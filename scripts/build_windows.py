@@ -33,8 +33,7 @@ def main():
     folder = ROOT / 'dist/LyricCandle'
     if not (folder / 'LyricCandle.exe').is_file():
         raise RuntimeError('PyInstaller did not produce LyricCandle.exe')
-    for name in ('README.md', 'README.es.md', 'LEEME.md', 'CHANGELOG.md', 'CONTRIBUTING.md',
-                 'THIRD_PARTY.md', 'VERIFICACION.md', 'LICENSE'):
+    for name in ('README.md', 'README.es.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'THIRD_PARTY.md', 'LICENSE'):
         shutil.copy2(ROOT / name, folder / name)
     shutil.copytree(ROOT / 'docs', folder / 'docs', dirs_exist_ok=True)
     python_license = Path(sys.base_prefix) / 'LICENSE.txt'

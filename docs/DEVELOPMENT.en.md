@@ -89,7 +89,7 @@ python scripts/build_windows.py --portable --zip
 
 The script creates `dist/LyricCandle/` and `dist/Lyric-Candle-0.2.6-alpha-Windows-x64.zip`, with the version read from the model. Omit `--portable` to keep installed-mode storage; a portable build adds `portable.txt` beside the EXE. `--zip` also writes a SHA-256 checksum. Documentation and notices accompany the executable.
 
-`CREAR_EXE.bat` remains an interactive alternative. Always distribute the entire generated folder, including `_internal`. FFmpeg binaries are not bundled: place them in `tools/` beside the EXE or use PATH. PyInstaller is build-time only. A packaged application still needs manual startup, audio, high-DPI and media checks on Windows.
+`scripts\windows\CREAR_EXE.bat` remains an interactive alternative. Always distribute the entire generated folder, including `_internal`. FFmpeg binaries are not bundled: place them in `tools/` beside the EXE or use PATH. PyInstaller is build-time only. A packaged application still needs manual startup, audio, high-DPI and media checks on Windows.
 
 The Windows workflow builds on pushes to `main`, pull requests and manual dispatch. Artifacts are retained for 30 days; they are build outputs, not published releases. The build workflow has read-only repository permission; the separate Release workflow publishes tested versions.
 

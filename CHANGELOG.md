@@ -51,4 +51,4 @@
 | 0.2 | Linked phrase/time selection and animation keyframes | Selección vinculada y keyframes de animación |
 | 0.1.x | Initial editor, paired TXT input, syllable marks and MP4 export | Editor inicial, TXT emparejado, marcas y exportación MP4 |
 
-Detailed historical notes are retained in `CAMBIOS-*.md` (Spanish). / Las notas históricas detalladas se conservan en `CAMBIOS-*.md`.
+Detailed historical notes live in `docs/releases/` (0.2.4 and earlier in Spanish). / Las notas históricas detalladas están en `docs/releases/`.

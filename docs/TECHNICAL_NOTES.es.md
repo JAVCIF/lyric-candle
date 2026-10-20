@@ -27,7 +27,7 @@ La curva usa Keyframe(time, progress), con tiempo relativo y progreso entre 0 y 
 
 Alpha 0.2.1: el hover usa una copia superficial de la configuración de la vista previa, sin alterar el proyecto exportable. El campo playhead guarda la posición de vista dentro del schema 2. Las respuestas de extracción de fotogramas llevan una generación de medio y un número de solicitud para descartar respuestas tardías. La búsqueda pendiente se reaplica al recibir LoadedMedia para evitar que un 0 transitorio sustituya la posición guardada.
 
-Versión: el número vive solo en `VERSION` (`lyric_candle/model.py`); el encabezado y los proyectos guardados lo toman de ahí. Al publicar una versión, actualiza también el título de `LEEME.md` y agrega su `CAMBIOS-x.y.z.md`.
+Versión: el número vive solo en `VERSION` (`lyric_candle/model.py`); el encabezado y los proyectos guardados lo toman de ahí. Al publicar una versión, actualiza también el título de `docs/USER_GUIDE.es.md`, agrega sus notas bilingües en `docs/releases/x.y.z.md` (el workflow de release las usa) y resume el cambio en `CHANGELOG.md`.
 
 Logo: `lyric_candle/assets/logo.svg` es la fuente (solo funciones SVG Tiny, para que Qt lo dibuje igual). `logo.ico` (16–256 px) y `logo-256.png` se generaron a partir de él; si cambias el SVG, vuelve a generarlos. En Windows, `main()` fija un AppUserModelID propio para que la barra de tareas muestre este icono y no el de Python.
 

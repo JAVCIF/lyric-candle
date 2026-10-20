@@ -421,8 +421,8 @@ EN = {
     # --- export -------------------------------------------------------------------------
     'Ya hay una exportación en curso.': 'An export is already running.',
     'Hace falta FFmpeg': 'FFmpeg is needed',
-    'Puedes editar y previsualizar. Para exportar, coloca ffmpeg.exe y ffprobe.exe en tools/ o instala FFmpeg en PATH.\n\nConsulta LEEME.md.':
-        'You can edit and preview. To export, put ffmpeg.exe and ffprobe.exe in tools/ or install FFmpeg on the PATH.\n\nSee LEEME.md.',
+    'Puedes editar y previsualizar. Para exportar, coloca ffmpeg.exe y ffprobe.exe en tools/ o instala FFmpeg en PATH.\n\nConsulta Ayuda → Guía rápida (F1).':
+        'You can edit and preview. To export, put ffmpeg.exe and ffprobe.exe in tools/ or install FFmpeg on the PATH.\n\nSee Help → Quick guide (F1).',
     'Corrige los tiempos antes de exportar': 'Fix the timings before exporting',
     'Texto fuera de márgenes': 'Text outside the margins',
     'Hay frases que exceden los márgenes y pueden cortarse. ¿Exportar de todos modos?':

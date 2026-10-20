@@ -2,7 +2,7 @@
 
 **146 pruebas aprobadas, sin omisiones**, ejecutando la suite completa con Python 3.12, PySide6 6.8.3 y FFmpeg/ffprobe 6.1.1 en Linux con Qt sin pantalla. Duración de la ejecución: aproximadamente 13 segundos.
 
-Comando: `python -m unittest discover -s tests -v` (con `QT_QPA_PLATFORM=offscreen` y `LYRIC_CANDLE_LANG=es` en este entorno). En Windows puedes usar `PROBAR.bat`.
+Comando: `python -m unittest discover -s tests -v` (con `QT_QPA_PLATFORM=offscreen` y `LYRIC_CANDLE_LANG=es` en este entorno). En Windows puedes usar `scripts\windows\PROBAR.bat`.
 
 ## Regresiones nuevas (18 pruebas)
 

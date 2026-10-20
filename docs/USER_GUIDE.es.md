@@ -2,7 +2,7 @@
 
 Editor de escritorio para crear video lyrics con una o dos líneas, traducción, repintado, desvanecimiento y énfasis por sílabas. Proyecto independiente de Sonic Candle. Interfaz en español e inglés.
 
-[Inicio en español](README.es.md) · [English user guide](docs/USER_GUIDE.en.md) · [Desarrollo](docs/DEVELOPMENT.es.md)
+[Inicio en español](../README.es.md) · [English user guide](USER_GUIDE.en.md) · [Desarrollo](DEVELOPMENT.es.md)
 
 La 0.2.4 protege el texto sin aplicar guardándolo como borrador, corrige la exportación y vista pausada de videos con píxeles no cuadrados, y reconoce la orientación del video al adoptar su resolución. Puedes abrir tus proyectos anteriores.
 
@@ -10,18 +10,18 @@ La 0.2.4 protege el texto sin aplicar guardándolo como borrador, corrige la exp
 
 1. Extrae **toda** la carpeta del ZIP. No ejecutes los archivos desde dentro del ZIP.
 2. Necesitas **Python 3.10–3.13 de 64 bits**. Se recomienda Python 3.12, disponible en https://www.python.org/downloads/windows/ . Si usas el instalador, incluye el lanzador `py`.
-3. Ejecuta **INSTALAR.bat**. Crea un entorno `.venv` dentro de la carpeta y descarga la dependencia PySide6. La primera instalación requiere internet.
-4. Ejecuta **INICIAR.bat**. La aplicación abre una demo de 12 segundos.
-5. Si no abre, ejecuta **DIAGNOSTICO.bat** y conserva el mensaje. Los errores de arranque también se escriben en `Lyric-Candle-startup-error.log` dentro de tu carpeta de usuario.
+3. Ejecuta **scripts\windows\INSTALAR.bat**. Crea un entorno `.venv` dentro de la carpeta y descarga la dependencia PySide6. La primera instalación requiere internet.
+4. Ejecuta **scripts\windows\INICIAR.bat**. La aplicación abre una demo de 12 segundos.
+5. Si no abre, ejecuta **scripts\windows\DIAGNOSTICO.bat** y conserva el mensaje. Los errores de arranque también se escriben en `Lyric-Candle-startup-error.log` dentro de tu carpeta de usuario.
 
-Este paquete contiene **código fuente y lanzadores**, no un EXE precompilado. `CREAR_EXE.bat` permite intentar la compilación en Windows con PyInstaller; ese proceso no se ejecutó aquí. Distribuye la carpeta que genere, completa.
+Este paquete contiene **código fuente y lanzadores**, no un EXE precompilado. `scripts\windows\CREAR_EXE.bat` permite intentar la compilación en Windows con PyInstaller; ese proceso no se ejecutó aquí. Distribuye la carpeta que genere, completa.
 
 ### FFmpeg: exportación y forma de onda
 
 La edición y vista previa pueden abrir sin FFmpeg instalado por separado. Para generar MP4, dibujar la forma de onda y ajustar marcas a ataques del audio:
 
 - Coloca **ffmpeg.exe y ffprobe.exe** dentro de `tools/`, o instálalos en el PATH.
-- Si compilaste el EXE con `CREAR_EXE.bat`, usa la carpeta `tools\` junto a `LyricCandle.exe` (créala si no existe).
+- Si compilaste el EXE con `scripts\windows\CREAR_EXE.bat`, usa la carpeta `tools\` junto a `LyricCandle.exe` (créala si no existe).
 - Descarga y enlaces a compilaciones: https://ffmpeg.org/download.html . Necesitas una compilación con `libx264` y AAC.
 - No se incluyen binarios de FFmpeg. Si acabas de modificar PATH, vuelve a abrir la aplicación.
 

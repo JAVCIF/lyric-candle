@@ -28,7 +28,7 @@ class ExportMixin:
                                        'Guardar conserva los borradores para retomarlos después.').format(len(drafts)))
             return
         if not media_tools.executable('ffmpeg'):
-            QMessageBox.information(self, tr('Hace falta FFmpeg'), tr('Puedes editar y previsualizar. Para exportar, coloca ffmpeg.exe y ffprobe.exe en tools/ o instala FFmpeg en PATH.\n\nConsulta LEEME.md.'))
+            QMessageBox.information(self, tr('Hace falta FFmpeg'), tr('Puedes editar y previsualizar. Para exportar, coloca ffmpeg.exe y ffprobe.exe en tools/ o instala FFmpeg en PATH.\n\nConsulta Ayuda → Guía rápida (F1).'))
             return
         problems = self.project.problems()
         if problems:

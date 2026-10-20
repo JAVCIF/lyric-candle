@@ -1,4 +1,4 @@
-"""Desktop entry point. See LEEME.md for Windows installation."""
+"""Desktop entry point. See docs/USER_GUIDE.en.md (or .es.md) for installation."""
 import sys
 import traceback
 from pathlib import Path
@@ -16,7 +16,10 @@ if __name__ == '__main__':
             pass
         if sys.platform == 'win32' and '--smoke-test' not in sys.argv:
             import ctypes
-            ctypes.windll.user32.MessageBoxW(None, 'No se pudo iniciar Lyric Candle.\nEjecuta INSTALAR.bat y luego DIAGNOSTICO.bat.\n\nDetalle: ' + str(path), 'Lyric Candle · inicio', 16)
+            hint = ('' if getattr(sys, 'frozen', False) else
+                    'Ejecuta scripts\\windows\\INSTALAR.bat y luego DIAGNOSTICO.bat.\n\n')
+            ctypes.windll.user32.MessageBoxW(None, 'No se pudo iniciar Lyric Candle.\n' + hint + 'Detalle: ' + str(path),
+                                             'Lyric Candle · inicio', 16)
         else:
             print(details, file=sys.stderr)
         raise SystemExit(1) from None

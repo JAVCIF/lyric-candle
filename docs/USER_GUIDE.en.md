@@ -1,10 +1,10 @@
 # User guide · Lyric Candle 0.2.6-alpha
 
-[English](USER_GUIDE.en.md) · [Español](../LEEME.md) · [Home](../README.md)
+[English](USER_GUIDE.en.md) · [Español](USER_GUIDE.es.md) · [Home](../README.md)
 
 ## Installation and demo
 
-On Windows, install 64-bit Python 3.12, extract the source and run `INSTALAR.bat`, then `INICIAR.bat`. The dependency is pinned in `requirements.txt`. Alternatively, download the portable ZIP or per-user Setup EXE from [Releases](https://github.com/JAVCIF/lyric-candle/releases). Neither needs Python.
+On Windows, install 64-bit Python 3.12, extract the source and run `scripts\windows\INSTALAR.bat`, then `scripts\windows\INICIAR.bat`. The dependency is pinned in `requirements.txt`. Alternatively, download the portable ZIP or per-user Setup EXE from [Releases](https://github.com/JAVCIF/lyric-candle/releases). Neither needs Python.
 
 The app opens a 12-second demo with original text and synthetic audio. `examples/Demo.lyric.json` is editable, `Demo.wav` contains the beat, and `Demo.mp4` is an exported example. It has no singing: use it to understand the clock and effects. `Demo-Keyframes.lyric.json` demonstrates a hold, and `Demo-Video-Pausado.lyric.json` demonstrates reopening a paused video. The latter uses already-burned-in lyrics; those pixels cannot be edited as text.
 
@@ -156,7 +156,7 @@ Installed mode stores settings/recovery/logs in the user's application data loca
 
 | Symptom | Check |
 | --- | --- |
-| Source launcher does not start | Run `INSTALAR.bat` again, then `DIAGNOSTICO.bat`; use 64-bit supported Python. |
+| Source launcher does not start | Run `scripts\windows\INSTALAR.bat` again, then `scripts\windows\DIAGNOSTICO.bat`; use 64-bit supported Python. |
 | EXE fails after copying | Restore the complete extracted folder, including `_internal`; the EXE alone is insufficient. |
 | Export/waveform unavailable | Verify both FFmpeg tools in `tools/` or PATH; the default encoder needs `libx264` and AAC. |
 | Media missing after moving a project | Relink the file offered on open and save again. |

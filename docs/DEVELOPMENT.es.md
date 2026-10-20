@@ -64,7 +64,7 @@ python -m unittest discover -s tests -v
 python -m unittest discover -s tests -p test_stability.py -v
 ```
 
-Instala FFmpeg/ffprobe para evitar omisiones de medios. La base 0.2.4 tiene 146 pruebas. CI instala las herramientas y ejecuta Python 3.12 en Linux y Windows. [Verificación](../VERIFICACION.md) registra la base local; Actions conserva por separado sus ejecuciones remotas.
+Instala FFmpeg/ffprobe para evitar omisiones de medios. La base 0.2.4 tiene 146 pruebas. CI instala las herramientas y ejecuta Python 3.12 en Linux y Windows. [Verificación](VERIFICATION.es.md) registra la base local; Actions conserva por separado sus ejecuciones remotas.
 
 Revisa el registro completo para detectar excepciones de slots Qt además del estado unittest. Los avisos de dispositivo de audio ausente/decodificación por CPU son posibles sin pantalla. Las pruebas no verifican audio audible ni todos los códecs del usuario.
 
@@ -84,7 +84,7 @@ python scripts/build_windows.py --portable --zip
 
 Se crean `dist/LyricCandle/` y `dist/Lyric-Candle-0.2.6-alpha-Windows-x64.zip`; la versión se lee del modelo. `--portable` agrega `portable.txt`, `--zip` comprime y escribe SHA-256. Sin `--portable` se mantiene el almacenamiento instalado. Se incluyen documentación y avisos.
 
-`CREAR_EXE.bat` sigue disponible como alternativa interactiva. Distribuye toda la carpeta, incluido `_internal`. FFmpeg no se incluye: agrégalo a `tools/` junto al EXE o usa PATH. PyInstaller solo hace falta para construir. El arranque, audio, HiDPI y medios deben probarse además en Windows.
+`scripts\windows\CREAR_EXE.bat` sigue disponible como alternativa interactiva. Distribuye toda la carpeta, incluido `_internal`. FFmpeg no se incluye: agrégalo a `tools/` junto al EXE o usa PATH. PyInstaller solo hace falta para construir. El arranque, audio, HiDPI y medios deben probarse además en Windows.
 
 El workflow compila con pushes a `main`, pull requests y ejecución manual; los artefactos duran 30 días y no son Releases. Ese workflow tiene permiso de lectura; el workflow separado Release publica las versiones probadas.
 

@@ -25,7 +25,7 @@ ROOT = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parents[1]))
 
 
 def tool_dirs():
-    """tools/ next to the EXE (what LEEME describes) and inside the bundle or source tree."""
+    """tools/ next to the EXE (what the user guide describes) and inside the bundle or source tree."""
     dirs = []
     if getattr(sys, 'frozen', False):
         dirs.append(Path(sys.executable).resolve().parent / 'tools')

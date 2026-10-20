@@ -31,10 +31,10 @@ Escucha la canción, marca las frases, afina sus tiempos y anima las sílabas o 
 
 1. Descarga **Code → Download ZIP** y extrae toda la carpeta, o clona el repositorio.
 2. Instala **Python 3.12 de 64 bits**. El instalador acepta Python 3.10–3.13; la base probada es 3.12.
-3. Ejecuta `INSTALAR.bat`: crea `.venv` e instala PySide6.
-4. Ejecuta `INICIAR.bat` para abrir la demo sintética incluida.
+3. Ejecuta `scripts\windows\INSTALAR.bat`: crea `.venv` e instala PySide6.
+4. Ejecuta `scripts\windows\INICIAR.bat` para abrir la demo sintética incluida.
 
-Si no inicia, usa `DIAGNOSTICO.bat`. Consulta también la [guía de uso](LEEME.md).
+Si no inicia, usa `scripts\windows\DIAGNOSTICO.bat`. Consulta también la [guía de uso](docs/USER_GUIDE.es.md).
 
 ### Ejecutable de Windows
 
@@ -43,7 +43,7 @@ Descarga la **[0.2.6-alpha desde Releases](https://github.com/JAVCIF/lyric-candl
 - **ZIP portable:** extrae todo y abre `LyricCandle/LyricCandle.exe`. Conserva la carpeta completa. Los ajustes quedan en `data/` junto al EXE.
 - **EXE instalador:** instala para tu usuario, con español/inglés, accesos directos y desinstalador. Los ajustes usan la carpeta de datos del usuario.
 
-Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.6-alpha.md). Puedes compilar con `CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
+Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.6-alpha.md). Puedes compilar con `scripts\windows\CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
 
 ### Agregar FFmpeg
 
@@ -79,16 +79,16 @@ Instala `ffmpeg` y `ffprobe` por separado. El código es multiplataforma, pero e
 
 | Tema | Español | English |
 | --- | --- | --- |
-| Uso, atajos, formatos y solución de problemas | [Guía de uso](LEEME.md) | [User guide](docs/USER_GUIDE.en.md) |
+| Uso, atajos, formatos y solución de problemas | [Guía de uso](docs/USER_GUIDE.es.md) | [User guide](docs/USER_GUIDE.en.md) |
 | Arquitectura, formato del proyecto y compilación | [Desarrollo](docs/DEVELOPMENT.es.md) | [Development](docs/DEVELOPMENT.en.md) |
-| Cobertura y límites de las pruebas | [Verificación](VERIFICACION.md) | [Verification](docs/VERIFICATION.en.md) |
+| Cobertura y límites de las pruebas | [Verificación](docs/VERIFICATION.es.md) | [Verification](docs/VERIFICATION.en.md) |
 | Cambios de versiones | [Cambios / Changelog](CHANGELOG.md) | [Cambios / Changelog](CHANGELOG.md) |
 | Reportes y contribuciones | [Contribuir / Contributing](CONTRIBUTING.md) | [Contribuir / Contributing](CONTRIBUTING.md) |
 | Componentes externos | [Componentes / Acknowledgements](THIRD_PARTY.md) | [Componentes / Acknowledgements](THIRD_PARTY.md) |
 
 ## Estado y límites
 
-La 0.2.6 agrega veintidós regresiones del destino de Ctrl+M y de los tiempos provisionales (176 pruebas en total). Ejecuta la suite completa con `PROBAR.bat` o `python -m unittest discover -s tests`. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
+La 0.2.6 agrega veintidós regresiones del destino de Ctrl+M y de los tiempos provisionales (176 pruebas en total). Ejecuta la suite completa con `scripts\windows\PROBAR.bat` o `python -m unittest discover -s tests`. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
 
 La base de la 0.2.4 pasó **146 pruebas** en Linux con Python 3.12, PySide6 6.8.3 y FFmpeg 6.1.1, incluidas exportaciones reales. Los indicadores de arriba muestran por separado el resultado de CI del repositorio. Sigue siendo una alpha: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
 

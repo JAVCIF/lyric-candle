@@ -1,18 +1,19 @@
 @echo off
 setlocal
-cd /d "%~dp0"
+rem Lives in scripts\windows; work from the repository root.
+cd /d "%~dp0..\.."
 echo Lyric Candle - Preparando entorno local
-echo Necesita Python 3.10 a 3.13. Recomendado: Python 3.12 de 64 bits.
+echo Necesita Python 3.10 a 3.14. Recomendado: Python 3.12 de 64 bits.
 echo.
 if exist ".venv\Scripts\python.exe" goto deps
-for %%V in (3.12 3.11 3.13 3.10) do (
+for %%V in (3.12 3.13 3.11 3.14 3.10) do (
     py -%%V -c "import sys; assert sys.maxsize > 2**32" >nul 2>nul
     if not errorlevel 1 (
         py -%%V -m venv .venv
         if not errorlevel 1 goto deps
     )
 )
-python -c "import sys; assert (3,10) <= sys.version_info[:2] <= (3,13) and sys.maxsize > 2**32" >nul 2>nul
+python -c "import sys; assert (3,10) <= sys.version_info[:2] <= (3,14) and sys.maxsize > 2**32" >nul 2>nul
 if errorlevel 1 goto missing
 python -m venv .venv
 if errorlevel 1 goto fail

@@ -1,6 +1,6 @@
 # Verification · 0.2.4-alpha
 
-[English](VERIFICATION.en.md) · [Español](../VERIFICACION.md) · [Home](../README.md)
+[English](VERIFICATION.en.md) · [Español](VERIFICATION.es.md) · [Home](../README.md)
 
 The full local baseline passed **146 tests with no skips** in about 13 seconds, using Python 3.12, PySide6 6.8.3 and FFmpeg/ffprobe 6.1.1 on Linux with Qt offscreen.
 
@@ -8,7 +8,7 @@ The full local baseline passed **146 tests with no skips** in about 13 seconds, 
 python -m unittest discover -s tests -v
 ```
 
-Use `PROBAR.bat` on Windows after installation. Media tests may skip when FFmpeg is absent; install both tools for complete coverage. GitHub Actions results are independent of this recorded local baseline and are visible in the repository's Actions tab.
+Use `scripts\windows\PROBAR.bat` on Windows after installation. Media tests may skip when FFmpeg is absent; install both tools for complete coverage. GitHub Actions results are independent of this recorded local baseline and are visible in the repository's Actions tab.
 
 ## 18 stabilization regressions
 
