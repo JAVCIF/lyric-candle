@@ -2423,6 +2423,9 @@ class MainWindow(QMainWindow):
         self.remove_recovery()
         self.recovery_lock.unlock()
         self.player.stop()
+        # stop() keeps the decoder/source loaded. Release it as well, so Windows
+        # does not keep the media file locked while this closed window survives.
+        self.player.setSource(QUrl())
         event.accept()
 
 

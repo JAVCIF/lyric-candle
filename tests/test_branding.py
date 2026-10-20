@@ -1,6 +1,6 @@
 """Alpha 0.2.3: fixed window title, version label from model.VERSION and the logo."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import unittest
 from PySide6.QtWidgets import QApplication

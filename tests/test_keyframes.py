@@ -1,6 +1,6 @@
 """Regression coverage for linked navigation and piecewise animation timing."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import copy
 from pathlib import Path
@@ -192,9 +192,11 @@ class CurveExportTests(unittest.TestCase):
             while job.isRunning() and time.monotonic()<limit:APP.processEvents();job.wait(10)
             if job.isRunning():job.cancel();job.wait(5000);self.fail('Export timed out')
             APP.processEvents();self.assertEqual(errors,[]);self.assertTrue(done)
-            data=subprocess.run([executable('ffmpeg'),'-v','error','-i',str(target),'-vf',
-                r'select=eq(n\,12)+eq(n\,36)+eq(n\,60)','-vsync','0','-f','rawvideo','-pix_fmt','rgb24','pipe:1'],
-                capture_output=True,check=True).stdout
+            decoded=subprocess.run([executable('ffmpeg'),'-v','error','-i',str(target),'-vf',
+                r'select=eq(n\,12)+eq(n\,36)+eq(n\,60)','-fps_mode','passthrough','-f','rawvideo','-pix_fmt','rgb24','pipe:1'],
+                capture_output=True)
+            self.assertEqual(decoded.returncode,0,decoded.stderr.decode('utf-8','replace'))
+            data=decoded.stdout
             size=320*240*3;self.assertEqual(len(data),size*3)
             before,held_a,held_b=[data[i*size:(i+1)*size] for i in range(3)]
             self.assertLess(sum(abs(a-b) for a,b in zip(held_a,held_b))/size,1.5)

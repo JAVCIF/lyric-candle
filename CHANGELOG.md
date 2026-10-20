@@ -12,6 +12,7 @@
 - Read 90°/180°/270° rotation when adopting video dimensions; refresh a tracked canvas when opening older projects.
 - Add 18 regression tests; the complete 146-test baseline passed on Linux with real exports.
 - Prepare the public repository with English/Spanish documentation, synthetic demos, CI and Windows packaging.
+- Release the player's media source on close so closed windows do not retain Windows file locks. Use native Windows fonts and current FFmpeg frame-sync options in cross-platform tests.
 
 ### Español
 
@@ -21,6 +22,7 @@
 - Interpretar la rotación de 90°/180°/270° al adoptar resolución y actualizar lienzos vinculados de proyectos anteriores.
 - Agregar 18 regresiones; la base completa de 146 pruebas pasó en Linux con exportaciones reales.
 - Preparar el repositorio público con documentación bilingüe, demos sintéticas, CI y empaquetado para Windows.
+- Liberar el medio del reproductor al cerrar para evitar bloqueos de archivos en Windows. Usar las fuentes nativas y opciones vigentes de sincronización FFmpeg en las pruebas multiplataforma.
 
 ## 0.2.3-alpha
 

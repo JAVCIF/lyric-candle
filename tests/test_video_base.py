@@ -1,6 +1,6 @@
 """Alpha 0.2.3: base-video canvas/format, moved project files, Separación and keyframe locks."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import json
 import shutil

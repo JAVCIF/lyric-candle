@@ -14,7 +14,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-Qt needs a desktop session for interactive use. Tests select `QT_QPA_PLATFORM=offscreen`; there is no need to configure a physical display. No API keys or cloud service are required by the editor.
+Qt needs a desktop session for interactive use. Linux tests select `QT_QPA_PLATFORM=offscreen`; Windows tests use the native `windows` backend so the real system font database is available. The Windows CI runner supplies a desktop session. No API keys or cloud service are required by the editor.
 
 ## Repository map
 

@@ -23,7 +23,7 @@ jobs:
       matrix:
         os: [ubuntu-24.04, windows-latest]
     env:
-      QT_QPA_PLATFORM: offscreen
+      QT_QPA_PLATFORM: ${{ matrix.os == 'windows-latest' && 'windows' || 'offscreen' }}
       LYRIC_CANDLE_LANG: es
       PYTHONUTF8: '1'
     steps:

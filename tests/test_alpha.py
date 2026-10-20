@@ -2,7 +2,7 @@
 import copy
 import json
 import os
-os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import subprocess
 import tempfile
@@ -70,7 +70,7 @@ class ModelTests(unittest.TestCase):
             c=Cue(original='El corazón 💛',translation='The heart',original_spans=[Span(3,10,.2,.8,color='#ab12ef',lift=20,scale=1.5)])
             p=Project(media=str(media),cues=[c]);path=base/'proyecto.lyric.json'
             save(p,path)
-            self.assertEqual(json.loads(path.read_text())['media'],media.name)
+            self.assertEqual(json.loads(path.read_text(encoding='utf-8'))['media'],media.name)
             self.assertEqual(to_dict(p),to_dict(load(path)))
             self.assertEqual(list(base.glob('*.tmp')),[])
     def test_draft_can_be_reopened_and_flagged(self):

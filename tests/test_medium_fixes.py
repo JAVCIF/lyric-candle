@@ -1,7 +1,7 @@
 """Alpha 0.2.3: NBSP editing, marks inside the repaint window, phrase order, snap with
 keyframes and grouped undo for repeated steps."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import unittest
 from PySide6.QtCore import Qt

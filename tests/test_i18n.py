@@ -1,6 +1,6 @@
 """0.2.3: Spanish/English interface, language choice, quick guide and portable data folder."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import ast
 import re

@@ -1,6 +1,6 @@
 """0.2.4: no lost drafts, square-pixel export and rotated-video display geometry."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')
 from pathlib import Path
 import shutil

@@ -1,7 +1,7 @@
 """Alpha 0.2.3: low-priority fixes (FFmpeg next to the EXE, lenient opening, recovery per
 instance, mark timing, video frame conversion, Space, color cell and waveform)."""
 import os
-os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
 import json
 import sys

@@ -14,7 +14,7 @@ python -m pip install -r requirements.txt
 python main.py
 ```
 
-El uso interactivo necesita una sesión gráfica. Las pruebas usan `QT_QPA_PLATFORM=offscreen`. El editor no requiere claves API ni un servicio en la nube.
+El uso interactivo necesita una sesión gráfica. Las pruebas Linux usan `QT_QPA_PLATFORM=offscreen`; las de Windows usan el backend nativo `windows` para acceder a las fuentes reales del sistema. El runner Windows de CI ofrece una sesión de escritorio. El editor no requiere claves API ni un servicio en la nube.
 
 ## Estructura
 
