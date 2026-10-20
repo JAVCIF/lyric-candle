@@ -5,7 +5,7 @@
 ![Pruebas](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Compilación Windows](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **0.2.6-alpha**.
+**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **1.0.0-beta**.
 
 ![Editor Lyric Candle](docs/assets/editor-es.png)
 
@@ -23,7 +23,7 @@ Escucha la canción, marca las frases, afina sus tiempos y anima las sílabas o 
 - **Exportación:** MP4 H.264/AAC, contenedor/códec del video base cuando sea compatible (copiando su audio), o solo la letra en ProRes 4444 con canal alfa para superponerla en otro editor. Cancelar conserva el archivo de destino anterior.
 - **Interfaz en español e inglés:** idioma del sistema al iniciar, selección manual y guía integrada con F1.
 
-**Esta alpha no reconoce el canto ni alinea la voz automáticamente.** Las ayudas estiman por posición del texto o ataques cercanos del audio; revisa escuchando. Por ahora se importa texto pegado y TXT, sin SRT/ASS/LRC.
+**Esta beta no reconoce el canto ni alinea la voz automáticamente.** Las ayudas estiman por posición del texto o ataques cercanos del audio; revisa escuchando. Por ahora se importa texto pegado y TXT, sin SRT/ASS/LRC.
 
 ## Empezar en Windows
 
@@ -38,12 +38,12 @@ Si no inicia, usa `scripts\windows\DIAGNOSTICO.bat`. Consulta también la [guía
 
 ### Ejecutable de Windows
 
-Descarga la **[0.2.6-alpha desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.6-alpha)**:
+Descarga la **[1.0.0-beta desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.0-beta)**:
 
 - **ZIP portable:** extrae todo y abre `LyricCandle/LyricCandle.exe`. Conserva la carpeta completa. Los ajustes quedan en `data/` junto al EXE.
 - **EXE instalador:** instala para tu usuario, con español/inglés, accesos directos y desinstalador. Los ajustes usan la carpeta de datos del usuario.
 
-Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.6-alpha.md). Puedes compilar con `scripts\windows\CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
+Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/1.0.0-beta.md). Puedes compilar con `scripts\windows\CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
 
 ### Agregar FFmpeg
 
@@ -88,9 +88,9 @@ Instala `ffmpeg` y `ffprobe` por separado. El código es multiplataforma, pero e
 
 ## Estado y límites
 
-La 0.2.6 agrega veintidós regresiones del destino de Ctrl+M y de los tiempos provisionales (176 pruebas en total). Ejecuta la suite completa con `scripts\windows\PROBAR.bat` o `python -m unittest discover -s tests`. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
+La 1.0.0-beta tiene 181 pruebas automáticas, incluidas exportaciones reales. CI ejecuta Ruff y la suite en Python 3.12 (Linux y Windows), Python 3.14 con el PySide6 más nuevo permitido y Python 3.10 con PySide6 6.8.3. Ejecuta la suite completa con `scripts\windows\PROBAR.bat` o `python -m unittest discover -s tests`. Los releases se publican solo cuando pasan CI y las comprobaciones de paquetes de Windows.
 
-La base de la 0.2.4 pasó **146 pruebas** en Linux con Python 3.12, PySide6 6.8.3 y FFmpeg 6.1.1, incluidas exportaciones reales. Los indicadores de arriba muestran por separado el resultado de CI del repositorio. Sigue siendo una alpha: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
+Los indicadores de arriba muestran el resultado de CI del repositorio. Es una beta: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
 
 Un medio por proyecto, sin mezclador de audio/video separados. El texto no se divide automáticamente en más renglones: reduce el tamaño o divide una frase si excede los márgenes. Las fuentes deben estar instaladas en el equipo de destino. El lienzo admite de 320×240 a 3840×2160, dimensiones pares y 1–120 FPS.
 

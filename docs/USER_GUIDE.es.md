@@ -1,4 +1,4 @@
-# Lyric Candle — Alpha 0.2.6
+# Lyric Candle — Beta 1.0.0
 
 Editor de escritorio para crear video lyrics con una o dos líneas, traducción, repintado, desvanecimiento y énfasis por sílabas. Proyecto independiente de Sonic Candle. Interfaz en español e inglés.
 
@@ -112,7 +112,7 @@ Hay dos ayudas distintas, ambas corregibles:
 1. **Estimar tiempos:** reparte las marcas según su posición y longitud de texto dentro del intervalo de repintado. No separa sílabas ni escucha la voz.
 2. **Ajustar marcas a ataques del audio:** mueve sus inicios hacia aumentos de amplitud cercanos, dentro de ±0.18 s. Conserva aproximadamente su duración y el orden de las marcas. Necesita que la forma de onda esté lista. **Puede seguir batería o instrumentos en vez del canto.** Úsalo después de aproximar los tiempos y verifica escuchando.
 
-No hay reconocimiento automático de letras cantadas ni alineación vocal con IA en esta alpha. El flujo principal es marcar escuchando y refinar.
+No hay reconocimiento automático de letras cantadas ni alineación vocal con IA en esta beta. El flujo principal es marcar escuchando y refinar.
 
 ### 7. Guardar y exportar
 
@@ -129,7 +129,7 @@ Los videos con píxeles no cuadrados se convierten a píxeles cuadrados antes de
 
 Los borradores son una función de la 0.2.4: utiliza esta versión o una posterior para conservarlos al volver a guardar. Las versiones anteriores no los reconocen.
 
-## Alcance de esta alpha
+## Alcance de esta beta
 
 - App de escritorio en español e inglés, código fuente; el arranque y los scripts de Windows requieren probarse en tu equipo.
 - Sin reconocimiento de canto, división automática lingüística en sílabas, glow/partículas ni animaciones de trayectorias personalizadas.

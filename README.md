@@ -5,7 +5,7 @@
 ![Tests](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Windows build](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **0.2.6-alpha**.
+**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **1.0.0-beta**.
 
 ![Lyric Candle editor](docs/assets/editor-en.png)
 
@@ -23,7 +23,7 @@ Listen to the song, mark the phrases, refine their timing, and animate selected 
 - **Export:** H.264/AAC MP4, the base video's container/codec where supported (with copied source audio), or the lyrics alone as ProRes 4444 with an alpha channel for overlaying in another editor. Cancellation preserves an existing destination file.
 - **Spanish and English UI:** system language at startup, with a manual language option and a built-in F1 guide.
 
-**This alpha does not recognize sung lyrics or perform vocal alignment.** Automatic timing tools estimate by text position or nearby audio attacks; review their results by ear. Import currently accepts pasted text and TXT, not SRT/ASS/LRC.
+**This beta does not recognize sung lyrics or perform vocal alignment.** Automatic timing tools estimate by text position or nearby audio attacks; review their results by ear. Import currently accepts pasted text and TXT, not SRT/ASS/LRC.
 
 ## Get started on Windows
 
@@ -38,12 +38,12 @@ If the app does not start, run `scripts\windows\DIAGNOSTICO.bat`. See [Troublesh
 
 ### Windows executable
 
-Download **[0.2.6-alpha from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.6-alpha)**:
+Download **[1.0.0-beta from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.0-beta)**:
 
 - **Portable ZIP:** extract everything and run `LyricCandle/LyricCandle.exe`. Keep the entire folder together. Settings live in `data/` beside the EXE.
 - **Setup EXE:** install for your Windows user, with English/Spanish setup, shortcuts and an uninstaller. Settings use your application data folder.
 
-Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/0.2.6-alpha.md). Build locally with `scripts\windows\CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
+Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/1.0.0-beta.md). Build locally with `scripts\windows\CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
 
 ### Add FFmpeg
 
@@ -88,9 +88,9 @@ Install `ffmpeg` and `ffprobe` separately. The source is cross-platform, but des
 
 ## Status and limits
 
-0.2.6 adds twenty-two regression tests for the Ctrl+M target and provisional times (176 tests in total). Run the whole suite with `scripts\windows\PROBAR.bat` or `python -m unittest discover -s tests`. Windows CI and package checks are required before publishing.
+1.0.0-beta has 181 automated tests, including real exports. CI runs Ruff and the suite on Python 3.12 (Linux and Windows), Python 3.14 with the newest allowed PySide6 and Python 3.10 with PySide6 6.8.3. Run the whole suite with `scripts\windows\PROBAR.bat` or `python -m unittest discover -s tests`. Releases are published only after CI and the Windows package checks pass.
 
-The 0.2.4 baseline passed **146 tests** on Linux with Python 3.12, PySide6 6.8.3 and FFmpeg 6.1.1, including real exports. The Actions badges above report repository CI separately. This remains an alpha: test your own codecs, fonts, audio output and Windows environment before relying on it for a complete production workflow.
+The Actions badges above report repository CI. This is a beta: test your own codecs, fonts, audio output and Windows environment before relying on it for a complete production workflow.
 
 One media file per project; no separate audio/video mixer. Text does not automatically wrap into extra lines: reduce the font or split a phrase when it exceeds the margins. Fonts must be installed on the destination machine. The editor's canvas limits are 320×240 through 3840×2160, with even dimensions and 1–120 FPS.
 

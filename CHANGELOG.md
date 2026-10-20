@@ -2,6 +2,12 @@
 
 [English overview](README.md) · [Resumen en español](README.es.md)
 
+## 1.0.0-beta — 2026-10-20
+
+**English:** first beta. Export only the lyrics as ProRes 4444 with an alpha channel. PySide6 `>=6.8,<6.11` adds Python 3.14 support (tested on 3.10, 3.13 and 3.14). The main window is split into responsibility modules without behaviour changes; the repository root is tidied (notes in `docs/releases/`, guides in `docs/`, launchers in `scripts\windows\`); `pyproject.toml` and Ruff join CI, which also tests Python 3.14 and the oldest supported pair. 181 tests.
+
+**Español:** primera beta. Exportar solo la letra en ProRes 4444 con canal alfa. PySide6 `>=6.8,<6.11` agrega Python 3.14 (probado en 3.10, 3.13 y 3.14). La ventana principal se divide en módulos por responsabilidad sin cambios de comportamiento; la raíz del repositorio se ordena (notas en `docs/releases/`, guías en `docs/`, lanzadores en `scripts\windows\`); `pyproject.toml` y Ruff se suman a CI, que además prueba Python 3.14 y la pareja más antigua soportada. 181 pruebas.
+
 ## 0.2.6-alpha — 2026-10-20
 
 **English:** Ctrl+M always changes the line on screen: outside a marking sequence it uses the selected row, also when Link line ↔ time selected it. A ▶ marks the Ctrl+M target and every mark is confirmed in the status bar. Imported and new lines keep provisional times (dimmed, saved in the project) that automatic following ignores, so the first pass with linking enabled no longer jumps ahead. The target has one source shared by ▶ and Ctrl+M (no hidden target after opening/recovering a project), hand-picked provisional rows stay selected during playback, and a zoomed mark on the placeholder time confirms it. Each zoomed Ctrl+M/Ctrl+F is its own undo step. Undo/redo restore the marking sequence, deleting rows keeps it on the same phrases, and holding Ctrl+M/Ctrl+F no longer repeats. Repeated final Ctrl+F corrections keep the sequence closed. Twenty-two regression tests.

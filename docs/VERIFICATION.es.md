@@ -1,4 +1,18 @@
-# Verificación de la Alpha 0.2.4
+# Verificación · 1.0.0-beta
+
+## 1.0.0-beta
+
+La suite completa pasó **181 pruebas sin omisiones** (unos 15 segundos por ejecución) con FFmpeg/ffprobe 6.1.1 en Linux y Qt sin pantalla, en tres entornos:
+
+| Python | PySide6 | Resultado |
+|---|---|---|
+| 3.14.6 | 6.10.3 | 181 aprobadas |
+| 3.13 | 6.8.3 | 181 aprobadas |
+| 3.10.20 | 6.8.3 | 181 aprobadas |
+
+También pasan Ruff (`ruff check .`, configurado en `pyproject.toml`) y la comprobación de enlaces de la documentación. Nuevo en esta beta: cinco pruebas de ProRes 4444 con alfa que decodifican el `.mov` exportado y comprueban transparencia, códec, perfil, formato de píxel y ausencia de audio. La división de la ventana principal se validó ejecutando la suite sin cambios sobre los nuevos módulos. El empaquetado, la instalación en Windows y la reproducción audible los cubren los jobs de Windows en CI y debes comprobarlos en tu equipo.
+
+## Base de la Alpha 0.2.4
 
 **146 pruebas aprobadas, sin omisiones**, ejecutando la suite completa con Python 3.12, PySide6 6.8.3 y FFmpeg/ffprobe 6.1.1 en Linux con Qt sin pantalla. Duración de la ejecución: aproximadamente 13 segundos.
 

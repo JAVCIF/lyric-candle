@@ -1,6 +1,20 @@
-# Verification · 0.2.4-alpha
+# Verification · 1.0.0-beta
 
 [English](VERIFICATION.en.md) · [Español](VERIFICATION.es.md) · [Home](../README.md)
+
+## 1.0.0-beta
+
+The full suite passed **181 tests with no skips** (about 15 seconds each run) with FFmpeg/ffprobe 6.1.1 on Linux, Qt offscreen, in three environments:
+
+| Python | PySide6 | Result |
+|---|---|---|
+| 3.14.6 | 6.10.3 | 181 passed |
+| 3.13 | 6.8.3 | 181 passed |
+| 3.10.20 | 6.8.3 | 181 passed |
+
+Ruff (`ruff check .`, configuration in `pyproject.toml`) and the documentation link check also pass. New in this beta: five ProRes 4444 alpha tests that decode the exported `.mov` and check transparency, codec, profile, pixel format and the absence of audio. The main-window split was validated by running the unchanged suite against the new modules. Windows packaging, installation and audible playback are covered by the Windows CI jobs and must still be checked on your own machine.
+
+## 0.2.4-alpha baseline
 
 The full local baseline passed **146 tests with no skips** in about 13 seconds, using Python 3.12, PySide6 6.8.3 and FFmpeg/ffprobe 6.1.1 on Linux with Qt offscreen.
 

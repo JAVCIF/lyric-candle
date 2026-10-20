@@ -12,7 +12,7 @@ from pathlib import Path
 from .i18n import tr
 
 EXPORT_FORMATS = ('mp4', 'source', 'prores_alpha')
-VERSION = '0.2.6-alpha'
+VERSION = '1.0.0-beta'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
 

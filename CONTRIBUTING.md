@@ -8,7 +8,7 @@ Use a focused branch/PR. Explain the user-visible behavior changed and validatio
 
 Keep compiled files, local environments, logs, settings, recovery files and personal media out of commits. Architecture matters: preview and export share a renderer; text anchors stay fixed; drafts stay separate from applied text; media results must reject stale requests.
 
-The project is alpha and uses the [MIT license](LICENSE). Discuss substantial proposed contributions with the maintainer before investing in a large change.
+The project is in beta and uses the [MIT license](LICENSE). Discuss substantial proposed contributions with the maintainer before investing in a large change.
 
 ## Español
 
@@ -18,4 +18,4 @@ Usa una rama/PR con alcance concreto. Explica el comportamiento que cambió y c�
 
 No incluyas compilados, entornos, registros, ajustes, recuperaciones ni medios personales. Conserva el renderer compartido, anclajes fijos, borradores separados del texto aplicado y descarte de respuestas antiguas de medios.
 
-El proyecto es alpha y usa la [licencia MIT](LICENSE). Comenta las contribuciones grandes con el mantenedor antes de invertir en un cambio extenso.
+El proyecto está en beta y usa la [licencia MIT](LICENSE). Comenta las contribuciones grandes con el mantenedor antes de invertir en un cambio extenso.

@@ -1,4 +1,4 @@
-# User guide · Lyric Candle 0.2.6-alpha
+# User guide · Lyric Candle 1.0.0-beta
 
 [English](USER_GUIDE.en.md) · [Español](USER_GUIDE.es.md) · [Home](../README.md)
 

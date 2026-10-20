@@ -87,7 +87,7 @@ python -m pip install "pyinstaller>=6.11,<7"
 python scripts/build_windows.py --portable --zip
 ```
 
-The script creates `dist/LyricCandle/` and `dist/Lyric-Candle-0.2.6-alpha-Windows-x64.zip`, with the version read from the model. Omit `--portable` to keep installed-mode storage; a portable build adds `portable.txt` beside the EXE. `--zip` also writes a SHA-256 checksum. Documentation and notices accompany the executable.
+The script creates `dist/LyricCandle/` and `dist/Lyric-Candle-1.0.0-beta-Windows-x64.zip`, with the version read from the model. Omit `--portable` to keep installed-mode storage; a portable build adds `portable.txt` beside the EXE. `--zip` also writes a SHA-256 checksum. Documentation and notices accompany the executable.
 
 `scripts\windows\CREAR_EXE.bat` remains an interactive alternative. Always distribute the entire generated folder, including `_internal`. FFmpeg binaries are not bundled: place them in `tools/` beside the EXE or use PATH. PyInstaller is build-time only. A packaged application still needs manual startup, audio, high-DPI and media checks on Windows.
 
@@ -105,6 +105,6 @@ Avoid committing environments, built executables, FFmpeg binaries, logs, setting
 
 ## Installer and release / Instalador y publicación
 
-On Windows install Inno Setup 6 or later. After building the portable app run `python scripts/build_installer.py` and `python scripts/check_windows_packages.py`. This creates `dist/Lyric-Candle-0.2.6-alpha-Setup-x64.exe` and its SHA-256. Setup excludes `portable.txt` and `data/`, installs per user without administrator rights, and preserves user settings/projects on uninstall. The checker extracts the ZIP, opens both EXEs with `--smoke-test`, installs silently and uninstalls. This flag opens the window and closes it after one second; it does not assess audible playback.
+On Windows install Inno Setup 6 or later. After building the portable app run `python scripts/build_installer.py` and `python scripts/check_windows_packages.py`. This creates `dist/Lyric-Candle-1.0.0-beta-Setup-x64.exe` and its SHA-256. Setup excludes `portable.txt` and `data/`, installs per user without administrator rights, and preserves user settings/projects on uninstall. The checker extracts the ZIP, opens both EXEs with `--smoke-test`, installs silently and uninstalls. This flag opens the window and closes it after one second; it does not assess audible playback.
 
 Windows build checks and retains both packages for 30 days. Release runs after successful Tests on a main push: it checks out that exact tested SHA, rebuilds/checks both packages and creates `v<VERSION>` using `docs/releases/<VERSION>.md`. Alpha versions are prereleases. Existing releases are never replaced. To publish a new version update VERSION and add bilingual notes. Only that job has contents:write permission.

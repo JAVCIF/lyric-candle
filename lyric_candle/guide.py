@@ -104,7 +104,7 @@ la sesión. <b>Opciones → Abrir carpeta de datos</b> lleva a esa carpeta.</li>
 <li><b>Opciones → Idioma</b>: automático (según Windows), español o inglés. Se aplica al reiniciar.</li>
 </ul>
 
-<h2>Límites de esta alpha</h2>
+<h2>Límites de esta beta</h2>
 <p class="muted">No reconoce el canto ni divide sílabas automáticamente: el flujo es marcar escuchando y refinar.
 Un medio por proyecto. Las fuentes dependen del equipo (para japonés, usa una fuente con esos caracteres).
 Sin importación de SRT, ASS o LRC todavía. Más detalles en docs/USER_GUIDE.es.md.</p>
@@ -197,7 +197,7 @@ next start. <b>Options → Open data folder</b> takes you there.</li>
 <li><b>Options → Language</b>: automatic (from Windows), Spanish or English. Applied after a restart.</li>
 </ul>
 
-<h2>Limits of this alpha</h2>
+<h2>Limits of this beta</h2>
 <p class="muted">It doesn't recognize singing or split syllables automatically: the workflow is to mark by ear and refine.
 One media file per project. Fonts depend on the computer (for Japanese, use a font that has those characters).
 No SRT, ASS or LRC import yet. More details in docs/USER_GUIDE.en.md.</p>
