@@ -1,0 +1,17 @@
+name: Feature request / Proponer mejora
+description: Explain the editing problem and desired behavior / Explica el problema y comportamiento deseado
+title: '[Feature] '
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Editing problem / Problema al editar
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Proposed behavior / Comportamiento propuesto
+      description: Describe a concrete example / Describe un ejemplo concreto
+    validations:
+      required: true

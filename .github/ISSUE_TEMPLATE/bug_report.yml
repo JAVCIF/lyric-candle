@@ -1,0 +1,30 @@
+name: Bug report / Reportar error
+description: Help reproduce an editor problem / Ayuda a reproducir un problema
+title: '[Bug] '
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version / Versión
+      placeholder: 0.2.4-alpha, source or Windows artifact / código o artefacto
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / Entorno
+      description: OS, Python, FFmpeg, fonts and media codec / Sistema, Python, FFmpeg, fuentes y códec
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps / Pasos
+      description: Include expected and actual behavior / Incluye resultado esperado y real
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: Logs and sample / Registros y ejemplo
+      description: Use a minimal shareable project; remove personal paths / Usa un proyecto mínimo compartible, sin rutas personales

@@ -1,0 +1,98 @@
+{
+  "title": "Demo · Pausa y aceleración",
+  "duration": 6,
+  "media": "Demo.wav",
+  "image": "",
+  "style": {
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "layout": "two",
+    "position": "left_split",
+    "primary": "original",
+    "font": "Segoe UI",
+    "size": 46,
+    "secondary_size": 34,
+    "margin": 48,
+    "gap": 20,
+    "fill": "#f1f4ff",
+    "painted": "#63b8ff",
+    "outline": "#17243f",
+    "outline_width": 2.5,
+    "mode": "advanced",
+    "repaint": true,
+    "fade": false,
+    "crossfade": true,
+    "fade_in": 0.16,
+    "fade_out": 0.28,
+    "effect_color": "#ffe49c",
+    "lift": 15.0,
+    "scale": 1.22,
+    "background": "gradient",
+    "background_color": "#101928"
+  },
+  "cues": [
+    {
+      "uid": "32ab46843e6d478e8278c9152f3c331c",
+      "start": 0,
+      "end": 4,
+      "original": "Una palabra se sostiene",
+      "translation": "One word holds its place",
+      "paint_start": 0.0,
+      "paint_end": null,
+      "original_spans": [
+        {
+          "begin": 4,
+          "end": 11,
+          "start": 1,
+          "finish": 2.4,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        }
+      ],
+      "translation_spans": [
+        {
+          "begin": 4,
+          "end": 8,
+          "start": 1,
+          "finish": 2.4,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        }
+      ],
+      "keyframes": [
+        {
+          "time": 1,
+          "progress": 0.4
+        },
+        {
+          "time": 3,
+          "progress": 0.4
+        }
+      ],
+      "use_keyframes": true,
+      "keyframe_scope": "all"
+    },
+    {
+      "uid": "7377d5b4fc8a462d90e2909620684988",
+      "start": 4.3,
+      "end": 5.7,
+      "original": "Y después continúa",
+      "translation": "And then it continues",
+      "paint_start": 0.0,
+      "paint_end": null,
+      "original_spans": [],
+      "translation_spans": [],
+      "keyframes": [],
+      "use_keyframes": true,
+      "keyframe_scope": "all"
+    }
+  ],
+  "format": "lyric-candle",
+  "schema": 2,
+  "app_version": "0.2.0-alpha"
+}

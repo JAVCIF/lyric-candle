@@ -1,0 +1,178 @@
+{
+  "title": "Demo · Luz y ritmo",
+  "duration": 12.0,
+  "media": "Demo.wav",
+  "image": "",
+  "style": {
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "layout": "two",
+    "position": "left_split",
+    "primary": "original",
+    "font": "Segoe UI",
+    "size": 46,
+    "secondary_size": 34,
+    "margin": 48,
+    "gap": 20,
+    "fill": "#f1f4ff",
+    "painted": "#63b8ff",
+    "outline": "#17243f",
+    "outline_width": 2.5,
+    "mode": "advanced",
+    "repaint": true,
+    "fade": true,
+    "crossfade": true,
+    "fade_in": 0.16,
+    "fade_out": 0.28,
+    "effect_color": "#ffe49c",
+    "lift": 15.0,
+    "scale": 1.22,
+    "background": "gradient",
+    "background_color": "#101928"
+  },
+  "cues": [
+    {
+      "uid": "41a26e4304a14adc90d371e7ced46b65",
+      "start": 0.5,
+      "end": 3.7,
+      "original": "Hoy la luz vuelve a brillar",
+      "translation": "Today the light shines again",
+      "paint_start": 0.0,
+      "paint_end": null,
+      "original_spans": [
+        {
+          "begin": 20,
+          "end": 23,
+          "start": 2.3703703703703702,
+          "finish": 2.9703703703703703,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        },
+        {
+          "begin": 23,
+          "end": 27,
+          "start": 2.7259259259259263,
+          "finish": 3.2,
+          "enabled": true,
+          "color": "#ff97ba",
+          "lift": null,
+          "scale": null
+        }
+      ],
+      "translation_spans": [
+        {
+          "begin": 10,
+          "end": 15,
+          "start": 1.1428571428571428,
+          "finish": 1.7428571428571429,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        }
+      ]
+    },
+    {
+      "uid": "9115074aed0a4514b82bbc2a540ec952",
+      "start": 4.2,
+      "end": 7.7,
+      "original": "Lleva el ritmo, déjate llevar",
+      "translation": "Follow the rhythm, let it flow",
+      "paint_start": 0.0,
+      "paint_end": null,
+      "original_spans": [
+        {
+          "begin": 9,
+          "end": 12,
+          "start": 1.0862068965517242,
+          "finish": 1.6862068965517243,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        },
+        {
+          "begin": 12,
+          "end": 14,
+          "start": 1.4482758620689655,
+          "finish": 2.0482758620689654,
+          "enabled": true,
+          "color": "#ff97ba",
+          "lift": null,
+          "scale": null
+        }
+      ],
+      "translation_spans": [
+        {
+          "begin": 11,
+          "end": 17,
+          "start": 1.2833333333333334,
+          "finish": 1.8833333333333333,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        }
+      ]
+    },
+    {
+      "uid": "9afb875bfc6e4237909b4a5aa9fe974b",
+      "start": 8.1,
+      "end": 11.7,
+      "original": "Cada sílaba encuentra su lugar",
+      "translation": "Every syllable finds its place",
+      "paint_start": 0.0,
+      "paint_end": null,
+      "original_spans": [
+        {
+          "begin": 5,
+          "end": 7,
+          "start": 0.6,
+          "finish": 1.2,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        },
+        {
+          "begin": 7,
+          "end": 9,
+          "start": 0.8399999999999999,
+          "finish": 1.44,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        },
+        {
+          "begin": 9,
+          "end": 11,
+          "start": 1.0799999999999998,
+          "finish": 1.6799999999999997,
+          "enabled": true,
+          "color": "#ff97ba",
+          "lift": null,
+          "scale": null
+        }
+      ],
+      "translation_spans": [
+        {
+          "begin": 6,
+          "end": 14,
+          "start": 0.72,
+          "finish": 1.3199999999999998,
+          "enabled": true,
+          "color": "",
+          "lift": null,
+          "scale": null
+        }
+      ]
+    }
+  ],
+  "format": "lyric-candle",
+  "schema": 1,
+  "app_version": "0.1.0-alpha"
+}

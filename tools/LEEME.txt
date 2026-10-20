@@ -1,0 +1,10 @@
+Opcional: coloca ffmpeg.exe y ffprobe.exe aqui (Windows x64).
+Tambien se detectan si estan instalados en PATH.
+Descarga y enlaces a compilaciones: https://ffmpeg.org/download.html
+Usa una compilacion que incluya libx264 y AAC.
+No se incluyen binarios de FFmpeg en este paquete.
+
+Optional: place ffmpeg.exe and ffprobe.exe here (Windows x64).
+They are also detected on PATH. Download links: https://ffmpeg.org/download.html
+Use a build with libx264 and AAC. FFmpeg binaries are not bundled.
+For a packaged application this folder belongs beside LyricCandle.exe.
