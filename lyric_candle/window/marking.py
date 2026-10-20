@@ -110,7 +110,9 @@ class MarkingMixin:
     def marking_state(self):
         """Ctrl+M sequence, selection and pinned row, by phrase identity (uid), not position."""
         uids = [cue.uid for cue in self.project.cues]
-        uid = lambda i: uids[i] if 0 <= i < len(uids) else None
+
+        def uid(i):
+            return uids[i] if 0 <= i < len(uids) else None
         return {'next': uid(self.mark_index), 'past_end': self.mark_index >= len(uids), 'last': uid(self.last_marked),
                 'done': self._sequence_done, 'pinned': self._pinned_uid, 'selected': uid(self.selected_index())}
 
@@ -120,7 +122,9 @@ class MarkingMixin:
             self.reset_marking()
             return
         uids = [cue.uid for cue in self.project.cues]
-        index = lambda u: uids.index(u) if u in uids else -1
+
+        def index(u):
+            return uids.index(u) if u in uids else -1
         self.last_marked = index(state['last'])
         nxt = index(state['next'])
         self.mark_index = nxt if nxt >= 0 else (len(uids) if state['past_end'] else 0)

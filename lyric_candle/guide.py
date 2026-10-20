@@ -1,6 +1,7 @@
 """Quick guide (Help → Quick guide) in Spanish and English, written for the packaged app:
 installed (data in the user's AppData) or portable (portable.txt next to the EXE)."""
 from __future__ import annotations
+
 from html import escape
 
 from .i18n import language

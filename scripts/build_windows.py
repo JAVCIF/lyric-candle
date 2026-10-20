@@ -1,12 +1,13 @@
 """Build the full Windows app folder; optionally add portable settings and a ZIP."""
 from __future__ import annotations
+
 import argparse
 import hashlib
-from pathlib import Path
+import os
 import shutil
 import subprocess
 import sys
-import os
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 

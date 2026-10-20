@@ -2,7 +2,6 @@
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
-import copy
 from pathlib import Path
 import subprocess
 import tempfile
@@ -10,7 +9,7 @@ import time
 import unittest
 from unittest.mock import patch
 from PySide6.QtCore import Qt,QPoint
-from PySide6.QtGui import QFont,QFontDatabase,QImage,QColor,QCursor
+from PySide6.QtGui import QFontDatabase,QImage,QColor,QCursor
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtMultimedia import QMediaPlayer

@@ -1,10 +1,26 @@
 from pathlib import Path
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QDialog, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPlainTextEdit,
-    QPushButton, QDialogButtonBox, QFileDialog, QCheckBox, QMessageBox, QTabWidget,
-    QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView)
-from .lyrics_import import parse_alternating, parse_columns, uniform_cues
+
+from PySide6.QtWidgets import (
+    QAbstractItemView,
+    QCheckBox,
+    QDialog,
+    QDialogButtonBox,
+    QFileDialog,
+    QHBoxLayout,
+    QHeaderView,
+    QLabel,
+    QMessageBox,
+    QPlainTextEdit,
+    QPushButton,
+    QTableWidget,
+    QTableWidgetItem,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
+
 from .i18n import tr
+from .lyrics_import import parse_alternating, parse_columns, uniform_cues
 
 
 class ImportDialog(QDialog):
@@ -78,7 +94,7 @@ class ImportDialog(QDialog):
         if path:
             try:
                 editor.setPlainText(Path(path).read_text(encoding='utf-8-sig'))
-            except Exception as exc:
+            except (OSError, UnicodeDecodeError) as exc:
                 QMessageBox.warning(self, tr('No se pudo leer'), str(exc))
 
     def pairs(self):

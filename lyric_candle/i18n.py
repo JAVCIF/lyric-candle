@@ -6,6 +6,7 @@ language: Spanish for any Spanish variant, English for everything else. Changing
 in Options applies on the next start. No Qt dependency, so the model can use it too.
 """
 from __future__ import annotations
+
 import os
 
 from .i18n_en import EN

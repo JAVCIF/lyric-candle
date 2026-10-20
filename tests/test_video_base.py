@@ -2,7 +2,6 @@
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
-import json
 import shutil
 import subprocess
 import tempfile
@@ -156,7 +155,7 @@ class BaseVideoExportTests(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.source = Path(cls.tmp.name, 'movie1_en.avi')
         audio = ['-c:a', 'libmp3lame'] if 'libmp3lame' in subprocess.run(
-            [executable('ffmpeg'), '-hide_banner', '-encoders'], capture_output=True, text=True).stdout else ['-c:a', 'pcm_s16le']
+            [executable('ffmpeg'), '-hide_banner', '-encoders'], capture_output=True, text=True, check=True).stdout else ['-c:a', 'pcm_s16le']
         subprocess.run([executable('ffmpeg'), '-v', 'error', '-f', 'lavfi', '-i', 'testsrc=size=640x360:rate=24000/1001',
                         '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=44100', '-t', '2',
                         '-c:v', 'mpeg4', '-vtag', 'XVID', '-q:v', '4', *audio, str(cls.source)], check=True)

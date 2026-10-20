@@ -3,7 +3,6 @@ instance, mark timing, video frame conversion, Space, color cell and waveform)."
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
-import json
 import sys
 import tempfile
 import unittest
@@ -16,7 +15,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QMessageBox, QAbstractItemView
 from lyric_candle import media
 from lyric_candle.app import MainWindow
-from lyric_candle.model import (Project, Cue, Keyframe, ProjectIssues, load, save, to_dict,
+from lyric_candle.model import (Project, Cue, Keyframe, ProjectIssues, save, to_dict,
                                 from_dict, add_span)
 APP = QApplication.instance() or QApplication([])
 

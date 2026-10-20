@@ -1,22 +1,25 @@
 """External media jobs; never block the GUI or overwrite a finished export on failure."""
 from __future__ import annotations
+
 import array
 import copy
-from fractions import Fraction
-from functools import lru_cache
 import json
 import math
 import os
 import re
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tempfile
+from fractions import Fraction
+from functools import lru_cache
+from pathlib import Path
+
 from PySide6.QtCore import QThread, Signal
 from PySide6.QtGui import QImage
-from .render import Renderer
+
 from .i18n import tr
+from .render import Renderer
 
 ROOT = Path(getattr(sys, '_MEIPASS', Path(__file__).resolve().parents[1]))
 
@@ -48,7 +51,7 @@ def probe(path):
     if not tool:
         return None
     result = subprocess.run([tool, '-v', 'error', '-show_format', '-show_streams', '-of', 'json', path],
-                            capture_output=True, timeout=30, **options())
+                            capture_output=True, timeout=30, check=False, **options())  # returncode checked below
     if result.returncode:
         raise ValueError(result.stderr.decode('utf-8', 'replace')[-1500:])
     return json.loads(result.stdout)
@@ -113,7 +116,9 @@ def canvas_size(video):
     width, height = size
     scale = min(1.0, 3840 / width, 2160 / height)
     scale = max(scale, 320 / width, 240 / height)
-    even = lambda value, low, high: min(high, max(low, int(round(float(value) * scale / 2)) * 2))
+
+    def even(value, low, high):
+        return min(high, max(low, int(round(float(value) * scale / 2)) * 2))
     return even(width, 320, 3840), even(height, 240, 2160)
 
 
@@ -126,7 +131,8 @@ SQUARE_PIXELS = ("scale=w='max(2,round(iw*max(1,sar)/2)*2)':"
 
 @lru_cache(maxsize=4)
 def available_encoders(tool):
-    result = subprocess.run([tool, '-hide_banner', '-encoders'], capture_output=True, timeout=30, **options())
+    result = subprocess.run([tool, '-hide_banner', '-encoders'], capture_output=True, timeout=30,
+                            check=False, **options())  # An empty listing simply offers fewer encoders.
     names, listing = set(), False
     for line in result.stdout.decode('utf-8', 'replace').splitlines():
         if line.strip().startswith('------'):
@@ -243,7 +249,7 @@ class WaveWorker(QThread):
             step = max(1, math.ceil(len(values) / 12000))
             peaks = [max((abs(v) for v in values[i:i+step]), default=0) for i in range(0, len(values), step)]
             self.ready.emit(peaks, len(values) / 1000)
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - thread boundary: report any failure to the UI.
             if self.process and self.process.poll() is None:
                 self.process.kill()
                 self.process.communicate()
@@ -390,7 +396,7 @@ class ExportWorker(QThread):
             self.done.emit(str(self.destination))
         except InterruptedError:
             self.cancelled.emit()
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - thread boundary: report any failure to the UI.
             if self.isInterruptionRequested():
                 self.cancelled.emit()
             else:
@@ -468,7 +474,7 @@ class StillFrameWorker(QThread):
             if image.isNull():
                 raise RuntimeError(tr('El medio no devolvió un fotograma de video.'))
             self.ready.emit(image)
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 - thread boundary: report any failure to the UI.
             if self.process and self.process.poll() is None:
                 self.process.kill()
                 self.process.communicate()

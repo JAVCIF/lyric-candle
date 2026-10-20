@@ -1,11 +1,22 @@
 """One fixed-layout painter for preview and exported frames."""
 from __future__ import annotations
+
 import math
 from functools import lru_cache
-from PySide6.QtCore import Qt, QRectF, QPointF
-from PySide6.QtGui import (QColor, QFont, QFontMetricsF, QImage, QLinearGradient,
-                           QPainter, QPainterPath, QPen)
-from .model import Project, Cue, animation_progress, animation_clock
+
+from PySide6.QtCore import QPointF, QRectF, Qt
+from PySide6.QtGui import (
+    QColor,
+    QFont,
+    QFontMetricsF,
+    QImage,
+    QLinearGradient,
+    QPainter,
+    QPainterPath,
+    QPen,
+)
+
+from .model import Project, animation_clock, animation_progress
 
 
 @lru_cache(maxsize=1200)

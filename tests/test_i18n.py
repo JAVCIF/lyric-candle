@@ -10,7 +10,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 from PySide6.QtWidgets import (QApplication, QAbstractButton, QLabel, QComboBox, QTabWidget, QTableWidget,
-                               QGroupBox, QAbstractSpinBox, QLineEdit, QPlainTextEdit, QTextBrowser)
+                               QGroupBox, QLineEdit, QPlainTextEdit, QTextBrowser)
 from lyric_candle import i18n, paths
 from lyric_candle.i18n_en import EN
 from lyric_candle.guide import guide_html

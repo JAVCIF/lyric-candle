@@ -7,7 +7,7 @@ if __name__ == '__main__':
     try:
         from lyric_candle.app import main
         sys.exit(main(smoke_test='--smoke-test' in sys.argv))
-    except Exception:
+    except Exception:  # noqa: BLE001 - startup boundary: log any failure and tell the user.
         details = traceback.format_exc()
         path = Path.home() / 'Lyric-Candle-startup-error.log'
         try:
@@ -19,4 +19,4 @@ if __name__ == '__main__':
             ctypes.windll.user32.MessageBoxW(None, 'No se pudo iniciar Lyric Candle.\nEjecuta INSTALAR.bat y luego DIAGNOSTICO.bat.\n\nDetalle: ' + str(path), 'Lyric Candle · inicio', 16)
         else:
             print(details, file=sys.stderr)
-        raise SystemExit(1)
+        raise SystemExit(1) from None

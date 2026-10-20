@@ -1,5 +1,4 @@
 """Run: python -m unittest discover -s tests -v (headless via QT_QPA_PLATFORM)."""
-import copy
 import json
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
@@ -12,14 +11,13 @@ from pathlib import Path
 from PySide6.QtGui import QTextCursor
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
-from lyric_candle.model import (Project,Cue,Span,Style,Keyframe,load,save,to_dict,from_dict,
-    parse_time,time_text,add_span,split_spans,propose_spans,retime_cue,snap_spans_to_audio,
-    animation_progress,animation_clock,animation_to_elapsed,keyframe_points,retime_keyframes)
+from lyric_candle.model import (Project,Cue,Span,Style,load,save,to_dict,from_dict,
+    parse_time,time_text,add_span,split_spans,retime_cue,snap_spans_to_audio)
 from lyric_candle.render import Renderer,visibility
 from lyric_candle.media import ROOT,ExportWorker,WaveWorker,executable,probe
 from lyric_candle.app import MainWindow
 from lyric_candle.dialogs import ImportDialog
-from lyric_candle.lyrics_import import parse_alternating, parse_columns, uniform_cues
+from lyric_candle.lyrics_import import parse_alternating
 APP=QApplication.instance() or QApplication([])
 APP.setApplicationName('LyricCandleTests')
 

@@ -151,7 +151,7 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
         if demo:
             try:
                 self.project = load(ROOT / 'examples' / 'Demo.lyric.json')
-            except Exception:
+            except (OSError, ValueError, TypeError, KeyError):  # Missing or damaged demo file.
                 self.project.cues = [Cue(original='Tu primera frase', translation='Your first line')]
         self.refresh_all()
         self.set_media_source()

@@ -1,15 +1,15 @@
 """Check portable startup, silent installation, installed startup and uninstall."""
 import hashlib
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import time
 import zipfile
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from lyric_candle.model import VERSION
+from lyric_candle.model import VERSION  # noqa: E402 - after adding the repo to sys.path
 
 
 def run(*args):

@@ -1,17 +1,38 @@
 from __future__ import annotations
-import math
-from pathlib import Path
-from dataclasses import replace
-from PySide6.QtCore import Qt, QRectF, Signal, QPointF, QEvent, QTimer, QSize
-from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtGui import (QColor, QPainter, QPen, QLinearGradient, QCursor, QIcon, QPixmap,
-                           QPainterPath, QFont, QFontMetricsF)
-from PySide6.QtWidgets import (QWidget, QPushButton, QColorDialog, QFontComboBox, QCompleter,
-                              QListView, QSpinBox, QDoubleSpinBox, QAbstractSpinBox, QToolButton)
-from .render import Renderer
-from .model import time_text
-from .i18n import tr
 
+import math
+from dataclasses import replace
+from pathlib import Path
+
+from PySide6.QtCore import QEvent, QPointF, QRectF, QSize, Qt, QTimer, Signal
+from PySide6.QtGui import (
+    QColor,
+    QCursor,
+    QFont,
+    QFontMetricsF,
+    QIcon,
+    QPainter,
+    QPainterPath,
+    QPen,
+    QPixmap,
+)
+from PySide6.QtSvg import QSvgRenderer
+from PySide6.QtWidgets import (
+    QAbstractSpinBox,
+    QColorDialog,
+    QCompleter,
+    QDoubleSpinBox,
+    QFontComboBox,
+    QListView,
+    QPushButton,
+    QSpinBox,
+    QToolButton,
+    QWidget,
+)
+
+from .i18n import tr
+from .model import time_text
+from .render import Renderer
 
 LOGO_PATH = Path(__file__).resolve().parent / 'assets' / 'logo.svg'
 
@@ -589,7 +610,7 @@ class KeyframeCurve(QWidget):
         return a+fraction*(b-a), progress
 
     def paintEvent(self, event):
-        from .model import keyframe_points, animation_progress
+        from .model import animation_progress, keyframe_points
         p = QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.fillRect(self.rect(), QColor('#101b2b'))

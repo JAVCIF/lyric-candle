@@ -15,6 +15,8 @@ from ..media import ROOT
 from ..model import Project, ProjectIssues, load, save, time_text
 from .common import image_filter, media_filter
 
+log = logging.getLogger(__name__)
+
 
 class ProjectMixin:
     """Mixin for MainWindow: media and project files: new/open/save, relinking, import, autosave and recovery."""
@@ -101,7 +103,7 @@ class ProjectMixin:
                 if project is not None:
                     self.load_project_path(path, project)
                     self.offer_relink()
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 - any failure opening a file is shown, never fatal.
                 QMessageBox.warning(self, tr('No se pudo abrir'), str(exc))
 
     def offer_relink(self):
@@ -159,7 +161,7 @@ class ProjectMixin:
             self.update_labels()
             self.statusBar().showMessage(tr('Proyecto guardado en {0}. Los medios se vinculan; conserva sus archivos.').format(time_text(self.project.playhead)), 6000)
             return True
-        except Exception as exc:
+        except (OSError, ValueError, TypeError) as exc:  # Disk/permission errors, unserializable values.
             QMessageBox.warning(self, tr('No se pudo guardar'), str(exc))
             return False
 
@@ -182,15 +184,15 @@ class ProjectMixin:
             try:
                 self.project.playhead = min(self.project.duration, max(0, self.position))
                 save(self.project_with_drafts(), self.recovery_path, relative=False)
-            except Exception:
-                logging.exception('Autosave failed')
+            except (OSError, ValueError, TypeError):
+                log.exception('Autosave failed')
                 self.statusBar().showMessage(tr('No se pudo crear el autoguardado. Guarda el proyecto manualmente.'), 8000)
 
     def remove_recovery(self):
         try:
             self.recovery_path.unlink(missing_ok=True)
         except OSError:
-            logging.exception('Recovery cleanup failed')
+            log.exception('Recovery cleanup failed')
 
     def orphan_recoveries(self):
         """Autosaves of sessions that are no longer running, newest first.
@@ -229,7 +231,7 @@ class ProjectMixin:
                 self.set_media_source(force=True, position=self.project.playhead)
                 self.autosave()  # Now owned by this session.
                 path.unlink(missing_ok=True)
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 - a damaged autosave must never stop startup.
                 QMessageBox.warning(self, tr('No se pudo recuperar'), str(exc))
             return
 

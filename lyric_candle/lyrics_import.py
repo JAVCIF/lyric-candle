@@ -1,8 +1,10 @@
 """Deterministic import of paired lyrics. Never guess the language of a line."""
 from __future__ import annotations
+
 import math
-from .model import Cue
+
 from .i18n import tr
+from .model import Cue
 
 
 def parse_alternating(text: str) -> list[tuple[str, str]]:

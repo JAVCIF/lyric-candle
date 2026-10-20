@@ -1,6 +1,7 @@
 """Design and Effects tabs: layout, fonts, canvas, base video and export format."""
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 from PySide6.QtCore import QTimer
@@ -122,7 +123,7 @@ class StyleMixin:
         if self._media_info[0] != key:
             try:
                 self._media_info = (key, stream_info(media))
-            except Exception as exc:  # Unreadable file or ffprobe failure.
+            except (OSError, ValueError, subprocess.SubprocessError) as exc:  # Unreadable file or ffprobe failure.
                 self._media_info = (key, None)
                 if not quiet:
                     self.statusBar().showMessage(tr('No se pudo leer el video: ') + str(exc)[:200], 9000)

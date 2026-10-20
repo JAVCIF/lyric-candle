@@ -2,20 +2,19 @@
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')
 os.environ.setdefault('LYRIC_CANDLE_LANG', 'es')  # Tests compare Spanish texts.
-import copy
 from pathlib import Path
 import subprocess
 import tempfile
 import time
 import unittest
-from PySide6.QtCore import Qt, QPoint
+from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from lyric_candle.app import MainWindow
 from lyric_candle.model import (Project,Cue,Span,Keyframe,load,save,to_dict,from_dict,
     animation_progress,animation_clock,animation_to_elapsed,retime_cue,retime_keyframes)
 from lyric_candle.render import Renderer,visibility
-from lyric_candle.media import ExportWorker,executable,ROOT
+from lyric_candle.media import ExportWorker,executable
 APP=QApplication.instance() or QApplication([])
 
 
@@ -194,7 +193,7 @@ class CurveExportTests(unittest.TestCase):
             APP.processEvents();self.assertEqual(errors,[]);self.assertTrue(done)
             decoded=subprocess.run([executable('ffmpeg'),'-v','error','-i',str(target),'-vf',
                 r'select=eq(n\,12)+eq(n\,36)+eq(n\,60)','-fps_mode','passthrough','-f','rawvideo','-pix_fmt','rgb24','pipe:1'],
-                capture_output=True)
+                capture_output=True,check=True)
             self.assertEqual(decoded.returncode,0,decoded.stderr.decode('utf-8','replace'))
             data=decoded.stdout
             size=320*240*3;self.assertEqual(len(data),size*3)

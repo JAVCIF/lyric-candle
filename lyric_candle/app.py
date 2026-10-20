@@ -37,7 +37,7 @@ def main(smoke_test=False):
     logging.basicConfig(filename=log_dir / 'app.log', level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s')
     def handle_error(kind, value, tb):
-        logging.error('Unhandled exception', exc_info=(kind, value, tb))
+        logging.getLogger('lyric_candle').error('Unhandled exception', exc_info=(kind, value, tb))
         if smoke_test:
             app.exit(1)
             return

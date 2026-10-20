@@ -8,7 +8,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from lyric_candle.app import MainWindow
 from lyric_candle.model import Project,Cue
-from lyric_candle.widgets import StepSpinBox,StepDoubleSpinBox
+from lyric_candle.widgets import StepDoubleSpinBox
 APP=QApplication.instance() or QApplication([])
 
 

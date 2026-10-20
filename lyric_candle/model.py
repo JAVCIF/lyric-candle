@@ -1,13 +1,15 @@
 """Project model, validation, timing proposals and atomic persistence. No GUI dependency."""
 from __future__ import annotations
-from .i18n import tr
-from dataclasses import dataclass, field, asdict, fields
-from pathlib import Path
+
 import json
 import math
 import os
 import tempfile
 import uuid
+from dataclasses import asdict, dataclass, field, fields
+from pathlib import Path
+
+from .i18n import tr
 
 VERSION = '0.2.6-alpha'
 FORMAT = 'lyric-candle'
@@ -128,7 +130,9 @@ class Project:
         """(code, text) pairs. Code compares by kind, never by translated text:
         duration, cue_range, after_end, paint, keyframes, spans, span_time, span_scale."""
         issues = []
-        add = lambda code, text: issues.append((code, text))
+
+        def add(code, text):
+            issues.append((code, text))
         track_names = {'original': tr('original'), 'translation': tr('traducción')}
         if not math.isfinite(self.duration) or self.duration <= 0:
             add('duration', tr('La duración del proyecto debe ser positiva.'))

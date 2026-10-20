@@ -1,7 +1,7 @@
 """Check repository-local Markdown links and screenshots without network access."""
-from pathlib import Path
 import re
 import sys
+from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]

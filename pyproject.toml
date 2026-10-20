@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lyric-candle"
+description = "Desktop editor for timing, translating and animating lyric videos."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "JAVCIF" }]
+requires-python = ">=3.10"
+# 6.8 is the oldest tested Qt; 6.10 adds Python 3.14 wheels. Raise the cap after testing a newer series.
+dependencies = ["PySide6>=6.8,<6.11"]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = ["ruff==0.16.9"]
+build = ["pyinstaller>=6.11,<7"]
+
+[project.urls]
+Homepage = "https://github.com/JAVCIF/lyric-candle"
+Issues = "https://github.com/JAVCIF/lyric-candle/issues"
+
+[project.gui-scripts]
+lyric-candle = "lyric_candle.app:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "lyric_candle.model.VERSION" }
+
+[tool.setuptools.packages.find]
+include = ["lyric_candle*"]
+
+[tool.setuptools.package-data]
+lyric_candle = ["assets/*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+extend-exclude = ["dist", "build", ".venv"]
+
+[tool.ruff.lint]
+# Correctness first: pyflakes, syntax/statement errors, bugbear, blind excepts,
+# unchecked subprocess calls, logging misuse and import order. Line length stays advisory.
+select = ["E4", "E7", "E9", "F", "B", "BLE", "PLW1510", "LOG", "I"]
+ignore = [
+    "B905",  # zip() without strict=: several pairs (points, points[1:]) differ in length by design.
+]
+
+[tool.ruff.lint.per-file-ignores]
+# The suite keeps its compact one-line-per-step style.
+"tests/*" = ["E701", "E702", "E731", "E741", "B", "BLE001", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["lyric_candle"]
