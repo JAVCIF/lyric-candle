@@ -66,7 +66,7 @@ class ModelTests(unittest.TestCase):
         self.assertEqual((c.original_spans[0].start,c.original_spans[0].finish,c.paint_end),(.5,1,1.5))
     def test_unicode_atomic_save_relative_assets(self):
         with tempfile.TemporaryDirectory() as tmp:
-            base=Path(tmp);media=base/'música con espacios.wav';media.write_bytes(b'not-used')
+            base=Path(tmp).resolve();media=base/'música con espacios.wav';media.write_bytes(b'not-used')
             c=Cue(original='El corazón 💛',translation='The heart',original_spans=[Span(3,10,.2,.8,color='#ab12ef',lift=20,scale=1.5)])
             p=Project(media=str(media),cues=[c]);path=base/'proyecto.lyric.json'
             save(p,path)
@@ -119,7 +119,10 @@ class RenderTests(unittest.TestCase):
         p.style.fill='#ff0000';p.style.painted='#00ff00';p.style.outline='#0000ff'
         p.style.outline_width=5
         r=Renderer()
-        before=bytes(r.frame(p,0).constBits());after=bytes(r.frame(p,2.99).constBits())
+        # constBits() does not own the QImage buffer. Keep both images alive while
+        # copying their pixels (temporary images can crash the Windows process).
+        before_image=r.frame(p,0);after_image=r.frame(p,2.99)
+        before=bytes(before_image.constBits());after=bytes(after_image.constBits())
         blue=bytes([0,0,255,255])
         self.assertEqual([i for i in range(0,len(before),4) if before[i:i+4]==blue],
                          [i for i in range(0,len(after),4) if after[i:i+4]==blue])
