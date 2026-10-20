@@ -4,7 +4,7 @@
 
 ## Entorno
 
-La referencia es Python 3.12 de 64 bits; el instalador de Windows acepta 3.10–3.13. `requirements.txt` fija PySide6 6.8.3. FFmpeg/ffprobe son programas externos.
+La referencia es Python 3.12 de 64 bits; el instalador de Windows acepta 3.10–3.14. `requirements.txt` y `pyproject.toml` aceptan PySide6 `>=6.8,<6.11` (Python 3.14 usa la 6.10). CI prueba Python 3.12 en Linux y Windows, Python 3.14 con el PySide6 más nuevo permitido y Python 3.10 con PySide6 6.8.3, la pareja más antigua soportada. Sube el límite superior solo cuando la suite pase con la siguiente serie de Qt. FFmpeg/ffprobe son programas externos.
 
 ```sh
 python -m venv .venv

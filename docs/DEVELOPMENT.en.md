@@ -4,7 +4,7 @@
 
 ## Environment
 
-Use 64-bit Python 3.12 for the reference environment. The Windows installer accepts 3.10–3.13. `requirements.txt` pins PySide6 6.8.3; FFmpeg/ffprobe are external programs, not Python dependencies.
+Use 64-bit Python 3.12 for the reference environment. The Windows installer accepts 3.10–3.14. `requirements.txt` and `pyproject.toml` accept PySide6 `>=6.8,<6.11` (Python 3.14 resolves to 6.10). CI tests Python 3.12 on Linux and Windows, Python 3.14 with the newest allowed PySide6 and Python 3.10 with PySide6 6.8.3, the oldest supported pair. Raise the upper bound only after the suite passes on the next Qt series; FFmpeg/ffprobe are external programs, not Python dependencies.
 
 ```sh
 python -m venv .venv

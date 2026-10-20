@@ -30,7 +30,7 @@ Listen to the song, mark the phrases, refine their timing, and animate selected 
 ### Run from source
 
 1. Download **Code → Download ZIP** and extract the entire folder, or clone this repository.
-2. Install **64-bit Python 3.12**. The installer accepts Python 3.10–3.13; 3.12 is the tested baseline.
+2. Install **64-bit Python 3.12**. The installer accepts Python 3.10–3.14; 3.12 is the reference version.
 3. Double-click `scripts\windows\INSTALAR.bat` to create `.venv` and install PySide6.
 4. Double-click `scripts\windows\INICIAR.bat` to open the included synthetic demo.
 

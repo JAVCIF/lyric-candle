@@ -9,7 +9,7 @@ La 0.2.4 protege el texto sin aplicar guardándolo como borrador, corrige la exp
 ## Abrir en Windows
 
 1. Extrae **toda** la carpeta del ZIP. No ejecutes los archivos desde dentro del ZIP.
-2. Necesitas **Python 3.10–3.13 de 64 bits**. Se recomienda Python 3.12, disponible en https://www.python.org/downloads/windows/ . Si usas el instalador, incluye el lanzador `py`.
+2. Necesitas **Python 3.10–3.14 de 64 bits**. Se recomienda Python 3.12, disponible en https://www.python.org/downloads/windows/ . Si usas el instalador, incluye el lanzador `py`.
 3. Ejecuta **scripts\windows\INSTALAR.bat**. Crea un entorno `.venv` dentro de la carpeta y descarga la dependencia PySide6. La primera instalación requiere internet.
 4. Ejecuta **scripts\windows\INICIAR.bat**. La aplicación abre una demo de 12 segundos.
 5. Si no abre, ejecuta **scripts\windows\DIAGNOSTICO.bat** y conserva el mensaje. Los errores de arranque también se escriben en `Lyric-Candle-startup-error.log` dentro de tu carpeta de usuario.

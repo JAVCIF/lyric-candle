@@ -30,7 +30,7 @@ Escucha la canción, marca las frases, afina sus tiempos y anima las sílabas o 
 ### Ejecutar el código fuente
 
 1. Descarga **Code → Download ZIP** y extrae toda la carpeta, o clona el repositorio.
-2. Instala **Python 3.12 de 64 bits**. El instalador acepta Python 3.10–3.13; la base probada es 3.12.
+2. Instala **Python 3.12 de 64 bits**. El instalador acepta Python 3.10–3.14; la versión de referencia es 3.12.
 3. Ejecuta `scripts\windows\INSTALAR.bat`: crea `.venv` e instala PySide6.
 4. Ejecuta `scripts\windows\INICIAR.bat` para abrir la demo sintética incluida.
 
