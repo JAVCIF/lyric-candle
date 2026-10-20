@@ -184,7 +184,7 @@ class PausedVideoTests(unittest.TestCase):
         self.assertAlmostEqual(self.w.position,1.8,delta=.04)
         self.assertTrue(is_blue(self.w.preview.video))
     def test_decoder_fallback_without_standalone_ffmpeg(self):
-        with patch('lyric_candle.app.executable',return_value=None):
+        with patch('lyric_candle.media.executable',return_value=None):
             self.open_project();self.settle_blue()
             self.assertAlmostEqual(self.w.position,1.6,delta=.06)
             self.assertFalse(self.w.is_playing());self.assertFalse(self.w.audio.isMuted())

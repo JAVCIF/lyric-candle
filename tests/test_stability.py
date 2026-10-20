@@ -288,7 +288,7 @@ class VideoGeometryTests(unittest.TestCase):
                 self.assert_filled(image)
 
     def test_paused_reopen_and_qt_fallback_keep_display_aspect(self):
-        from lyric_candle import app as editor
+        from lyric_candle import media as editor  # The window looks tools up through media.executable.
         real_executable = editor.executable
         w = MainWindow(demo=False, recover=False)
         try:

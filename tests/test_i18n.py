@@ -21,7 +21,7 @@ SPANISH = re.compile(r'[áéíóúñ¿¡]|\b(Frase|frase|Sílaba|Guardar|Abrir|R
 
 def tr_keys():
     keys = set()
-    for path in PACKAGE.glob('*.py'):
+    for path in PACKAGE.rglob('*.py'):
         for node in ast.walk(ast.parse(path.read_text(encoding='utf-8'))):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == 'tr':
                 assert isinstance(node.args[0], ast.Constant), f'{path.name}:{node.lineno} tr() needs a literal'
