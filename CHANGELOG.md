@@ -2,6 +2,12 @@
 
 [English overview](README.md) · [Resumen en español](README.es.md)
 
+## 0.2.5-alpha — 2026-10-20
+
+**English:** fix start/end marking in Zoom line so only the selected phrase changes. Keep selection during zoomed seeking/playback; preserve the opposite boundary and undo/redo. Add eight regression tests. Adopt MIT and publish Windows portable ZIP and per-user installer with checksums, bilingual notes and automatic package smoke checks.
+
+**Español:** corregir el marcado de inicio/final con Zoom frase para modificar solo la frase seleccionada. Mantener selección al buscar/reproducir con zoom, conservar el otro límite y deshacer/rehacer. Agregar ocho regresiones. Adoptar MIT y publicar portable ZIP e instalador por usuario con SHA-256, notas bilingües y comprobación automática de paquetes.
+
 ## 0.2.4-alpha — 2026-10-20
 
 ### English

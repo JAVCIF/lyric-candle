@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    name: Portable Windows x64
+    name: Portable and installer Windows x64
     runs-on: windows-latest
     timeout-minutes: 20
     env:
@@ -35,13 +35,19 @@ jobs:
           python -m pip install "pyinstaller>=6.11,<7"
       - name: Build portable folder and ZIP
         run: python scripts/build_windows.py --portable --zip
-      - name: Upload ZIP and checksum
+      - name: Build installer
+        run: python scripts/build_installer.py
+      - name: Verify both Windows packages
+        run: python scripts/check_windows_packages.py
+      - name: Upload packages and checksums
         uses: actions/upload-artifact@v6
         with:
           name: Lyric-Candle-Windows-x64
           path: |
             dist/Lyric-Candle-*-Windows-x64.zip
             dist/Lyric-Candle-*-Windows-x64.zip.sha256
+            dist/Lyric-Candle-*-Setup-x64.exe
+            dist/Lyric-Candle-*-Setup-x64.exe.sha256
           if-no-files-found: error
           compression-level: 0
           retention-days: 30

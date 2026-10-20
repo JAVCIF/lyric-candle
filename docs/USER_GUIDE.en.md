@@ -1,10 +1,10 @@
-# User guide · Lyric Candle 0.2.4-alpha
+# User guide · Lyric Candle 0.2.5-alpha
 
 [English](USER_GUIDE.en.md) · [Español](../LEEME.md) · [Home](../README.md)
 
 ## Installation and demo
 
-On Windows, install 64-bit Python 3.12, extract the source and run `INSTALAR.bat`, then `INICIAR.bat`. The dependency is pinned in `requirements.txt`. Alternatively, use a successful Windows workflow's portable artifact and run `LyricCandle.exe` from its extracted folder.
+On Windows, install 64-bit Python 3.12, extract the source and run `INSTALAR.bat`, then `INICIAR.bat`. The dependency is pinned in `requirements.txt`. Alternatively, download the portable ZIP or per-user Setup EXE from [Releases](https://github.com/JAVCIF/lyric-candle/releases). Neither needs Python.
 
 The app opens a 12-second demo with original text and synthetic audio. `examples/Demo.lyric.json` is editable, `Demo.wav` contains the beat, and `Demo.mp4` is an exported example. It has no singing: use it to understand the clock and effects. `Demo-Keyframes.lyric.json` demonstrates a hold, and `Demo-Video-Pausado.lyric.json` demonstrates reopening a paused video. The latter uses already-burned-in lyrics; those pixels cannot be edited as text.
 
@@ -42,6 +42,8 @@ Choose which language is primary. In two-line mode it is above the secondary lin
 2. Press **Ctrl+M** when each phrase begins. This starts it, closes the previous phrase and prepares the next row.
 3. After starting the last phrase, press **Ctrl+F** when it ends.
 4. Correct starts/ends in the table or Line tab, or drag the selected phrase's waveform edges.
+
+**Zoom line** locks the selected phrase while seeking or playing. With zoom enabled, Ctrl+M changes only its start and Ctrl+F only its end; neither advances nor closes another phrase. The opposite boundary is preserved and marks/keyframes are retimed. Turn zoom off for sequential marking and automatic following.
 
 The table accepts seconds or `mm:ss.mmm`. Line start/end are absolute; repaint and syllable times are relative to the phrase start. The waveform shows an edge's proposed time while dragging. Slow playback, **Loop**, **Repeat line** and **Zoom line** help refine timing; exported audio always runs at normal speed.
 

@@ -5,6 +5,9 @@ tests/test_i18n.py checks that every tr() string in the code has an entry here.
 """
 
 EN = {
+    'Mantiene seleccionada esta frase. Marcar inicio/final ajusta solo sus límites, sin avanzar.':
+        'Keeps this line selected. Mark start/end adjusts only its boundaries, without advancing.',
+    'Marcar inicio  [Ctrl+M]': 'Mark start  [Ctrl+M]',
     'Borradores de texto inválidos.': 'Invalid text drafts.',
     'Guardar conserva los borradores. Aplica el texto en la pestaña Frase para verlo y exportarlo.':
         'Save keeps drafts. Apply the text in the Line tab to preview and export it.',

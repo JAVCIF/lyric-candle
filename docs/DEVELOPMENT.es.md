@@ -82,11 +82,11 @@ python -m pip install "pyinstaller>=6.11,<7"
 python scripts/build_windows.py --portable --zip
 ```
 
-Se crean `dist/LyricCandle/` y `dist/Lyric-Candle-0.2.4-alpha-Windows-x64.zip`; la versión se lee del modelo. `--portable` agrega `portable.txt`, `--zip` comprime y escribe SHA-256. Sin `--portable` se mantiene el almacenamiento instalado. Se incluyen documentación y avisos.
+Se crean `dist/LyricCandle/` y `dist/Lyric-Candle-0.2.5-alpha-Windows-x64.zip`; la versión se lee del modelo. `--portable` agrega `portable.txt`, `--zip` comprime y escribe SHA-256. Sin `--portable` se mantiene el almacenamiento instalado. Se incluyen documentación y avisos.
 
 `CREAR_EXE.bat` sigue disponible como alternativa interactiva. Distribuye toda la carpeta, incluido `_internal`. FFmpeg no se incluye: agrégalo a `tools/` junto al EXE o usa PATH. PyInstaller solo hace falta para construir. El arranque, audio, HiDPI y medios deben probarse además en Windows.
 
-El workflow compila con pushes a `main`, pull requests y ejecución manual; los artefactos duran 30 días y no son Releases. Solo tiene permiso de lectura y no publica versiones automáticamente.
+El workflow compila con pushes a `main`, pull requests y ejecución manual; los artefactos duran 30 días y no son Releases. Ese workflow tiene permiso de lectura; el workflow separado Release publica las versiones probadas.
 
 ## Antes de una versión
 
@@ -96,4 +96,10 @@ El workflow compila con pushes a `main`, pull requests y ejecución manual; los 
 4. Comprueba fuentes, fotograma pausado, marcado/vinculación, borradores/recuperación y exportación con audio.
 5. Registra el entorno probado y los límites pendientes; etiqueta/publica el commit revisado.
 
-Evita subir entornos, ejecutables, binarios FFmpeg, registros, ajustes, recuperaciones o medios/proyectos personales. Usa demos sintéticas o material compartible. La licencia del proyecto está pendiente; consulta [componentes externos](../THIRD_PARTY.md).
+Evita subir entornos, ejecutables, binarios FFmpeg, registros, ajustes, recuperaciones o medios/proyectos personales. Usa demos sintéticas o material compartible. El proyecto usa la [licencia MIT](../LICENSE); consulta [componentes externos](../THIRD_PARTY.md).
+
+## Installer and release / Instalador y publicación
+
+En Windows instala Inno Setup 6 o posterior. Después del portable ejecuta `python scripts/build_installer.py` y `python scripts/check_windows_packages.py`. Se genera `dist/Lyric-Candle-0.2.5-alpha-Setup-x64.exe` y su SHA-256. El instalador excluye `portable.txt` y `data/`, instala para el usuario sin administrador y conserva ajustes/proyectos al desinstalar. El comprobador extrae el ZIP, abre ambos EXE con `--smoke-test`, instala y desinstala en silencio. Este indicador abre la ventana y la cierra tras un segundo; no evalúa audio audible.
+
+El workflow Windows build comprueba y conserva ambos paquetes durante 30 días. Release se ejecuta tras Tests exitoso en un push a main: usa exactamente el SHA probado, vuelve a construir/comprobar ambos paquetes y crea `v<VERSION>` con las notas de `docs/releases/<VERSION>.md`. Las versiones alpha son prereleases. No reemplaza releases existentes. Para publicar una versión nueva actualiza VERSION y agrega sus notas bilingües. Solo ese trabajo tiene permiso contents:write.

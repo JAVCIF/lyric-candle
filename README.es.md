@@ -5,7 +5,7 @@
 ![Pruebas](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Compilación Windows](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **0.2.4-alpha**.
+**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **0.2.5-alpha**.
 
 ![Editor Lyric Candle](docs/assets/editor-es.png)
 
@@ -38,9 +38,12 @@ Si no inicia, usa `DIAGNOSTICO.bat`. Consulta también la [guía de uso](LEEME.m
 
 ### Ejecutable de Windows
 
-El [workflow de Windows](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml) prepara un ZIP portable x64. Abre una ejecución exitosa y descarga su artefacto; GitHub puede pedir iniciar sesión. Extrae el contenido y conserva toda la carpeta `LyricCandle`. Dentro del artefacto viene un ZIP con `LyricCandle.exe`; esa compilación no necesita Python instalado.
+Descarga la **[0.2.5-alpha desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.5-alpha)**:
 
-Los artefactos son temporales y no son GitHub Releases. Compilar correctamente verifica el empaquetado; la reproducción audible y tus medios siguen necesitando una prueba en tu equipo. También puedes compilar con `CREAR_EXE.bat` o seguir las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
+- **ZIP portable:** extrae todo y abre `LyricCandle/LyricCandle.exe`. Conserva la carpeta completa. Los ajustes quedan en `data/` junto al EXE.
+- **EXE instalador:** instala para tu usuario, con español/inglés, accesos directos y desinstalador. Los ajustes usan la carpeta de datos del usuario.
+
+Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.5-alpha.md). Puedes compilar con `CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
 
 ### Agregar FFmpeg
 
@@ -85,12 +88,14 @@ Instala `ffmpeg` y `ffprobe` por separado. El código es multiplataforma, pero e
 
 ## Estado y límites
 
+El hotfix 0.2.5 agrega ocho regresiones de marcado con zoom; las **154 pruebas pasaron localmente en Linux**. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
+
 La base de la 0.2.4 pasó **146 pruebas** en Linux con Python 3.12, PySide6 6.8.3 y FFmpeg 6.1.1, incluidas exportaciones reales. Los indicadores de arriba muestran por separado el resultado de CI del repositorio. Sigue siendo una alpha: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
 
 Un medio por proyecto, sin mezclador de audio/video separados. El texto no se divide automáticamente en más renglones: reduce el tamaño o divide una frase si excede los márgenes. Las fuentes deben estar instaladas en el equipo de destino. El lienzo admite de 320×240 a 3840×2160, dimensiones pares y 1–120 FPS.
 
 ## Licencia
 
-La licencia del proyecto está pendiente de elegir. Las dependencias conservan sus propias condiciones; consulta [THIRD_PARTY.md](THIRD_PARTY.md).
+El código del proyecto se distribuye con [licencia MIT](LICENSE). Las dependencias conservan sus propias condiciones; consulta [THIRD_PARTY.md](THIRD_PARTY.md).
 
 Creado por [JAVCIF](https://github.com/JAVCIF).

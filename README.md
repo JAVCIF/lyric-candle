@@ -5,7 +5,7 @@
 ![Tests](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Windows build](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **0.2.4-alpha**.
+**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **0.2.5-alpha**.
 
 ![Lyric Candle editor](docs/assets/editor-en.png)
 
@@ -38,9 +38,12 @@ If the app does not start, run `DIAGNOSTICO.bat`. See [Troubleshooting](docs/USE
 
 ### Windows executable
 
-The [Windows build workflow](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml) builds a portable x64 ZIP. Open a successful run and download its artifact; GitHub may require sign-in. Extract it and keep the whole `LyricCandle` folder together. The artifact contains a ZIP with `LyricCandle.exe`; no Python installation is needed for that build.
+Download **[0.2.5-alpha from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.5-alpha)**:
 
-Build artifacts are temporary and are not GitHub Releases. A successful build confirms packaging; audible playback and media compatibility still need testing on your machine. You can also build locally with `CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
+- **Portable ZIP:** extract everything and run `LyricCandle/LyricCandle.exe`. Keep the entire folder together. Settings live in `data/` beside the EXE.
+- **Setup EXE:** install for your Windows user, with English/Spanish setup, shortcuts and an uninstaller. Settings use your application data folder.
+
+Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/0.2.5-alpha.md). Build locally with `CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
 
 ### Add FFmpeg
 
@@ -85,12 +88,14 @@ Install `ffmpeg` and `ffprobe` separately. The source is cross-platform, but des
 
 ## Status and limits
 
+The 0.2.5 hotfix adds eight zoom-marking regression tests; all **154 tests passed locally on Linux**. Windows CI and package checks are required before publishing.
+
 The 0.2.4 baseline passed **146 tests** on Linux with Python 3.12, PySide6 6.8.3 and FFmpeg 6.1.1, including real exports. The Actions badges above report repository CI separately. This remains an alpha: test your own codecs, fonts, audio output and Windows environment before relying on it for a complete production workflow.
 
 One media file per project; no separate audio/video mixer. Text does not automatically wrap into extra lines: reduce the font or split a phrase when it exceeds the margins. Fonts must be installed on the destination machine. The editor's canvas limits are 320×240 through 3840×2160, with even dimensions and 1–120 FPS.
 
 ## License
 
-A project license has not been selected yet. Third-party dependencies retain their own license terms; see [THIRD_PARTY.md](THIRD_PARTY.md).
+The project code is available under the [MIT license](LICENSE). Third-party dependencies retain their own license terms; see [THIRD_PARTY.md](THIRD_PARTY.md).
 
 Created by [JAVCIF](https://github.com/JAVCIF).

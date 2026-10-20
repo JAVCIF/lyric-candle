@@ -9,7 +9,7 @@ import os
 import tempfile
 import uuid
 
-VERSION = '0.2.4-alpha'
+VERSION = '0.2.5-alpha'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
 

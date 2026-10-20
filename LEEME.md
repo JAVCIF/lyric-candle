@@ -1,4 +1,4 @@
-# Lyric Candle — Alpha 0.2.4
+# Lyric Candle — Alpha 0.2.5
 
 Editor de escritorio para crear video lyrics con una o dos líneas, traducción, repintado, desvanecimiento y énfasis por sílabas. Proyecto independiente de Sonic Candle. Interfaz en español e inglés.
 
@@ -74,7 +74,7 @@ La frase nunca se divide automáticamente en renglones. Si no cabe, aparece un a
 
 Seleccionar una fila reinicia el marcado desde esa fila. «Marcar final» se aplica a la última iniciada en una secuencia de marcado; si seleccionaste otra fila, se aplica a la selección.
 
-Haz clic en la forma de onda para buscar. Arrastra cerca del borde de inicio/final de la frase seleccionada y suelta para aplicar el cambio. «Zoom frase» amplía esa región; «Repetir frase» y «Bucle» facilitan escucharla varias veces. Puedes bajar la reproducción a 0.5× o 0.75×; la exportación siempre sale a velocidad normal.
+Haz clic en la forma de onda para buscar. Arrastra cerca del borde de inicio/final de la frase seleccionada y suelta para aplicar el cambio. «Zoom frase» amplía esa región y mantiene fija la selección. Mientras está activo, Ctrl+M ajusta solo el inicio y Ctrl+F solo el final de esa frase, sin avanzar ni cerrar otras filas. El límite opuesto se conserva y las marcas/keyframes se reajustan. Desactívalo para el marcado secuencial. «Repetir frase» y «Bucle» facilitan escucharla varias veces. Puedes bajar la reproducción a 0.5× o 0.75×; la exportación siempre sale a velocidad normal.
 
 En la pestaña **Frase**, el intervalo de repintado se expresa en segundos **desde su inicio**. Al cambiar la duración de una frase, sus marcas y su intervalo de repintado se reescalan proporcionalmente. «Desplazar tiempos» mueve todas las frases conservando sus intervalos internos.
 

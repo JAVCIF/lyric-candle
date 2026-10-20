@@ -33,9 +33,12 @@ def main():
     if not (folder / 'LyricCandle.exe').is_file():
         raise RuntimeError('PyInstaller did not produce LyricCandle.exe')
     for name in ('README.md', 'README.es.md', 'LEEME.md', 'CHANGELOG.md', 'CONTRIBUTING.md',
-                 'THIRD_PARTY.md', 'VERIFICACION.md'):
+                 'THIRD_PARTY.md', 'VERIFICACION.md', 'LICENSE'):
         shutil.copy2(ROOT / name, folder / name)
     shutil.copytree(ROOT / 'docs', folder / 'docs', dirs_exist_ok=True)
+    python_license = Path(sys.base_prefix) / 'LICENSE.txt'
+    if python_license.is_file():
+        shutil.copy2(python_license, folder / 'docs/licenses/Python-LICENSE.txt')
     # External tools belong next to the executable; none are downloaded or bundled.
     (folder / 'tools').mkdir(exist_ok=True)
     shutil.copy2(ROOT / 'tools/LEEME.txt', folder / 'tools/LEEME.txt')

@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: [Tests]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.id == github.event.repository.id
+    runs-on: windows-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    env:
+      PYTHONUTF8: '1'
+      GH_TOKEN: ${{ github.token }}
+      TESTED_SHA: ${{ github.event.workflow_run.head_sha }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          architecture: x64
+          cache: pip
+      - name: Check whether this version is already released
+        id: version
+        shell: python
+        run: |
+          import os, subprocess, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path.cwd()))
+          from lyric_candle.model import VERSION
+          result = subprocess.run(['gh', 'release', 'view', f'v{VERSION}'], capture_output=True, text=True)
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
+              out.write(f'publish={str(result.returncode != 0).lower()}\n')
+      - name: Install build dependencies
+        if: steps.version.outputs.publish == 'true'
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install "pyinstaller>=6.11,<7"
+      - name: Build both packages
+        if: steps.version.outputs.publish == 'true'
+        run: |
+          python scripts/build_windows.py --portable --zip
+          python scripts/build_installer.py
+      - name: Verify both Windows packages
+        if: steps.version.outputs.publish == 'true'
+        run: python scripts/check_windows_packages.py
+      - name: Publish tested commit and packages
+        if: steps.version.outputs.publish == 'true'
+        shell: python
+        run: |
+          import os, subprocess, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path.cwd()))
+          from lyric_candle.model import VERSION
+          dist = Path('dist')
+          files = [dist / f'Lyric-Candle-{VERSION}-Windows-x64.zip', dist / f'Lyric-Candle-{VERSION}-Setup-x64.exe']
+          assets = [str(path) for file in files for path in (file, file.with_suffix(file.suffix + '.sha256'))]
+          notes = Path('docs/releases') / f'{VERSION}.md'
+          if not notes.is_file():
+              raise SystemExit(f'Missing bilingual release notes: {notes}')
+          command = ['gh', 'release', 'create', f'v{VERSION}', *assets, '--target', os.environ['TESTED_SHA'],
+                     '--title', f'Lyric Candle {VERSION}', '--notes-file', str(notes)]
+          if '-' in VERSION:
+              command.append('--prerelease')
+          subprocess.run(command, check=True)

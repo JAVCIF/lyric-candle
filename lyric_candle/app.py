@@ -220,15 +220,17 @@ class MainWindow(QMainWindow):
         transport.addWidget(self.speed)
         leftlayout.addLayout(transport)
         marks = QHBoxLayout()
-        for caption, method in [(tr('Marcar inicio y avanzar  [Ctrl+M]'), self.mark_next),
-                                 (tr('Marcar final  [Ctrl+F]'), self.mark_end),
-                                 (tr('Repetir frase'), self.play_cue)]:
+        for name, caption, method in [('mark_start_button', tr('Marcar inicio y avanzar  [Ctrl+M]'), self.mark_next),
+                                      ('mark_end_button', tr('Marcar final  [Ctrl+F]'), self.mark_end),
+                                      ('repeat_cue_button', tr('Repetir frase'), self.play_cue)]:
             button = QPushButton(caption)
+            setattr(self, name, button)
             button.clicked.connect(method)
             marks.addWidget(button)
         self.loop = QCheckBox(tr('Bucle'))
         marks.addWidget(self.loop)
         self.zoom = QCheckBox(tr('Zoom frase'))
+        self.zoom.setToolTip(tr('Mantiene seleccionada esta frase. Marcar inicio/final ajusta solo sus límites, sin avanzar.'))
         self.zoom.toggled.connect(lambda v: self.set_zoom(v))
         marks.addWidget(self.zoom)
         self.guides = QCheckBox(tr('Guías'))
@@ -1196,7 +1198,7 @@ class MainWindow(QMainWindow):
             self.follow_time_selection(self.position)
 
     def follow_time_selection(self, value):
-        if not self.link_selection.isChecked() or self.loading or self._following_selection:
+        if self.zoom.isChecked() or not self.link_selection.isChecked() or self.loading or self._following_selection:
             return
         selected = self.selected_cue()
         if 0 <= self.last_marked and self.mark_index < len(self.project.cues):
@@ -1697,6 +1699,11 @@ class MainWindow(QMainWindow):
 
     def set_zoom(self, value):
         self.waveform.zoom = value
+        if value:
+            # Local boundary editing must not inherit a previous Ctrl+M sequence.
+            self.mark_index = max(0, self.selected_index())
+            self.last_marked = -1
+        self.mark_start_button.setText(tr('Marcar inicio  [Ctrl+M]') if value else tr('Marcar inicio y avanzar  [Ctrl+M]'))
         self.waveform.update()
 
     def set_guides(self, value):
@@ -1826,6 +1833,9 @@ class MainWindow(QMainWindow):
         return max(0.0, min(self.project.duration, value))
 
     def mark_next(self):
+        if self.zoom.isChecked():
+            self.mark_selected_edge('start')
+            return
         if not self.project.cues:
             return
         if self.mark_index >= len(self.project.cues):
@@ -1865,6 +1875,9 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(tr('Última frase iniciada. Usa «Marcar final» al terminar.'), 6000)
 
     def mark_end(self):
+        if self.zoom.isChecked():
+            self.mark_selected_edge('end')
+            return
         index = self.last_marked if self.last_marked >= 0 else self.selected_index()
         if not 0 <= index < len(self.project.cues):
             return
@@ -1879,6 +1892,17 @@ class MainWindow(QMainWindow):
         retime_cue(cue, previous_duration)
         self.changed(tables=True, panels=True)
         self.last_marked = -1
+
+    def mark_selected_edge(self, edge):
+        """In phrase zoom, edit only the selected cue's boundary on the real clock."""
+        cue = self.selected_cue()
+        if cue is None:
+            return
+        self.mark_index = self.selected_index()
+        self.last_marked = -1
+        value = self.current_time()
+        if getattr(cue, edge) != value:
+            self.cue_time(edge, value)
 
     def video_frame(self, frame, generation=None):
         if generation is not None and generation != self._source_generation:
@@ -2429,7 +2453,7 @@ class MainWindow(QMainWindow):
         event.accept()
 
 
-def main():
+def main(smoke_test=False):
     if sys.platform == 'win32':
         try:  # Own taskbar identity, so Windows shows our icon instead of Python's.
             import ctypes
@@ -2450,10 +2474,15 @@ def main():
                         format='%(asctime)s %(levelname)s %(message)s')
     def handle_error(kind, value, tb):
         logging.error('Unhandled exception', exc_info=(kind, value, tb))
+        if smoke_test:
+            app.exit(1)
+            return
         QMessageBox.critical(None, tr('Lyric Candle · error'), tr('{0}\n\nSe guardó el detalle en:\n{1}').format(value, log_dir / "app.log"))
     sys.excepthook = handle_error
-    window = MainWindow()
+    window = MainWindow(recover=not smoke_test)
     window.show()
+    if smoke_test:
+        QTimer.singleShot(1000, window.close)
     code = app.exec()
     if window.restart_requested:
         # Same program and arguments: LyricCandle.exe when packaged, python main.py from source.
