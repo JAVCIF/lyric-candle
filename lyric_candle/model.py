@@ -11,6 +11,7 @@ from pathlib import Path
 
 from .i18n import tr
 
+EXPORT_FORMATS = ('mp4', 'source', 'prores_alpha')
 VERSION = '0.2.6-alpha'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
@@ -108,7 +109,9 @@ class Style:
     background: str = 'gradient'  # gradient / image / video
     background_color: str = '#101928'
     match_media: bool = False  # Canvas follows the base video's resolution and FPS.
-    export_format: str = 'mp4'  # mp4 (H.264/AAC) / source (container and codecs of the base video)
+    # mp4 (H.264/AAC) / source (container and codecs of the base video) /
+    # prores_alpha (ProRes 4444 .mov with only the lyrics over a transparent background)
+    export_format: str = 'mp4'
 
 
 @dataclass
@@ -413,7 +416,7 @@ def from_dict(data, base: Path | None = None, strict=True):
     if (isinstance(s.fps, bool) or not isinstance(s.fps, (int, float)) or not math.isfinite(s.fps)
             or not 1 <= s.fps <= 120 or s.layout not in ('one', 'two') or s.mode not in ('repaint', 'fade', 'advanced')):
         raise ValueError(tr('Configuración de proyecto inválida.'))
-    if s.export_format not in ('mp4', 'source'):
+    if s.export_format not in EXPORT_FORMATS:
         s.export_format = 'mp4'
     s.match_media = bool(s.match_media)
     if not (8 <= s.size <= 180 and 8 <= s.secondary_size <= 180):

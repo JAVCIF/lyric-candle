@@ -95,10 +95,11 @@ class StyleMixin:
         self.match_media.toggled.connect(self.match_media_toggled)
         vb.addWidget(self.match_media)
         ef = QFormLayout()
-        self.export_format = self.combo([(tr('MP4 · H.264 + AAC'), 'mp4'), (tr('Igual que el video base'), 'source')],
+        self.export_format = self.combo([(tr('MP4 · H.264 + AAC'), 'mp4'), (tr('Igual que el video base'), 'source'),
+                                         (tr('ProRes 4444 · solo letra con alfa'), 'prores_alpha')],
                                         lambda v: self.set_style('export_format', v))
         self.export_format.setToolTip(tr('«Igual que el video base» usa su contenedor (AVI, MKV, MOV…), su códec de video, '
-                                      'formato de píxel y bitrate, y copia su audio sin recodificar.'))
+                                      'formato de píxel y bitrate, y copia su audio sin recodificar. «ProRes 4444 · solo letra» exporta un .mov con canal alfa: solo la letra sobre fondo transparente, sin audio, aunque el proyecto use un video de fondo.'))
         self.style_controls['export_format'] = self.export_format
         ef.addRow(tr('Exportar como'), self.export_format)
         vb.addLayout(ef)

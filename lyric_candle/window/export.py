@@ -42,7 +42,9 @@ class ExportMixin:
         ext, folder, stem = '.mp4', Path.home(), tr('Mi-video-lyrics')
         if self.project.media:
             folder, stem = Path(self.project.media).parent, Path(self.project.media).stem + '-lyrics'
-        if self.project.style.export_format == 'source' and self.project.media:
+        if self.project.style.export_format == 'prores_alpha':
+            ext, stem = '.mov', stem + '-alpha'
+        elif self.project.style.export_format == 'source' and self.project.media:
             info = self.media_info(quiet=False)
             if info is None:
                 QMessageBox.warning(self, tr('Formato del video base'), tr('Para exportar como el video base hace falta ffprobe '

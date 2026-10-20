@@ -20,7 +20,7 @@ Escucha la canción, marca las frases, afina sus tiempos y anima las sílabas o 
 - **Prueba de fuentes:** pasa el mouse por la lista o por los resultados de búsqueda para previsualizar; confirma para aplicar o pulsa Esc para cancelar.
 - **Video de fondo:** restaura el fotograma guardado en pausa y adopta resolución/FPS del medio, incluidas velocidades fraccionarias, rotación y píxeles no cuadrados.
 - **Proyectos y recuperación:** guardado JSON, deshacer/rehacer, autoguardado por ventana y borradores de texto sin aplicar que se conservan al guardar.
-- **Exportación:** MP4 H.264/AAC o contenedor/códec del video base cuando sea compatible, copiando su audio. Cancelar conserva el archivo de destino anterior.
+- **Exportación:** MP4 H.264/AAC, contenedor/códec del video base cuando sea compatible (copiando su audio), o solo la letra en ProRes 4444 con canal alfa para superponerla en otro editor. Cancelar conserva el archivo de destino anterior.
 - **Interfaz en español e inglés:** idioma del sistema al iniciar, selección manual y guía integrada con F1.
 
 **Esta alpha no reconoce el canto ni alinea la voz automáticamente.** Las ayudas estiman por posición del texto o ataques cercanos del audio; revisa escuchando. Por ahora se importa texto pegado y TXT, sin SRT/ASS/LRC.

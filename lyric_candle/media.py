@@ -300,6 +300,7 @@ class ExportWorker(QThread):
         try:
             project = self.project
             s = project.style
+            alpha = s.export_format == 'prores_alpha'  # Lyrics only, transparent: no background, no audio.
             if project.text_drafts:
                 raise ValueError(tr('Aplica los borradores de texto antes de exportar.'))
             problems = project.problems()
@@ -308,15 +309,17 @@ class ExportWorker(QThread):
             ffmpeg = executable('ffmpeg')
             if not ffmpeg:
                 raise ValueError(tr('No se encontró FFmpeg. Coloca ffmpeg.exe y ffprobe.exe en tools/ o instálalos en PATH.'))
-            if project.media and not Path(project.media).is_file():
+            if alpha and 'prores_ks' not in available_encoders(ffmpeg):
+                raise ValueError(tr('Esta compilación de FFmpeg no incluye el codificador ProRes (prores_ks).'))
+            if not alpha and project.media and not Path(project.media).is_file():
                 raise ValueError(tr('El medio no existe. Vuelve a vincularlo con «Audio / video».'))
-            if s.background == 'image' and (not project.image or QImage(project.image).isNull()):
+            if not alpha and s.background == 'image' and (not project.image or QImage(project.image).isNull()):
                 raise ValueError(tr('La imagen de fondo no se encuentra o no es compatible.'))
             if project.media and self.destination.resolve() == Path(project.media).resolve():
                 raise ValueError(tr('El destino no puede ser el medio original.'))
             if project.image and self.destination.resolve() == Path(project.image).resolve():
                 raise ValueError(tr('El destino no puede ser la imagen original.'))
-            if s.background == 'video':
+            if s.background == 'video' and not alpha:
                 if not project.media:
                     raise ValueError(tr('Carga un video para utilizarlo como fondo.'))
                 metadata = probe(project.media)
@@ -347,10 +350,14 @@ class ExportWorker(QThread):
             temp = Path(tmp_name)
             cmd = [ffmpeg, '-y', '-v', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgba',
                    '-video_size', f'{s.width}x{s.height}', '-framerate', str(fps_fraction(s.fps)), '-i', 'pipe:0']
-            if project.media:
+            if project.media and not alpha:
                 cmd += ['-i', project.media, '-map', '0:v:0', '-map', '1:a:0?']
             cmd += ['-vf', 'setsar=1']  # The composed RGBA canvas always has square pixels.
-            if settings:
+            if alpha:
+                # ProRes 4444 keeps a real alpha channel; 10-bit 4:4:4 with alpha is what editors expect.
+                cmd += ['-c:v', 'prores_ks', '-profile:v', '4444', '-pix_fmt', 'yuva444p10le', '-vendor', 'apl0']
+                self.summary = tr('MOV · ProRes 4444 · solo letra con canal alfa (sin audio)')
+            elif settings:
                 cmd += settings['video_args'] + settings['audio_args']
             else:
                 cmd += ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '19', '-pix_fmt', 'yuv420p']
@@ -378,7 +385,7 @@ class ExportWorker(QThread):
                         raise ValueError(tr('No se pudo decodificar el primer fotograma del video.'))
                     elif data or (decoder.poll() is not None and decoder.returncode != 0):
                         raise ValueError(tr('El video terminó con un error de decodificación.'))
-                image = renderer.frame(project, frame_index / s.fps, video)
+                image = renderer.frame(project, frame_index / s.fps, video, transparent=alpha)
                 encoder.stdin.write(bytes(image.constBits()))
                 percent = int((frame_index + 1) * 99 / frame_count)
                 if percent != last_percent:

@@ -96,10 +96,20 @@ class Renderer:
         self.image_path = None
         self.background_image = QImage()
 
-    def draw(self, p: QPainter, project: Project, t: float, video=None):
+    def draw(self, p: QPainter, project: Project, t: float, video=None, transparent=False):
+        """Compose one frame. transparent=True draws only the lyrics (no background at all)."""
         s = project.style
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        if not transparent:
+            self.draw_background(p, project, video)
+        for cue in project.cues:
+            opacity = visibility(cue, t, s)
+            if opacity:
+                self.draw_cue(p, project, cue, t, opacity)
+
+    def draw_background(self, p, project, video=None):
+        s = project.style
         rect = QRectF(0, 0, s.width, s.height)
         p.fillRect(rect, QColor(s.background_color))
         if s.background == 'image':
@@ -115,10 +125,6 @@ class Renderer:
             gradient.setColorAt(0.65, QColor('#192d49'))
             gradient.setColorAt(1, QColor('#342b49'))
             p.fillRect(rect, gradient)
-        for cue in project.cues:
-            opacity = visibility(cue, t, s)
-            if opacity:
-                self.draw_cue(p, project, cue, t, opacity)
 
     @staticmethod
     def draw_fit(p, rect, img):
@@ -210,7 +216,17 @@ class Renderer:
                 p.restore()
             p.restore()
 
-    def frame(self, project, t, video=None):
+    def frame(self, project, t, video=None, transparent=False):
+        """RGBA8888 frame for FFmpeg. With transparent=True the alpha channel is straight
+        (not premultiplied), as FFmpeg's rgba input expects."""
+        if transparent:
+            # Paint premultiplied (exact edges, fast), then un-premultiply for FFmpeg.
+            image = QImage(project.style.width, project.style.height, QImage.Format.Format_RGBA8888_Premultiplied)
+            image.fill(Qt.GlobalColor.transparent)
+            p = QPainter(image)
+            self.draw(p, project, t, None, transparent=True)
+            p.end()
+            return image.convertToFormat(QImage.Format.Format_RGBA8888)
         image = QImage(project.style.width, project.style.height, QImage.Format.Format_RGBA8888)
         image.fill(QColor('black'))
         p = QPainter(image)

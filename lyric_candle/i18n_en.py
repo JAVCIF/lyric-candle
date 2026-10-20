@@ -5,6 +5,9 @@ tests/test_i18n.py checks that every tr() string in the code has an entry here.
 """
 
 EN = {
+    'ProRes 4444 · solo letra con alfa': 'ProRes 4444 · lyrics only with alpha',
+    'MOV · ProRes 4444 · solo letra con canal alfa (sin audio)': 'MOV · ProRes 4444 · lyrics only with alpha channel (no audio)',
+    'Esta compilación de FFmpeg no incluye el codificador ProRes (prores_ks).': 'This FFmpeg build does not include the ProRes encoder (prores_ks).',
     'Tiempo provisional: márcalo con Ctrl+M o edítalo para confirmarlo.': 'Provisional time: mark it with Ctrl+M or edit it to confirm it.',
     'Ctrl+M marcará esta frase.': 'Ctrl+M will mark this line.',
     'Frase {0}: inicio en {1}.': 'Line {0}: start at {1}.',
@@ -282,8 +285,8 @@ EN = {
         'The canvas takes the size and frame rate of the loaded video. They are read again when you change the video.',
     'MP4 · H.264 + AAC': 'MP4 · H.264 + AAC',
     'Igual que el video base': 'Same as base video',
-    '«Igual que el video base» usa su contenedor (AVI, MKV, MOV…), su códec de video, formato de píxel y bitrate, y copia su audio sin recodificar.':
-        '"Same as base video" uses its container (AVI, MKV, MOV…), video codec, pixel format and bitrate, and copies its audio without re-encoding.',
+    '«Igual que el video base» usa su contenedor (AVI, MKV, MOV…), su códec de video, formato de píxel y bitrate, y copia su audio sin recodificar. «ProRes 4444 · solo letra» exporta un .mov con canal alfa: solo la letra sobre fondo transparente, sin audio, aunque el proyecto use un video de fondo.':
+        '"Same as base video" uses its container (AVI, MKV, MOV…), video codec, pixel format and bitrate, and copies its audio without re-encoding. "ProRes 4444 · lyrics only" exports a .mov with an alpha channel: just the lyrics over a transparent background, without audio, even if the project uses a video background.',
     'Exportar como': 'Export as',
     'Sin medio': 'No media',
     'Medio: ': 'Media: ',

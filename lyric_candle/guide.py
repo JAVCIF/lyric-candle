@@ -78,6 +78,8 @@ junto con sus medios o con el medio a su lado; si no lo encuentra, al abrir te p
 El contador de arriba indica cuántas frases están pendientes; aplica sus cambios antes de exportar.</li>
 <li><b>Exportar video</b>: MP4 (H.264 + AAC) o <b>Igual que el video base</b> (mismo contenedor, códec, formato de píxel y
 bitrate; el audio se copia). Los problemas de tiempos se señalan arriba a la derecha y bloquean la exportación.</li>
+<li><b>ProRes 4444 · solo letra con alfa</b> exporta un <code>.mov</code> con canal alfa: solo la letra sobre fondo
+transparente y sin audio, aunque el proyecto use un video de fondo, para superponerla en tu editor.</li>
 </ul>
 
 <h2>Atajos</h2>
@@ -169,6 +171,8 @@ together with its media, or with the media next to it; if a file can't be found,
 The counter at the top shows pending lines; apply their changes before exporting.</li>
 <li><b>Export video</b>: MP4 (H.264 + AAC) or <b>Same as base video</b> (same container, codec, pixel format and bitrate;
 audio is copied). Timing problems are flagged at the top right and block the export.</li>
+<li><b>ProRes 4444 · lyrics only with alpha</b> exports a <code>.mov</code> with an alpha channel: just the lyrics over a
+transparent background and without audio, even if the project uses a video background, to overlay in your editor.</li>
 </ul>
 
 <h2>Shortcuts</h2>

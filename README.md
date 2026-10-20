@@ -20,7 +20,7 @@ Listen to the song, mark the phrases, refine their timing, and animate selected 
 - **Font audition:** hover over installed fonts or search results to preview them; confirm to apply or press Esc to cancel.
 - **Video backgrounds:** restore the saved frame while paused; adopt video resolution/FPS, including common fractional rates, rotation and non-square pixels.
 - **Projects and recovery:** JSON saves, undo/redo, per-window autosaves and persistent unapplied text drafts.
-- **Export:** H.264/AAC MP4, or the base video's container/codec where supported, with copied source audio. Cancellation preserves an existing destination file.
+- **Export:** H.264/AAC MP4, the base video's container/codec where supported (with copied source audio), or the lyrics alone as ProRes 4444 with an alpha channel for overlaying in another editor. Cancellation preserves an existing destination file.
 - **Spanish and English UI:** system language at startup, with a manual language option and a built-in F1 guide.
 
 **This alpha does not recognize sung lyrics or perform vocal alignment.** Automatic timing tools estimate by text position or nearby audio attacks; review their results by ear. Import currently accepts pasted text and TXT, not SRT/ASS/LRC.

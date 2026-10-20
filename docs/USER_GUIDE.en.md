@@ -128,6 +128,7 @@ Each window has its own recovery file and lock. At startup, autosaves from unexp
 
 - **MP4 · H.264 + AAC** is the default.
 - **Same as base video** attempts its container, video codec, pixel format and bitrate and copies its first audio stream. Video is re-encoded because lyrics must be drawn into frames. Unsupported encoders/containers use the implemented compatible fallback when available, with a note after export; arbitrary combinations may still fail.
+- **ProRes 4444 · lyrics only with alpha** writes a ProRes 4444 `.mov` (`yuva444p10le`) with an alpha channel: just the lyrics over a transparent background, without audio, even when the project uses a gradient, image or video background. Use it to overlay the lyrics in Vegas, Premiere, DaVinci or another editor.
 - Use **Use base video resolution and FPS** as well if the output should match the video's display canvas and rate.
 
 Resolve pending text drafts and timing issues first. Projects with fixable timing problems can be opened for correction, but cannot export until fixed. An overflow warning allows you to review text that might be clipped. Preview and export share the same text renderer; guides are not exported.
