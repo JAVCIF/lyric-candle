@@ -9,7 +9,7 @@ import os
 import tempfile
 import uuid
 
-VERSION = '0.2.5-alpha'
+VERSION = '0.2.6-alpha'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
 
@@ -65,6 +65,9 @@ class Cue:
     keyframes: list[Keyframe] = field(default_factory=list)
     use_keyframes: bool = True
     keyframe_scope: str = 'all'  # all / paint / emphasis; fades keep real time.
+    # False while start/end are only a placeholder (imported lyrics, a new phrase). Marking or
+    # editing either boundary confirms them. Provisional phrases never drive linked navigation.
+    timed: bool = True
 
     @property
     def duration(self):
@@ -383,6 +386,7 @@ def from_dict(data, base: Path | None = None, strict=True):
         for key in ('original_spans', 'translation_spans'):
             cp[key] = [Span(**_filtered(Span, s)) for s in item.get(key, [])]
         cp['keyframes'] = [Keyframe(**_filtered(Keyframe, p)) for p in item.get('keyframes', [])]
+        cp['timed'] = bool(cp.get('timed', True))
         params['cues'].append(Cue(**cp))
     for key in ('media', 'image'):
         if params.get(key) and base:

@@ -1,4 +1,4 @@
-# Lyric Candle — Alpha 0.2.5
+# Lyric Candle — Alpha 0.2.6
 
 Editor de escritorio para crear video lyrics con una o dos líneas, traducción, repintado, desvanecimiento y énfasis por sílabas. Proyecto independiente de Sonic Candle. Interfaz en español e inglés.
 
@@ -75,6 +75,10 @@ La frase nunca se divide automáticamente en renglones. Si no cabe, aparece un a
 Seleccionar una fila reinicia el marcado desde esa fila. «Marcar final» se aplica a la última iniciada en una secuencia de marcado; si seleccionaste otra fila, se aplica a la selección.
 
 Haz clic en la forma de onda para buscar. Arrastra cerca del borde de inicio/final de la frase seleccionada y suelta para aplicar el cambio. «Zoom frase» amplía esa región y mantiene fija la selección. Mientras está activo, Ctrl+M ajusta solo el inicio y Ctrl+F solo el final de esa frase, sin avanzar ni cerrar otras filas. El límite opuesto se conserva y las marcas/keyframes se reajustan. Desactívalo para el marcado secuencial. «Repetir frase» y «Bucle» facilitan escucharla varias veces. Puedes bajar la reproducción a 0.5× o 0.75×; la exportación siempre sale a velocidad normal.
+
+**Qué frase cambia Ctrl+M**: siempre lo indica ▶ en la columna #, y cada marca se confirma en la barra de estado («Frase 3: inicio en 00:09.000.»). Fuera de una secuencia de marcado, Ctrl+M actúa sobre la fila seleccionada, también si la eligió «Vincular frase ↔ tiempo». Durante una secuencia continúa con la siguiente frase.
+
+**Tiempos provisionales.** La letra importada y las frases nuevas empiezan con tiempos de relleno: en la tabla se ven atenuados y en cursiva, y en la onda con bordes discontinuos. «Vincular frase ↔ tiempo» los ignora: en la primera pasada la selección no salta a frases que todavía no se cantan, y elegir esas filas no mueve el cabezal. Marcar o editar su inicio o final las confirma. Los proyectos de versiones anteriores cuentan como ya sincronizados.
 
 En la pestaña **Frase**, el intervalo de repintado se expresa en segundos **desde su inicio**. Al cambiar la duración de una frase, sus marcas y su intervalo de repintado se reescalan proporcionalmente. «Desplazar tiempos» mueve todas las frases conservando sus intervalos internos.
 

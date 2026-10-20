@@ -1,4 +1,4 @@
-# User guide · Lyric Candle 0.2.5-alpha
+# User guide · Lyric Candle 0.2.6-alpha
 
 [English](USER_GUIDE.en.md) · [Español](../LEEME.md) · [Home](../README.md)
 
@@ -44,6 +44,10 @@ Choose which language is primary. In two-line mode it is above the secondary lin
 4. Correct starts/ends in the table or Line tab, or drag the selected phrase's waveform edges.
 
 **Zoom line** locks the selected phrase while seeking or playing. With zoom enabled, Ctrl+M changes only its start and Ctrl+F only its end; neither advances nor closes another phrase. The opposite boundary is preserved and marks/keyframes are retimed. Turn zoom off for sequential marking and automatic following.
+
+**Which line Ctrl+M changes** is always marked with ▶ in the # column, and every mark is confirmed in the status bar ("Line 3: start at 00:09.000"). Outside a marking sequence, Ctrl+M acts on the selected row, including a row selected automatically by Link line ↔ time. During a sequence it continues with the next line.
+
+**Provisional times.** Imported lyrics and new lines start with placeholder times, shown dimmed and in italics in the table and with dashed edges on the waveform. Link line ↔ time ignores them, so during the first pass the selection doesn't jump to lines that aren't being sung yet, and selecting such a row doesn't move the playhead. Marking or editing a start or end confirms the line. Projects from earlier versions count as already timed.
 
 The table accepts seconds or `mm:ss.mmm`. Line start/end are absolute; repaint and syllable times are relative to the phrase start. The waveform shows an edge's proposed time while dragging. Slow playback, **Loop**, **Repeat line** and **Zoom line** help refine timing; exported audio always runs at normal speed.
 

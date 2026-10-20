@@ -36,7 +36,8 @@ class ZoomMarkingTests(unittest.TestCase):
         w = self.w; before = self.snapshots()
         w.link_selection.setChecked(True); w.set_position(5)
         self.assertEqual(w.selected_index(), 1)
-        self.assertEqual(w.mark_index, 0)  # The original failure: following isn't a marking sequence.
+        # 0.2.6: outside a Ctrl+M sequence, following also retargets Ctrl+M to the row on screen.
+        self.assertEqual(w.mark_index, 1)
         w.zoom.setChecked(True); w.seek(4.5)
         QTest.mouseClick(w.mark_start_button, Qt.MouseButton.LeftButton)
         self.assertEqual(w.project.cues[1].start, 4.5)

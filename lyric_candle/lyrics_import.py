@@ -50,5 +50,5 @@ def uniform_cues(pairs: list[tuple[str, str]], duration: float) -> list[Cue]:
     step = duration / len(pairs)
     if step < .05:
         raise ValueError(tr('Amplía la duración del proyecto: hay demasiadas frases para ese intervalo.'))
-    return [Cue(start=i*step, end=(i+1)*step, original=x, translation=y)
+    return [Cue(start=i*step, end=(i+1)*step, original=x, translation=y, timed=False)
             for i, (x, y) in enumerate(pairs)]

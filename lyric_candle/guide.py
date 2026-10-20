@@ -46,6 +46,10 @@ y la velocidad 0.5× / 0.75× ayudan a afinar (la exportación siempre sale a ve
 
 <p>Con <b>Zoom frase</b> activo, la selección queda fija: <kbd>Ctrl+M</kbd> ajusta solo su inicio y <kbd>Ctrl+F</kbd> solo su final, sin avanzar. Desactívalo para marcar frases consecutivas.</p>
 
+<p>La <b>▶</b> en la columna # indica qué frase cambiará <kbd>Ctrl+M</kbd>, y cada marca se confirma en la barra de estado.
+Los tiempos <i>provisionales</i> (letra recién importada, frases nuevas) se ven atenuados y en cursiva: el seguimiento
+automático los ignora hasta que los marcas o editas.</p>
+
 <h2>3 · Sílabas y efectos</h2>
 <ul>
 <li>En <b>Sílabas</b>, selecciona letras y pulsa <b>Marcar selección</b>, o escribe el texto con <code>|</code>
@@ -132,6 +136,10 @@ while marking with Ctrl+M it shows the next line. <b>Zoom line</b>, <b>Loop</b>,
 and 0.5× / 0.75× speed help you fine-tune (exports always play at normal speed).</p>
 
 <p>With <b>Zoom line</b> enabled, selection stays fixed: <kbd>Ctrl+M</kbd> adjusts only its start and <kbd>Ctrl+F</kbd> only its end, without advancing. Turn zoom off for sequential marking.</p>
+
+<p>The <b>▶</b> in the # column shows which line <kbd>Ctrl+M</kbd> will change, and each mark is confirmed in the status bar.
+<i>Provisional</i> times (freshly imported lyrics, new lines) are dimmed and in italics: automatic following ignores them
+until you mark or edit them.</p>
 
 <h2>3 · Syllables and effects</h2>
 <ul>

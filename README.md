@@ -5,7 +5,7 @@
 ![Tests](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Windows build](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **0.2.5-alpha**.
+**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **0.2.6-alpha**.
 
 ![Lyric Candle editor](docs/assets/editor-en.png)
 
@@ -38,12 +38,12 @@ If the app does not start, run `DIAGNOSTICO.bat`. See [Troubleshooting](docs/USE
 
 ### Windows executable
 
-Download **[0.2.5-alpha from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.5-alpha)**:
+Download **[0.2.6-alpha from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.6-alpha)**:
 
 - **Portable ZIP:** extract everything and run `LyricCandle/LyricCandle.exe`. Keep the entire folder together. Settings live in `data/` beside the EXE.
 - **Setup EXE:** install for your Windows user, with English/Spanish setup, shortcuts and an uninstaller. Settings use your application data folder.
 
-Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/0.2.5-alpha.md). Build locally with `CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
+Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/0.2.6-alpha.md). Build locally with `CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
 
 ### Add FFmpeg
 
@@ -88,7 +88,7 @@ Install `ffmpeg` and `ffprobe` separately. The source is cross-platform, but des
 
 ## Status and limits
 
-The 0.2.5 hotfix adds eight zoom-marking regression tests; all **154 tests passed locally on Linux**. Windows CI and package checks are required before publishing.
+0.2.6 adds twenty-two regression tests for the Ctrl+M target and provisional times (176 tests in total). Run the whole suite with `PROBAR.bat` or `python -m unittest discover -s tests`. Windows CI and package checks are required before publishing.
 
 The 0.2.4 baseline passed **146 tests** on Linux with Python 3.12, PySide6 6.8.3 and FFmpeg 6.1.1, including real exports. The Actions badges above report repository CI separately. This remains an alpha: test your own codecs, fonts, audio output and Windows environment before relying on it for a complete production workflow.
 

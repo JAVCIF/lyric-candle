@@ -2,6 +2,12 @@
 
 [English overview](README.md) · [Resumen en español](README.es.md)
 
+## 0.2.6-alpha — 2026-10-20
+
+**English:** Ctrl+M always changes the line on screen: outside a marking sequence it uses the selected row, also when Link line ↔ time selected it. A ▶ marks the Ctrl+M target and every mark is confirmed in the status bar. Imported and new lines keep provisional times (dimmed, saved in the project) that automatic following ignores, so the first pass with linking enabled no longer jumps ahead. The target has one source shared by ▶ and Ctrl+M (no hidden target after opening/recovering a project), hand-picked provisional rows stay selected during playback, and a zoomed mark on the placeholder time confirms it. Each zoomed Ctrl+M/Ctrl+F is its own undo step. Undo/redo restore the marking sequence, deleting rows keeps it on the same phrases, and holding Ctrl+M/Ctrl+F no longer repeats. Repeated final Ctrl+F corrections keep the sequence closed. Twenty-two regression tests.
+
+**Español:** Ctrl+M siempre cambia la frase en pantalla: fuera de una secuencia usa la fila seleccionada, también si la eligió «Vincular frase ↔ tiempo». Una ▶ marca el destino de Ctrl+M y cada marca se confirma en la barra de estado. La letra importada y las frases nuevas conservan tiempos provisionales (atenuados y guardados en el proyecto) que el seguimiento automático ignora, así la primera pasada con vinculación ya no salta. El destino tiene una sola fuente compartida por ▶ y Ctrl+M (sin destino oculto tras abrir o recuperar un proyecto), las filas provisionales elegidas a mano se conservan al reproducir y marcar con zoom el tiempo provisional lo confirma. Cada Ctrl+M/Ctrl+F con zoom es su propio paso de deshacer. Deshacer/rehacer restauran la secuencia de marcado, borrar filas la mantiene en las mismas frases y mantener pulsado Ctrl+M/Ctrl+F ya no repite. Repetir Ctrl+F al corregir el final conserva la secuencia cerrada. Veintidós regresiones.
+
 ## 0.2.5-alpha — 2026-10-20
 
 **English:** fix start/end marking in Zoom line so only the selected phrase changes. Keep selection during zoomed seeking/playback; preserve the opposite boundary and undo/redo. Add eight regression tests. Adopt MIT and publish Windows portable ZIP and per-user installer with checksums, bilingual notes and automatic package smoke checks.

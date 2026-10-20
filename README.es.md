@@ -5,7 +5,7 @@
 ![Pruebas](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Compilación Windows](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **0.2.5-alpha**.
+**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **0.2.6-alpha**.
 
 ![Editor Lyric Candle](docs/assets/editor-es.png)
 
@@ -38,12 +38,12 @@ Si no inicia, usa `DIAGNOSTICO.bat`. Consulta también la [guía de uso](LEEME.m
 
 ### Ejecutable de Windows
 
-Descarga la **[0.2.5-alpha desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.5-alpha)**:
+Descarga la **[0.2.6-alpha desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v0.2.6-alpha)**:
 
 - **ZIP portable:** extrae todo y abre `LyricCandle/LyricCandle.exe`. Conserva la carpeta completa. Los ajustes quedan en `data/` junto al EXE.
 - **EXE instalador:** instala para tu usuario, con español/inglés, accesos directos y desinstalador. Los ajustes usan la carpeta de datos del usuario.
 
-Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.5-alpha.md). Puedes compilar con `CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
+Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/0.2.6-alpha.md). Puedes compilar con `CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
 
 ### Agregar FFmpeg
 
@@ -88,7 +88,7 @@ Instala `ffmpeg` y `ffprobe` por separado. El código es multiplataforma, pero e
 
 ## Estado y límites
 
-El hotfix 0.2.5 agrega ocho regresiones de marcado con zoom; las **154 pruebas pasaron localmente en Linux**. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
+La 0.2.6 agrega veintidós regresiones del destino de Ctrl+M y de los tiempos provisionales (176 pruebas en total). Ejecuta la suite completa con `PROBAR.bat` o `python -m unittest discover -s tests`. Antes de publicar se exigen CI y comprobaciones de paquetes en Windows.
 
 La base de la 0.2.4 pasó **146 pruebas** en Linux con Python 3.12, PySide6 6.8.3 y FFmpeg 6.1.1, incluidas exportaciones reales. Los indicadores de arriba muestran por separado el resultado de CI del repositorio. Sigue siendo una alpha: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
 

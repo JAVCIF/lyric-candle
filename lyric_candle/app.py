@@ -112,6 +112,9 @@ class MainWindow(QMainWindow):
         self._history_time = 0.0
         self._media_info = (None, None)  # ((path, mtime), stream_info) of the loaded media.
         self.mark_index = 0
+        self._shown_target = None
+        self._sequence_done = False  # The last phrase was started and closed: no target until a row is picked.
+        self._pinned_uid = None  # Provisional phrase picked by hand; automatic following keeps it.
         self.last_marked = -1
         self.virtual_playing = False
         self.virtual_clock = QElapsedTimer()
@@ -926,6 +929,8 @@ class MainWindow(QMainWindow):
                                 (tr('Marcar inicio y avanzar'), self.mark_next, 'Ctrl+M'), (tr('Marcar final'), self.mark_end, 'Ctrl+F')]:
             action = QAction(label, self)
             action.setShortcut(key)
+            if key in ('Ctrl+M', 'Ctrl+F'):
+                action.setAutoRepeat(False)  # Holding the key must not mark several phrases.
             action.triggered.connect(fn)
             edit_menu.addAction(action)
         options_menu = self.menuBar().addMenu(tr('Opciones'))
@@ -973,7 +978,7 @@ class MainWindow(QMainWindow):
             self.dirty = True
             return
         self._history_group, self._history_time = group, now
-        self.history.append(copy.deepcopy(to_dict(self.project)))
+        self.history.append(self.snapshot())
         self.history = self.history[-80:]
         self.future.clear()
         self.dirty = True
@@ -1038,12 +1043,55 @@ class MainWindow(QMainWindow):
                     item = QTableWidgetItem(text)
                     if col == 0:
                         item.setFlags(item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+                    if col in (1, 2) and not cue.timed:
+                        font = item.font()
+                        font.setItalic(True)
+                        item.setFont(font)
+                        item.setForeground(QColor('#7f93ad'))
+                        item.setToolTip(tr('Tiempo provisional: márcalo con Ctrl+M o edítalo para confirmarlo.'))
                     self.table.setItem(i, col, item)
+            self._shown_target = None  # Items were rebuilt: draw ▶ again.
             if self.project.cues:
                 self.table.selectRow(max(0, min(old_row, len(self.project.cues)-1)))
             self.waveform.selected = self.table.currentRow()
         finally:
             self.loading = old_loading
+        self.update_mark_target()
+
+    def mark_target(self):
+        """The only source of the row Ctrl+M will change; the ▶ marker and mark_next both use it.
+
+        Zoom: the selected row. During a Ctrl+M sequence: the next phrase (mark_index).
+        After the last phrase was started and closed: none until a row is chosen.
+        Otherwise: the selected row, however it was selected."""
+        if self.zoom.isChecked():
+            index = self.selected_index()
+        elif self.last_marked >= 0:
+            index = self.mark_index
+        elif self._sequence_done:
+            index = None
+        else:
+            index = self.selected_index()
+        return index if index is not None and 0 <= index < len(self.project.cues) else None
+
+    def reset_marking(self):
+        """Forget any Ctrl+M sequence and pinned row (new/opened/recovered/imported project)."""
+        self.mark_index, self.last_marked = 0, -1
+        self._sequence_done = False
+        self._pinned_uid = None
+
+    def update_mark_target(self):
+        """▶ in the # column of the Ctrl+M target; cheap, so it runs every tick."""
+        target = self.mark_target()
+        if target == self._shown_target:
+            return
+        for row in (self._shown_target, target):
+            if row is not None and 0 <= row < self.table.rowCount() and self.table.item(row, 0):
+                was = self.table.blockSignals(True)
+                self.table.item(row, 0).setText(('▶ ' if row == target else '') + str(row+1))
+                self.table.item(row, 0).setToolTip(tr('Ctrl+M marcará esta frase.') if row == target else '')
+                self.table.blockSignals(was)
+        self._shown_target = target
 
     def refresh_panels(self):
         was_loading = self.loading
@@ -1178,17 +1226,20 @@ class MainWindow(QMainWindow):
             return
         self.mark_index = max(0, self.selected_index())
         self.last_marked = -1
+        self._sequence_done = False
+        picked = self.selected_cue()
+        self._pinned_uid = picked.uid if picked is not None and not picked.timed else None
         self.waveform.selected = self.selected_index()
         self.refresh_panels()
         self.update_labels()
         self.waveform.update()
         cue = self.selected_cue()
-        if self.link_selection.isChecked() and cue:
+        if self.link_selection.isChecked() and cue and cue.timed:
             self.seek(cue.start)
 
     def cue_clicked(self, row, column):
         cue = self.selected_cue()
-        if (self.link_selection.isChecked() and cue and row == self.selected_index()
+        if (self.link_selection.isChecked() and cue and cue.timed and row == self.selected_index()
                 and not self.loading and not self._following_selection and abs(self.position-cue.start) > .001):
             self.cue_selected()
 
@@ -1201,13 +1252,18 @@ class MainWindow(QMainWindow):
         if self.zoom.isChecked() or not self.link_selection.isChecked() or self.loading or self._following_selection:
             return
         selected = self.selected_cue()
+        if selected is not None and selected.uid == self._pinned_uid and not selected.timed:
+            return  # A provisional phrase chosen by hand stays the target while it plays elsewhere.
         if 0 <= self.last_marked and self.mark_index < len(self.project.cues):
             # Ctrl+M sequence: keep showing the phrase the next mark will start.
             index = self.mark_index
         else:
-            if selected and selected.start <= value < selected.end:
+            if selected and selected.timed and selected.start <= value < selected.end:
                 return
-            candidates = [(cue.start, i) for i, cue in enumerate(self.project.cues) if cue.start <= value < cue.end]
+            # Provisional times are placeholders: following them would select phrases that are
+            # not being sung yet (and Ctrl+M would then mark the wrong one).
+            candidates = [(cue.start, i) for i, cue in enumerate(self.project.cues)
+                          if cue.timed and cue.start <= value < cue.end]
             if not candidates:
                 return
             index = max(candidates)[1]
@@ -1216,6 +1272,9 @@ class MainWindow(QMainWindow):
         if selected and self.pending_text():
             self.statusBar().showMessage(tr('Aplica los cambios de texto para reanudar el seguimiento automático de frases.'), 6000)
             return
+        if self.last_marked < 0:
+            self.mark_index = index  # Kept in step with the row on screen (mark_target uses the row).
+            self._sequence_done = False
         self._following_selection = True
         try:
             self.table.selectRow(index)
@@ -1264,7 +1323,7 @@ class MainWindow(QMainWindow):
         self.project.duration = value
         self.changed()
 
-    def cue_time(self, key, value):
+    def cue_time(self, key, value, group=True):
         cue = self.selected_cue()
         if self.loading or cue is None:
             return
@@ -1278,12 +1337,14 @@ class MainWindow(QMainWindow):
         if key == 'paint_end' and not cue.paint_start < value <= cue.duration:
             self.refresh_panels()
             return
-        self.record(('cue', cue.uid, key))
+        # Spin-box steps share one undo step; each Ctrl+M/Ctrl+F in zoom is its own (group=False).
+        self.record(('cue', cue.uid, key) if group else None)
         previous_duration = cue.duration
         old_paint_start = cue.paint_start
         old_paint_end = cue.duration if cue.paint_end is None else cue.paint_end
         setattr(cue, key, value)
         if key in ('start', 'end'):
+            cue.timed = True
             retime_cue(cue, previous_duration)
         else:
             clamp_cue(cue)
@@ -1315,6 +1376,7 @@ class MainWindow(QMainWindow):
                 self.record()
                 previous_duration = cue.duration
                 setattr(cue, 'start' if col == 1 else 'end', value)
+                cue.timed = True
                 retime_cue(cue, previous_duration)
             else:
                 track = 'original' if col == 3 else 'translation'
@@ -1367,7 +1429,8 @@ class MainWindow(QMainWindow):
         start = min(self.position, max(0, self.project.duration - .1))
         # Insert in time order: Ctrl+M and linked navigation walk the list from top to bottom.
         row = next((i for i, c in enumerate(self.project.cues) if c.start > start), len(self.project.cues))
-        self.project.cues.insert(row, Cue(start=start, end=min(self.project.duration, start+3), original=tr('Nueva frase')))
+        self.project.cues.insert(row, Cue(start=start, end=min(self.project.duration, start+3), original=tr('Nueva frase'),
+                                          timed=False))
         self.changed(tables=True)
         self.table.selectRow(row)
         self.refresh_panels()
@@ -1394,7 +1457,9 @@ class MainWindow(QMainWindow):
         i = self.selected_index()
         if 0 <= i < len(self.project.cues):
             self.record()
+            old_uids = [cue.uid for cue in self.project.cues]
             del self.project.cues[i]
+            self.remap_marking(old_uids)
             self.changed(tables=True, panels=True)
 
     def offset_cues(self):
@@ -1421,6 +1486,7 @@ class MainWindow(QMainWindow):
         self.record()
         previous_duration = cue.duration
         setattr(cue, edge, round(value, 3))
+        cue.timed = True
         retime_cue(cue, previous_duration)
         self.changed(tables=True, panels=True)
 
@@ -1679,26 +1745,84 @@ class MainWindow(QMainWindow):
                 span.color, span.lift, span.scale = '', None, None
             self.changed(panels=True)
 
+    def snapshot(self):
+        """Undo entry: the project plus where marking stood (from_dict ignores the extra key)."""
+        data = copy.deepcopy(to_dict(self.project))
+        data['_marking'] = self.marking_state()
+        return data
+
+    def marking_state(self):
+        """Ctrl+M sequence, selection and pinned row, by phrase identity (uid), not position."""
+        uids = [cue.uid for cue in self.project.cues]
+        uid = lambda i: uids[i] if 0 <= i < len(uids) else None
+        return {'next': uid(self.mark_index), 'past_end': self.mark_index >= len(uids), 'last': uid(self.last_marked),
+                'done': self._sequence_done, 'pinned': self._pinned_uid, 'selected': uid(self.selected_index())}
+
+    def restore_marking(self, state):
+        """Put the Ctrl+M sequence and selection back as they were when a snapshot was taken."""
+        if not state:
+            self.reset_marking()
+            return
+        uids = [cue.uid for cue in self.project.cues]
+        index = lambda u: uids.index(u) if u in uids else -1
+        self.last_marked = index(state['last'])
+        nxt = index(state['next'])
+        self.mark_index = nxt if nxt >= 0 else (len(uids) if state['past_end'] else 0)
+        self._sequence_done = state['done']
+        self._pinned_uid = state['pinned'] if state['pinned'] in uids else None
+        row = index(state['selected'])
+        if row >= 0 and row != self.selected_index():
+            self.loading = True
+            try:
+                self.table.selectRow(row)
+            finally:
+                self.loading = False
+            self.waveform.selected = row
+            self.refresh_panels()
+            self.update_labels()
+        self.update_mark_target()
+
+    def remap_marking(self, old_uids):
+        """After rows were removed or inserted, keep a running sequence on the same phrases."""
+        uids = [cue.uid for cue in self.project.cues]
+        if self.last_marked >= 0:
+            last = old_uids[self.last_marked] if self.last_marked < len(old_uids) else None
+            self.last_marked = uids.index(last) if last in uids else -1  # Its phrase is gone: end the sequence.
+        nxt = old_uids[self.mark_index] if self.mark_index < len(old_uids) else None
+        if nxt in uids:
+            self.mark_index = uids.index(nxt)
+        else:  # The target itself was removed: the phrase after it takes its turn.
+            following = next((u for u in old_uids[self.mark_index+1:] if u in uids), None)
+            self.mark_index = uids.index(following) if following else len(uids)
+        if self._pinned_uid not in uids:
+            self._pinned_uid = None
+
     def undo(self):
         if self.history:
             self._history_group = None
-            self.future.append(copy.deepcopy(to_dict(self.project)))
-            self.project = from_dict(self.history.pop(), strict=False)
+            self.future.append(self.snapshot())
+            data = self.history.pop()
+            self.project = from_dict(data, strict=False)
             self.dirty = True
             self.refresh_all()
+            self.restore_marking(data.get('_marking'))
             self.set_media_source()
 
     def redo(self):
         if self.future:
             self._history_group = None
-            self.history.append(copy.deepcopy(to_dict(self.project)))
-            self.project = from_dict(self.future.pop(), strict=False)
+            self.history.append(self.snapshot())
+            data = self.future.pop()
+            self.project = from_dict(data, strict=False)
             self.dirty = True
             self.refresh_all()
+            self.restore_marking(data.get('_marking'))
             self.set_media_source()
 
     def set_zoom(self, value):
         self.waveform.zoom = value
+        self._pinned_uid = None
+        self._sequence_done = False
         if value:
             # Local boundary editing must not inherit a previous Ctrl+M sequence.
             self.mark_index = max(0, self.selected_index())
@@ -1720,6 +1844,7 @@ class MainWindow(QMainWindow):
         elif self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState and not self._warming_video:
             self.set_position(self.player.position() / 1000)
         self.update_play_button()
+        self.update_mark_target()
 
     def update_play_button(self, button=None):
         """Swap icon and caption only when the playback state changes."""
@@ -1838,10 +1963,10 @@ class MainWindow(QMainWindow):
             return
         if not self.project.cues:
             return
-        if self.mark_index >= len(self.project.cues):
+        index = self.mark_target()
+        if index is None:
             self.statusBar().showMessage(tr('Todas las frases están iniciadas. Marca el final o selecciona una fila para volver a marcar.'), 6000)
             return
-        index = min(self.mark_index, len(self.project.cues)-1)
         t = self.current_time()
         if t >= self.project.duration - .05:
             self.statusBar().showMessage(tr('Retrocede: la frase necesita al menos 0.05 s.'), 5000)
@@ -1854,6 +1979,7 @@ class MainWindow(QMainWindow):
             previous = self.project.cues[self.last_marked]
             previous_duration = previous.duration
             previous.end = t
+            previous.timed = True
             retime_cue(previous, previous_duration)
         cue = self.project.cues[index]
         # Keep the provisional duration until the next mark closes it. Shrinking it here and
@@ -1861,6 +1987,7 @@ class MainWindow(QMainWindow):
         previous_duration = cue.duration
         cue.start = t
         cue.end = min(self.project.duration, t + previous_duration)
+        cue.timed = True
         retime_cue(cue, previous_duration)
         self.changed(tables=True)
         self.loading = True
@@ -1868,11 +1995,14 @@ class MainWindow(QMainWindow):
         self.loading = False
         self.last_marked = index
         self.mark_index = index + 1
+        self._pinned_uid = None
         self.waveform.selected = self.selected_index()
         self.refresh_panels()
         self.update_labels()
         if self.mark_index >= len(self.project.cues):
             self.statusBar().showMessage(tr('Última frase iniciada. Usa «Marcar final» al terminar.'), 6000)
+        else:
+            self.statusBar().showMessage(tr('Frase {0}: inicio en {1}.').format(index+1, time_text(t)), 4000)
 
     def mark_end(self):
         if self.zoom.isChecked():
@@ -1889,9 +2019,14 @@ class MainWindow(QMainWindow):
         self.record()
         previous_duration = cue.duration
         cue.end = t
+        cue.timed = True
         retime_cue(cue, previous_duration)
         self.changed(tables=True, panels=True)
+        # Closing the last started phrase ends the pass: an extra Ctrl+M must not re-mark it.
+        self._sequence_done = self._sequence_done or (
+            self.last_marked >= 0 and self.mark_index >= len(self.project.cues))
         self.last_marked = -1
+        self.statusBar().showMessage(tr('Frase {0}: final en {1}.').format(index+1, time_text(t)), 4000)
 
     def mark_selected_edge(self, edge):
         """In phrase zoom, edit only the selected cue's boundary on the real clock."""
@@ -1901,8 +2036,12 @@ class MainWindow(QMainWindow):
         self.mark_index = self.selected_index()
         self.last_marked = -1
         value = self.current_time()
-        if getattr(cue, edge) != value:
-            self.cue_time(edge, value)
+        if getattr(cue, edge) != value or not cue.timed:  # Marking the placeholder time confirms it.
+            before = (cue.start, cue.end, cue.timed)
+            self.cue_time(edge, value, group=False)
+            if (cue.start, cue.end, cue.timed) != before:
+                caption = tr('Frase {0}: inicio en {1}.') if edge == 'start' else tr('Frase {0}: final en {1}.')
+                self.statusBar().showMessage(caption.format(self.selected_index()+1, time_text(value)), 4000)
 
     def video_frame(self, frame, generation=None):
         if generation is not None and generation != self._source_generation:
@@ -2132,7 +2271,7 @@ class MainWindow(QMainWindow):
         self.history.clear()
         self.future.clear()
         self.dirty = False
-        self.mark_index, self.last_marked = 0, -1
+        self.reset_marking()
         self.reset_text_editors()
         self.refresh_all()
         self.set_media_source(force=True)
@@ -2147,7 +2286,7 @@ class MainWindow(QMainWindow):
         self.history.clear()
         self.future.clear()
         self.dirty = False
-        self.mark_index, self.last_marked = 0, -1
+        self.reset_marking()
         self.adopt_duration = False
         if self.project.style.match_media:
             before = (project.style.width, project.style.height, project.style.fps)
@@ -2238,7 +2377,7 @@ class MainWindow(QMainWindow):
             else:
                 self.project.cues.extend(dialog.cues)
                 self.project.cues.sort(key=lambda c: c.start)
-            self.mark_index, self.last_marked = 0, -1
+            self.reset_marking()
             self.changed(tables=True, panels=True)
             self.table.selectRow(0)
 
@@ -2286,6 +2425,7 @@ class MainWindow(QMainWindow):
                 self.project = project
                 self.path = None
                 self.dirty = True
+                self.reset_marking()
                 if self.project.style.match_media:
                     self.adopt_base_video()
                 self.reset_text_editors(restore=True)

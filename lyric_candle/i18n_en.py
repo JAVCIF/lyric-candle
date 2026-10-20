@@ -5,6 +5,10 @@ tests/test_i18n.py checks that every tr() string in the code has an entry here.
 """
 
 EN = {
+    'Tiempo provisional: márcalo con Ctrl+M o edítalo para confirmarlo.': 'Provisional time: mark it with Ctrl+M or edit it to confirm it.',
+    'Ctrl+M marcará esta frase.': 'Ctrl+M will mark this line.',
+    'Frase {0}: inicio en {1}.': 'Line {0}: start at {1}.',
+    'Frase {0}: final en {1}.': 'Line {0}: end at {1}.',
     'Mantiene seleccionada esta frase. Marcar inicio/final ajusta solo sus límites, sin avanzar.':
         'Keeps this line selected. Mark start/end adjusts only its boundaries, without advancing.',
     'Marcar inicio  [Ctrl+M]': 'Mark start  [Ctrl+M]',

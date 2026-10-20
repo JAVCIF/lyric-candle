@@ -476,7 +476,9 @@ class Waveform(QWidget):
                     continue
                 selected = i == self.selected
                 p.fillRect(QRectF(a, 23, b-a, self.height()-23), QColor(99, 184, 255, 38 if selected else 9))
-                p.setPen(QPen(QColor('#ffe49c' if selected else '#3e5675'), 2 if selected else 1))
+                # Provisional (unmarked) phrases: dashed boundaries.
+                p.setPen(QPen(QColor('#ffe49c' if selected else '#3e5675'), 2 if selected else 1,
+                              Qt.PenStyle.SolidLine if cue.timed else Qt.PenStyle.DashLine))
                 p.drawLine(QPointF(a, 23), QPointF(a, self.height()))
                 if selected:
                     p.drawLine(QPointF(b, 23), QPointF(b, self.height()))
