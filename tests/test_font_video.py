@@ -10,7 +10,7 @@ import time
 import unittest
 from unittest.mock import patch
 from PySide6.QtCore import Qt,QPoint
-from PySide6.QtGui import QFont,QFontDatabase,QImage,QColor
+from PySide6.QtGui import QFont,QFontDatabase,QImage,QColor,QCursor
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtMultimedia import QMediaPlayer
@@ -42,18 +42,32 @@ class FontAuditionTests(unittest.TestCase):
         self.second=next((f for f in families if f=='DejaVu Serif'),families[-1])
         w.project.style.font=self.first
         w.refresh_all();w.seek(1);w.show();w.tabs.setCurrentIndex(2)
+        w.activateWindow();w.raise_()
+        self.assertTrue(QTest.qWaitForWindowExposed(w))
         w.history.clear();w.future.clear();w.dirty=False;APP.processEvents()
     def tearDown(self):
         self.w.font_combo.hidePopup()
         self.w.dirty=False;self.w.close();APP.processEvents()
     def hover_second(self):
         combo=self.w.font_combo
-        combo.showPopup();APP.processEvents()
+        combo.showPopup();QTest.qWait(30)
         index=combo.model().index(combo.findText(self.second),0)
-        combo.view().scrollTo(index);APP.processEvents()
-        pos=combo.view().visualRect(index).center()
-        QTest.mouseMove(combo.view().viewport(),QPoint(2,2));APP.processEvents()
-        QTest.mouseMove(combo.view().viewport(),pos);APP.processEvents()
+        pos=self.move_to_font(combo.view(),index)
+        return pos
+    def move_to_font(self,view,index):
+        view.scrollTo(index);QTest.qWait(30)
+        pos=view.visualRect(index).center()
+        self.assertTrue(view.viewport().rect().contains(pos))
+        QTest.mouseMove(view.viewport(),QPoint(2,2),20);QTest.qWait(30)
+        QTest.mouseMove(view.viewport(),pos,20)
+        # Windows delivers native cursor motion asynchronously; one processEvents()
+        # can still leave the previous font under the cursor in the event queue.
+        deadline=time.monotonic()+2
+        while self.w.preview.font_override!=self.second and time.monotonic()<deadline:
+            QTest.qWait(10)
+        self.assertEqual(self.w.preview.font_override,self.second,
+                         f'cursor={QCursor.pos()} target={view.viewport().mapToGlobal(pos)} '
+                         f'item={index.data()} rect={view.viewport().rect()}')
         return pos
     def test_mouse_hover_renders_temporarily_without_mutating_project(self):
         before=to_dict(self.w.project)
@@ -102,12 +116,11 @@ class FontAuditionTests(unittest.TestCase):
         prefix=self.second[:3]
         QTest.keyClicks(edit,prefix);APP.processEvents()
         combo.completer().setCompletionPrefix(prefix)
-        combo.completer().complete();APP.processEvents()
+        combo.completer().complete();QTest.qWait(30)
         popup=combo.completer().popup()
         row=next(i for i in range(popup.model().rowCount()) if popup.model().index(i,0).data()==self.second)
-        index=popup.model().index(row,0);popup.scrollTo(index);APP.processEvents()
-        QTest.mouseMove(popup.viewport(),QPoint(2,2));APP.processEvents()
-        QTest.mouseMove(popup.viewport(),popup.visualRect(index).center());APP.processEvents()
+        index=popup.model().index(row,0)
+        self.move_to_font(popup,index)
         self.assertEqual(self.w.preview.font_override,self.second)
         self.assertEqual(self.w.project.style.font,self.first)
         QTest.keyClick(popup,Qt.Key.Key_Escape);APP.processEvents()
