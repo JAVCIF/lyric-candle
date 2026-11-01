@@ -5,7 +5,7 @@
 ![Pruebas](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Compilación Windows](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **1.0.0-beta**.
+**Editor de escritorio para sincronizar, traducir y animar letras de canciones.** Desarrollado con Python y PySide6. Versión actual: **1.0.1-beta**.
 
 ![Editor Lyric Candle](docs/assets/editor-es.png)
 
@@ -38,12 +38,12 @@ Si no inicia, usa `scripts\windows\DIAGNOSTICO.bat`. Consulta también la [guía
 
 ### Ejecutable de Windows
 
-Descarga la **[1.0.0-beta desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.0-beta)**:
+Descarga la **[1.0.1-beta desde Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.1-beta)**:
 
 - **ZIP portable:** extrae todo y abre `LyricCandle/LyricCandle.exe`. Conserva la carpeta completa. Los ajustes quedan en `data/` junto al EXE.
 - **EXE instalador:** instala para tu usuario, con español/inglés, accesos directos y desinstalador. Los ajustes usan la carpeta de datos del usuario.
 
-Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/1.0.0-beta.md). Puedes compilar con `scripts\windows\CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
+Ambos son para Windows 10/11 x64 y no requieren Python. Cada descarga incluye su SHA-256. Consulta las [notas bilingües del release](docs/releases/1.0.1-beta.md). Puedes compilar con `scripts\windows\CREAR_EXE.bat` o las [instrucciones de desarrollo](docs/DEVELOPMENT.es.md#compilar-en-windows).
 
 ### Agregar FFmpeg
 
@@ -88,7 +88,7 @@ Instala `ffmpeg` y `ffprobe` por separado. El código es multiplataforma, pero e
 
 ## Estado y límites
 
-La 1.0.0-beta tiene 181 pruebas automáticas, incluidas exportaciones reales. CI ejecuta Ruff y la suite en Python 3.12 (Linux y Windows), Python 3.14 con el PySide6 más nuevo permitido y Python 3.10 con PySide6 6.8.3. Ejecuta la suite completa con `scripts\windows\PROBAR.bat` o `python -m unittest discover -s tests`. Los releases se publican solo cuando pasan CI y las comprobaciones de paquetes de Windows.
+La 1.0.1-beta tiene 207 pruebas automáticas, incluidas exportaciones reales. CI ejecuta Ruff y la suite en Python 3.12 (Linux y Windows), Python 3.14 con el PySide6 más nuevo permitido y Python 3.10 con PySide6 6.8.3. Ejecuta la suite completa con `scripts\windows\PROBAR.bat` o `python -m unittest discover -s tests`. Los releases se publican solo cuando pasan CI y las comprobaciones de paquetes de Windows.
 
 Los indicadores de arriba muestran el resultado de CI del repositorio. Es una beta: comprueba tus códecs, fuentes, salida de audio y entorno de Windows antes de usarla para un trabajo completo.
 

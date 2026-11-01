@@ -2,7 +2,7 @@
 
 [English overview](README.md) · [Resumen en español](README.es.md)
 
-## Unreleased
+## 1.0.1-beta — 2026-10-31
 
 **English:** rectangular text area. Design → Text area sets the margin of each side, or **Draw on the preview** lets you drag the rectangle the lyrics are laid out in (Esc cancels; **Use the whole canvas** resets it). Alignment, centring and the margin warning follow that area, which also checks the lines fit in its height. New two-line positions: left on top · right below, right on top · left below, and Center · top / bottom (both lines centred but kept at the top and bottom of the area). Full-screen preview: the button next to the speed, F11 or a double click; Space plays or pauses and Esc returns. Projects from 1.0.0 open unchanged. Numeric fields place their text box themselves: with Qt 6.12 it collapsed to 1 px and the numbers disappeared. The app also always uses Qt's Fusion style with its own dark palette, so Windows 11's native style no longer colours selections with the system accent.
 

@@ -14,7 +14,7 @@ from .i18n import tr
 EXPORT_FORMATS = ('mp4', 'source', 'prores_alpha')
 SIDES = ('margin_left', 'margin_top', 'margin_right', 'margin_bottom')
 MIN_TEXT_AREA = 32  # Pixels the text area keeps in each direction, whatever the margins.
-VERSION = '1.0.0-beta'
+VERSION = '1.0.1-beta'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
 

@@ -1,4 +1,8 @@
-# Verificación · 1.0.0-beta
+# Verificación · 1.0.1-beta
+
+## 1.0.1-beta
+
+26 pruebas nuevas llevan la suite a **207**: zona de texto y herramienta de dibujo (14), posiciones nuevas de dos líneas (6), tema y campos numéricos (2) y vista previa en pantalla completa (4). Se ejecutaron junto con los módulos existentes afectados (render, controles de diseño, botones de paso, reproducción, i18n, ProRes, video base) en Python 3.13 + PySide6 6.10.3. La prueba de campos numéricos también se ejecutó con PySide6 6.12.0: falla sin el arreglo (caja de texto de 1 px) y pasa con él. Pasan Ruff y la comprobación de enlaces de la documentación. La suite completa corre en CI en todas las parejas soportadas antes de publicar el release.
 
 ## 1.0.0-beta
 

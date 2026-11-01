@@ -1,4 +1,4 @@
-# Lyric Candle — Beta 1.0.0
+# Lyric Candle — Beta 1.0.1
 
 Editor de escritorio para crear video lyrics con una o dos líneas, traducción, repintado, desvanecimiento y énfasis por sílabas. Proyecto independiente de Sonic Candle. Interfaz en español e inglés.
 

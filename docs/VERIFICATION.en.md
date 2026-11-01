@@ -1,6 +1,10 @@
-# Verification · 1.0.0-beta
+# Verification · 1.0.1-beta
 
 [English](VERIFICATION.en.md) · [Español](VERIFICATION.es.md) · [Home](../README.md)
+
+## 1.0.1-beta
+
+26 new tests bring the suite to **207**: text area and draw tool (14), new two-line positions (6), theme and numeric fields (2) and full-screen preview (4). They ran together with the affected existing modules (rendering, design controls, step buttons, playback, i18n, ProRes, video base) on Python 3.13 + PySide6 6.10.3. The numeric-field test was also run on PySide6 6.12.0, where it fails without the fix (1 px text box) and passes with it. Ruff and the documentation link check pass. The full suite runs in CI on every supported pair before the release is published.
 
 ## 1.0.0-beta
 

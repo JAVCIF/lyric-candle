@@ -5,7 +5,7 @@
 ![Tests](https://github.com/JAVCIF/lyric-candle/actions/workflows/tests.yml/badge.svg)
 ![Windows build](https://github.com/JAVCIF/lyric-candle/actions/workflows/windows-build.yml/badge.svg)
 
-**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **1.0.0-beta**.
+**A desktop lyric video editor for timing, translating and animating lyrics.** Built with Python and PySide6. Current version: **1.0.1-beta**.
 
 ![Lyric Candle editor](docs/assets/editor-en.png)
 
@@ -38,12 +38,12 @@ If the app does not start, run `scripts\windows\DIAGNOSTICO.bat`. See [Troublesh
 
 ### Windows executable
 
-Download **[1.0.0-beta from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.0-beta)**:
+Download **[1.0.1-beta from Releases](https://github.com/JAVCIF/lyric-candle/releases/tag/v1.0.1-beta)**:
 
 - **Portable ZIP:** extract everything and run `LyricCandle/LyricCandle.exe`. Keep the entire folder together. Settings live in `data/` beside the EXE.
 - **Setup EXE:** install for your Windows user, with English/Spanish setup, shortcuts and an uninstaller. Settings use your application data folder.
 
-Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/1.0.0-beta.md). Build locally with `scripts\windows\CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
+Both target Windows 10/11 x64 and need no Python installation. SHA-256 files accompany both downloads. See the [bilingual release notes](docs/releases/1.0.1-beta.md). Build locally with `scripts\windows\CREAR_EXE.bat` or the [developer instructions](docs/DEVELOPMENT.en.md#building-on-windows).
 
 ### Add FFmpeg
 
@@ -88,7 +88,7 @@ Install `ffmpeg` and `ffprobe` separately. The source is cross-platform, but des
 
 ## Status and limits
 
-1.0.0-beta has 181 automated tests, including real exports. CI runs Ruff and the suite on Python 3.12 (Linux and Windows), Python 3.14 with the newest allowed PySide6 and Python 3.10 with PySide6 6.8.3. Run the whole suite with `scripts\windows\PROBAR.bat` or `python -m unittest discover -s tests`. Releases are published only after CI and the Windows package checks pass.
+1.0.1-beta has 207 automated tests, including real exports. CI runs Ruff and the suite on Python 3.12 (Linux and Windows), Python 3.14 with the newest allowed PySide6 and Python 3.10 with PySide6 6.8.3. Run the whole suite with `scripts\windows\PROBAR.bat` or `python -m unittest discover -s tests`. Releases are published only after CI and the Windows package checks pass.
 
 The Actions badges above report repository CI. This is a beta: test your own codecs, fonts, audio output and Windows environment before relying on it for a complete production workflow.
 
