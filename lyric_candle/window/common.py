@@ -1,6 +1,8 @@
 """Theme, file filters and small helpers shared by the window modules."""
 from __future__ import annotations
 
+from PySide6.QtGui import QColor, QPalette
+
 from ..i18n import tr
 from ..model import VERSION
 
@@ -26,6 +28,25 @@ QSlider::handle:horizontal { background:#81c6ff; width:12px; margin:-5px 0; bord
 QStatusBar { color:#9cb0ca; }
 QToolTip { color:#e5edfa; background:#253955; border:1px solid #657b9a; }
 '''
+
+
+def apply_theme(app):
+    """Same look on every system: Fusion plus a dark palette. On Windows 11, Qt 6.7+ otherwise picks
+    its «windows11» style, which ignores parts of the style sheet: spin box numbers slide under the
+    − / + buttons and selections take the system accent colour."""
+    app.setStyle('Fusion')
+    palette = QPalette()
+    for role, colour in ((QPalette.ColorRole.Window, '#0e1623'), (QPalette.ColorRole.WindowText, '#e3eaf6'),
+                         (QPalette.ColorRole.Base, '#162236'), (QPalette.ColorRole.AlternateBase, '#162337'),
+                         (QPalette.ColorRole.Text, '#e3eaf6'), (QPalette.ColorRole.Button, '#20314a'),
+                         (QPalette.ColorRole.ButtonText, '#e3eaf6'), (QPalette.ColorRole.Highlight, '#294c70'),
+                         (QPalette.ColorRole.HighlightedText, '#ffffff'), (QPalette.ColorRole.ToolTipBase, '#253955'),
+                         (QPalette.ColorRole.ToolTipText, '#e5edfa'), (QPalette.ColorRole.PlaceholderText, '#7f93ae'),
+                         (QPalette.ColorRole.Link, '#81c6ff'), (QPalette.ColorRole.BrightText, '#ffffff')):
+        palette.setColor(role, QColor(colour))
+    for role in (QPalette.ColorRole.WindowText, QPalette.ColorRole.Text, QPalette.ColorRole.ButtonText):
+        palette.setColor(QPalette.ColorGroup.Disabled, role, QColor('#677992'))
+    app.setPalette(palette)
 
 
 MEDIA_PATTERNS = '*.mp3 *.wav *.ogg *.flac *.m4a *.aac *.mp4 *.m4v *.mkv *.webm *.mov *.avi *.wmv *.flv *.mpg *.mpeg'

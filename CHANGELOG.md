@@ -4,9 +4,9 @@
 
 ## Unreleased
 
-**English:** rectangular text area. Design → Text area sets the margin of each side, or **Draw on the preview** lets you drag the rectangle the lyrics are laid out in (Esc cancels; **Use the whole canvas** resets it). Alignment, centring and the margin warning follow that area, which also checks the lines fit in its height. Projects from 1.0.0 open unchanged.
+**English:** rectangular text area. Design → Text area sets the margin of each side, or **Draw on the preview** lets you drag the rectangle the lyrics are laid out in (Esc cancels; **Use the whole canvas** resets it). Alignment, centring and the margin warning follow that area, which also checks the lines fit in its height. Projects from 1.0.0 open unchanged. The app now always uses Qt's Fusion style with its own dark palette: on Windows 11 with PySide6 6.7+ the native «windows11» style hid the numbers of numeric fields behind their − / + buttons and coloured selections with the system accent.
 
-**Español:** zona de texto rectangular. Diseño → Zona de texto define el margen de cada lado, o **Dibujar en la vista previa** permite arrastrar el rectángulo donde se acomoda la letra (Esc cancela; **Usar todo el lienzo** lo restablece). La alineación, el centrado y el aviso de márgenes siguen esa zona, que además comprueba que las líneas quepan a lo alto. Los proyectos de la 1.0.0 abren igual.
+**Español:** zona de texto rectangular. Diseño → Zona de texto define el margen de cada lado, o **Dibujar en la vista previa** permite arrastrar el rectángulo donde se acomoda la letra (Esc cancela; **Usar todo el lienzo** lo restablece). La alineación, el centrado y el aviso de márgenes siguen esa zona, que además comprueba que las líneas quepan a lo alto. Los proyectos de la 1.0.0 abren igual. La app usa siempre el estilo Fusion de Qt con su propia paleta oscura: en Windows 11 con PySide6 6.7 o superior, el estilo nativo «windows11» escondía los números de los campos numéricos detrás de sus botones − / + y pintaba las selecciones con el color de acento del sistema.
 
 ## 1.0.0-beta — 2026-10-20
 

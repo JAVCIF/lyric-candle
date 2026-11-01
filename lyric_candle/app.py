@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QMessageBox
 from .i18n import language, resolve, set_language, tr
 from .paths import app_settings, data_dir
 from .widgets import app_icon
-from .window.common import DARK, fps_text, image_filter, media_filter, version_label
+from .window.common import DARK, apply_theme, fps_text, image_filter, media_filter, version_label
 from .window.main_window import MainWindow
 
 # Re-exported for code and tests written against the single-module window.
@@ -28,6 +28,7 @@ def main(smoke_test=False):
     app.setOrganizationName('JAVCIF')
     app.setApplicationName('LyricCandleAlpha')
     app.setWindowIcon(app_icon())
+    apply_theme(app)
     set_language(resolve(app_settings().value('language', 'auto'), QLocale.system().uiLanguages()))
     # Qt's own texts (Yes/No/Save buttons, file and color dialogs) in the same language.
     qt_translator = QTranslator(app)
