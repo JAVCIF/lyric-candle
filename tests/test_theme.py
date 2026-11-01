@@ -1,4 +1,5 @@
-"""1.0.1: the same theme on every system (Windows 11 + Qt 6.7+ would pick the windows11 style)."""
+"""1.0.1: the same theme on every system, and numeric fields that keep their numbers visible
+(Qt 6.12 collapsed the text box of a spin box without native buttons to 1 px)."""
 import os
 
 os.environ.setdefault('QT_QPA_PLATFORM', 'windows' if os.name == 'nt' else 'offscreen')

@@ -214,6 +214,13 @@ class _ExplicitStepButtons:
         self.minus_button.setGeometry(self.width()-58, 3, 26, height)
         self.minus_button.raise_()
         self.plus_button.raise_()
+        # The text field is placed by hand too: with NoButtons and a style sheet padding, Qt 6.12
+        # collapses it to 1 px (numbers invisible). Keep Qt's vertical placement when it is sane.
+        edit = self.lineEdit()
+        rect = edit.geometry()
+        top, height = (rect.y(), rect.height()) if rect.height() >= 12 else (3, max(12, self.height() - 6))
+        left = 5  # 1 px border + 4 px padding of the theme.
+        edit.setGeometry(left, top, max(1, self.minus_button.x() - 4 - left), height)
 
     def _update_steps(self, *_):
         if not hasattr(self, 'plus_button'):
@@ -225,6 +232,15 @@ class _ExplicitStepButtons:
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self._layout_steps()
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self._layout_steps()
+
+    def changeEvent(self, event):
+        super().changeEvent(event)  # Style or font changes make Qt place the text field again.
+        if event.type() in (QEvent.Type.StyleChange, QEvent.Type.FontChange):
+            self._layout_steps()
 
     def setRange(self, minimum, maximum):
         super().setRange(minimum, maximum)
