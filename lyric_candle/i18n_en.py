@@ -271,8 +271,8 @@ EN = {
     'Arrastra para marcar dónde va la letra · Esc cancela': 'Drag to mark where the lyrics go · Esc cancels',
     'Zona {0} × {1} px': 'Area {0} × {1} px',
     'Distancia vertical entre las dos líneas centradas.': 'Vertical distance between the two centered lines.',
-    'Solo se usa con «Dos líneas» en posición «Centro». A izquierda/derecha cada línea va pegada a su margen (arriba y abajo).':
-        'Only used with "Two lines" in the "Center" position. On the left/right each line sits on its own margin (top and bottom).',
+    'Solo se usa con «Dos líneas» en «Centro · principal arriba». En las demás posiciones cada línea va pegada a su margen (arriba y abajo).':
+        'Only used with "Two lines" in "Center · main on top". In the other positions each line sits on its own margin (top and bottom).',
     'Relleno inicial': 'Initial fill',
     'Relleno repintado': 'Repainted fill',
     'Contorno': 'Outline',
@@ -287,6 +287,9 @@ EN = {
     'Izquierda · arriba / abajo': 'Left · top / bottom',
     'Derecha · arriba / abajo': 'Right · top / bottom',
     'Centro · principal arriba': 'Center · main on top',
+    'Izquierda arriba · derecha abajo': 'Left on top · right below',
+    'Derecha arriba · izquierda abajo': 'Right on top · left below',
+    'Centro · arriba / abajo': 'Center · top / bottom',
     'Lienzo y fondo': 'Canvas and background',
     'Resolución': 'Resolution',
     'personalizada': 'custom',

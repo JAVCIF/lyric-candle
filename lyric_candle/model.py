@@ -404,7 +404,9 @@ class ProjectIssues(ValueError):
 
 
 POSITIONS = {'one': ('left_top', 'left_bottom', 'right_top', 'right_bottom', 'center'),
-             'two': ('left_split', 'right_split', 'center')}
+             # *_split: main line at the top of the text area, secondary at the bottom.
+             # left_right_split / right_left_split: crossed sides (main / secondary); center: stacked.
+             'two': ('left_split', 'right_split', 'left_right_split', 'right_left_split', 'center_split', 'center')}
 
 
 def _filtered(cls, data):

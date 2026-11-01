@@ -383,7 +383,9 @@ class StyleMixin:
                      (tr('Superior derecha'), 'right_top'), (tr('Inferior derecha'), 'right_bottom'), (tr('Centro'), 'center')]
         else:
             items = [(tr('Izquierda · arriba / abajo'), 'left_split'), (tr('Derecha · arriba / abajo'), 'right_split'),
-                     (tr('Centro · principal arriba'), 'center')]
+                     (tr('Izquierda arriba · derecha abajo'), 'left_right_split'),
+                     (tr('Derecha arriba · izquierda abajo'), 'right_left_split'),
+                     (tr('Centro · arriba / abajo'), 'center_split'), (tr('Centro · principal arriba'), 'center')]
         for caption, data in items:
             self.position_combo.addItem(caption, data)
         idx = self.position_combo.findData(self.project.style.position)
@@ -400,7 +402,9 @@ class StyleMixin:
         if key == 'layout':
             pos = self.project.style.position
             if value == 'one':
-                self.project.style.position = {'left_split': 'left_top', 'right_split': 'right_top'}.get(pos, 'center')
+                # Crossed positions keep the main line's side.
+                self.project.style.position = ('left_top' if pos.startswith('left') else
+                                               'right_top' if pos.startswith('right') else 'center')
             else:
                 self.project.style.position = 'left_split' if pos.startswith('left') else 'right_split' if pos.startswith('right') else 'center'
         self.changed(panels=True)

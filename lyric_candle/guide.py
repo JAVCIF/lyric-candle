@@ -65,7 +65,8 @@ entre partes (<code>vuel|ve a bri|llar</code>). <b>Repetir en frases</b> marca l
 <h2>4 · Diseño y video base</h2>
 <ul>
 <li>Una o dos líneas, posición, fuente (pasa el mouse por la lista para probarla), tamaños, colores y contorno.
-<b>Separación</b> solo se usa con dos líneas centradas.</li>
+Con dos líneas hay posiciones cruzadas (izquierda/derecha) y <b>Centro · arriba / abajo</b>.
+<b>Separación</b> solo se usa con <b>Centro · principal arriba</b>.</li>
 <li><b>Usar resolución y FPS del video base</b> ajusta el lienzo al video cargado (también 23.976 o 29.97 fps).</li>
 <li>El fondo puede ser degradado, imagen o el propio video.</li>
 <li><b>Zona de texto</b>: un margen para los cuatro lados, uno por lado, o <b>Dibujar en la vista previa</b> para arrastrar
@@ -160,7 +161,8 @@ between parts (<code>shi|ning a|gain</code>). <b>Repeat in lines</b> marks the s
 <h2>4 · Design and base video</h2>
 <ul>
 <li>One or two lines, position, font (hover over the list to try it), sizes, colors and outline.
-<b>Spacing</b> only applies to two centered lines.</li>
+Two lines can be crossed (left/right) or use <b>Center · top / bottom</b>.
+<b>Spacing</b> only applies to <b>Center · main on top</b>.</li>
 <li><b>Use base video resolution and FPS</b> matches the canvas to the loaded video (23.976 or 29.97 fps too).</li>
 <li>The background can be a gradient, an image or the video itself.</li>
 <li><b>Text area</b>: one margin for all four sides, one per side, or <b>Draw on the preview</b> to drag the rectangle

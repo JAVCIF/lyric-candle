@@ -61,6 +61,7 @@ Distribuciones:
 - **Una línea:** superior/inferior izquierda, superior/inferior derecha o centro. Puedes mostrar original o traducción como principal. Solo se usa el tamaño principal.
 - **Dos líneas:** izquierda o derecha con una arriba y otra abajo; o ambas en el centro, con la principal encima. Tamaños principal/secundario independientes.
 - Izquierda comparte margen izquierdo; derecha comparte margen derecho; centro comparte eje. Las longitudes diferentes no alteran esos anclajes.
+- Con dos líneas también hay posiciones cruzadas (**izquierda arriba · derecha abajo** y **derecha arriba · izquierda abajo**) y **Centro · arriba / abajo**, que centra ambas líneas pero las deja separadas arriba y abajo. **Centro · principal arriba** las junta en el medio con la **Separación** elegida.
 - **Diseño → Zona de texto** define dónde se acomoda la letra: «Margen» aplica a los cuatro lados; Izquierda, Arriba, Derecha y Abajo lo cambian por lado; **Dibujar en la vista previa** permite arrastrar el rectángulo directamente (Esc cancela). Sirve para videos 4:3 o con franjas negras. **Usar todo el lienzo** vuelve al margen único. La línea punteada de **Guías** muestra la zona actual.
 
 La frase nunca se divide automáticamente en renglones. Si no cabe, aparece un aviso. Reduce su tamaño o repártela en frases distintas. Las guías de márgenes solo aparecen en el editor; no se exportan.

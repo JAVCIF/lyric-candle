@@ -65,16 +65,22 @@ def visibility(cue, t, style):
     return clamp(min(inside, outside))
 
 
+def line_sides(position):
+    """Horizontal anchor of the main and the secondary line."""
+    crossed = {'left_right_split': ('left', 'right'), 'right_left_split': ('right', 'left')}
+    if position in crossed:
+        return crossed[position]
+    side = 'left' if position.startswith('left') else 'right' if position.startswith('right') else 'center'
+    return side, side
+
+
 def line_positions(style, widths, ascents, descents):
     """Aligned anchors depend on layout and font metrics, never on animated bounds."""
     x0, y0, x1, y1 = text_area(style)
     position = style.position
-    if position.startswith('left'):
-        xs = [x0 for _ in widths]
-    elif position.startswith('right'):
-        xs = [x1 - width for width in widths]
-    else:
-        xs = [x0 + (x1 - x0 - width) / 2 for width in widths]
+    xs = []
+    for side, width in zip(line_sides(position), widths):
+        xs.append(x0 if side == 'left' else x1 - width if side == 'right' else x0 + (x1 - x0 - width) / 2)
     if len(widths) == 1:
         if position.endswith('top'):
             ys = [y0 + ascents[0]]

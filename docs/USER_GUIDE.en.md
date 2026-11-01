@@ -34,7 +34,7 @@ The importer preserves punctuation and symbols; it does not detect languages or 
 | One line | Top/bottom left, top/bottom right, center | Primary size |
 | Two lines | Left or right split between top/bottom; centered stack | Primary and secondary sizes |
 
-Choose which language is primary. In two-line mode it is above the secondary line. Left/right lines share their respective margin; centered lines share the same axis even when their lengths differ. **Spacing** applies only to two centered lines. Text is not automatically wrapped: split an overlong phrase, edit it or reduce its size when the margin warning appears.
+Choose which language is primary. In two-line mode it is above the secondary line. Left/right lines share their respective margin; centered lines share the same axis even when their lengths differ. Two lines can also be crossed (**left on top · right below**, **right on top · left below**) or use **Center · top / bottom**, which centres both lines but keeps them apart at the top and bottom. **Spacing** applies only to **Center · main on top**, which stacks them in the middle. Text is not automatically wrapped: split an overlong phrase, edit it or reduce its size when the margin warning appears.
 
 **Design → Text area** sets where the lyrics are laid out: **Margin** applies to all four sides; Left, Top, Right and Bottom change one side; **Draw on the preview** lets you drag the rectangle directly (Esc cancels). Useful for 4:3 or letterboxed videos. **Use the whole canvas** goes back to a single margin. The dashed **Guides** line shows the current area.
 

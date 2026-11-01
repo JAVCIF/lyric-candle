@@ -389,8 +389,8 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
         stacked = s.layout == 'two' and s.position == 'center'
         self.style_controls['gap'].setEnabled(stacked)
         self.style_controls['gap'].setToolTip(tr('Distancia vertical entre las dos líneas centradas.') if stacked else
-                                              tr('Solo se usa con «Dos líneas» en posición «Centro». A izquierda/derecha '
-                                              'cada línea va pegada a su margen (arriba y abajo).'))
+                                              tr('Solo se usa con «Dos líneas» en «Centro · principal arriba». En las demás '
+                                              'posiciones cada línea va pegada a su margen (arriba y abajo).'))
         advanced = s.mode == 'advanced'
         for name in ('repaint', 'fade', 'lift', 'scale', 'effect_color'):
             self.style_controls[name].setEnabled(advanced)
