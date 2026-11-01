@@ -68,6 +68,8 @@ entre partes (<code>vuel|ve a bri|llar</code>). <b>Repetir en frases</b> marca l
 <b>Separación</b> solo se usa con dos líneas centradas.</li>
 <li><b>Usar resolución y FPS del video base</b> ajusta el lienzo al video cargado (también 23.976 o 29.97 fps).</li>
 <li>El fondo puede ser degradado, imagen o el propio video.</li>
+<li><b>Zona de texto</b>: un margen para los cuatro lados, uno por lado, o <b>Dibujar en la vista previa</b> para arrastrar
+el rectángulo donde va la letra. Ideal con videos 4:3 o con franjas negras; <b>Usar todo el lienzo</b> lo deshace.</li>
 </ul>
 
 <h2>5 · Guardar y exportar</h2>
@@ -161,6 +163,8 @@ between parts (<code>shi|ning a|gain</code>). <b>Repeat in lines</b> marks the s
 <b>Spacing</b> only applies to two centered lines.</li>
 <li><b>Use base video resolution and FPS</b> matches the canvas to the loaded video (23.976 or 29.97 fps too).</li>
 <li>The background can be a gradient, an image or the video itself.</li>
+<li><b>Text area</b>: one margin for all four sides, one per side, or <b>Draw on the preview</b> to drag the rectangle
+the lyrics go in. Great for 4:3 or letterboxed videos; <b>Use the whole canvas</b> undoes it.</li>
 </ul>
 
 <h2>5 · Save and export</h2>

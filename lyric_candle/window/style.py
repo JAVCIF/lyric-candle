@@ -10,7 +10,10 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
     QFormLayout,
+    QGridLayout,
     QGroupBox,
+    QHBoxLayout,
+    QLabel,
     QPushButton,
     QVBoxLayout,
 )
@@ -18,6 +21,7 @@ from PySide6.QtWidgets import (
 from .. import media as media_tools
 from ..i18n import tr
 from ..media import canvas_size, describe_source, frame_rate, stream_info
+from ..model import SIDES, side_margins
 from ..widgets import ColorButton, HoverFontComboBox, StepSpinBox
 from .common import FPS_PRESETS, RESOLUTIONS, fps_text
 
@@ -46,7 +50,7 @@ class StyleMixin:
         self.font_preview_note = self.help_label(tr('Pasa el mouse por una fuente para probarla. Clic para aplicar; Esc para cancelar.'))
         form.addRow(self.font_preview_note)
         for key, caption, lo, hi in [('size', tr('Tamaño principal'), 8, 180), ('secondary_size', tr('Tamaño secundario'), 8, 180),
-                                     ('margin', tr('Margen (px)'), 0, 240), ('gap', tr('Separación (px)'), 0, 180)]:
+                                     ('gap', tr('Separación (px)'), 0, 180)]:
             spin = StepSpinBox()
             spin.setRange(lo, hi)
             spin.setKeyboardTracking(False)
@@ -64,6 +68,7 @@ class StyleMixin:
         form.addRow(tr('Grosor del contorno'), width)
         layout.addLayout(form)
         layout.addWidget(self.help_label(tr('Principal: arriba en dos líneas; secundario: abajo. Izquierda/derecha comparten margen; centrado comparte eje. Las animaciones nunca redistribuyen las letras.')))
+        layout.addWidget(self.make_text_area_group())
         group = QGroupBox(tr('Lienzo y fondo'))
         gf = QFormLayout(group)
         # Item data are strings: QComboBox.findData compares Python tuples by identity.
@@ -110,6 +115,87 @@ class StyleMixin:
         layout.addWidget(self.media_label)
         layout.addStretch()
         return scroll
+
+    # --- Text area ----------------------------------------------------------------------
+    def make_text_area_group(self):
+        group = QGroupBox(tr('Zona de texto'))
+        box = QVBoxLayout(group)
+        form = QFormLayout()
+        spin = StepSpinBox()
+        spin.setRange(0, 240)
+        spin.setKeyboardTracking(False)
+        spin.setToolTip(tr('Mismo margen en los cuatro lados. Cambiarlo descarta la zona dibujada o los márgenes por lado.'))
+        spin.valueChanged.connect(lambda v: self.set_style('margin', v))
+        self.style_controls['margin'] = spin
+        form.addRow(tr('Margen (px)'), spin)
+        box.addLayout(form)
+        grid = QGridLayout()
+        self.side_spins = {}
+        captions = {'margin_left': tr('Izquierda'), 'margin_top': tr('Arriba'),
+                    'margin_right': tr('Derecha'), 'margin_bottom': tr('Abajo')}
+        cells = {'margin_left': (0, 0), 'margin_right': (0, 2), 'margin_top': (1, 0), 'margin_bottom': (1, 2)}
+        for key in SIDES:
+            spin = StepSpinBox()
+            spin.setRange(0, 2160)
+            spin.setKeyboardTracking(False)
+            spin.valueChanged.connect(lambda v, k=key: self.set_side_margin(k, v))
+            self.side_spins[key] = spin
+            row, column = cells[key]
+            grid.addWidget(QLabel(captions[key]), row, column)
+            grid.addWidget(spin, row, column + 1)
+        box.addLayout(grid)
+        buttons = QHBoxLayout()
+        self.area_button = QPushButton(tr('Dibujar en la vista previa'))
+        self.area_button.setCheckable(True)
+        self.area_button.setToolTip(tr('Arrastra un rectángulo sobre la vista previa para elegir dónde va la letra. Esc cancela.'))
+        self.area_button.toggled.connect(self.area_tool_toggled)
+        buttons.addWidget(self.area_button)
+        reset = QPushButton(tr('Usar todo el lienzo'))
+        reset.setToolTip(tr('Vuelve al mismo margen en los cuatro lados.'))
+        reset.clicked.connect(self.reset_text_area)
+        buttons.addWidget(reset)
+        box.addLayout(buttons)
+        box.addWidget(self.help_label(tr('Útil con videos 4:3 o con franjas negras: dibuja la zona sobre la imagen y la letra '
+                                         'se alinea y centra dentro de ella. La línea punteada muestra la zona actual.')))
+        self.preview.areaDrawn.connect(self.text_area_drawn)
+        self.preview.areaToolEnded.connect(lambda: self.area_button.setChecked(False))
+        return group
+
+    def refresh_text_area(self):
+        for key, value in zip(SIDES, side_margins(self.project.style)):
+            self.side_spins[key].setValue(value)
+
+    def set_side_margin(self, key, value):
+        if not self.loading and side_margins(self.project.style)[SIDES.index(key)] != value:
+            self.set_style(key, value)
+
+    def area_tool_toggled(self, on):
+        self.preview.set_area_tool(on)
+        if on and not self.preview.area_tool:
+            self.area_button.setChecked(False)
+
+    def text_area_drawn(self, rect):
+        self.area_button.setChecked(False)
+        s = self.project.style
+        values = (round(rect.left()), round(rect.top()), round(s.width - rect.right()), round(s.height - rect.bottom()))
+        values = tuple(max(0, v) for v in values)
+        if values == side_margins(s) and all(getattr(s, key) is not None for key in SIDES):
+            return
+        self.record()
+        for key, value in zip(SIDES, values):
+            setattr(s, key, value)
+        self.changed(panels=True)
+        self.statusBar().showMessage(tr('Zona de texto: {0} × {1} px.').format(
+            s.width - values[0] - values[2], s.height - values[1] - values[3]), 6000)
+
+    def reset_text_area(self):
+        s = self.project.style
+        if all(getattr(s, key) is None for key in SIDES):
+            return
+        self.record()
+        for key in SIDES:
+            setattr(s, key, None)
+        self.changed(panels=True)
 
     # --- Base video -------------------------------------------------------------------
     def media_info(self, quiet=True):
@@ -308,6 +394,9 @@ class StyleMixin:
             return
         self.record(('style', key))
         setattr(self.project.style, key, value)
+        if key == 'margin':  # «Margen» is every side: it replaces a drawn area.
+            for side in SIDES:
+                setattr(self.project.style, side, None)
         if key == 'layout':
             pos = self.project.style.position
             if value == 'one':

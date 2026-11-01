@@ -12,6 +12,8 @@ from pathlib import Path
 from .i18n import tr
 
 EXPORT_FORMATS = ('mp4', 'source', 'prores_alpha')
+SIDES = ('margin_left', 'margin_top', 'margin_right', 'margin_bottom')
+MIN_TEXT_AREA = 32  # Pixels the text area keeps in each direction, whatever the margins.
 VERSION = '1.0.0-beta'
 FORMAT = 'lyric-candle'
 SCHEMA = 2
@@ -91,7 +93,13 @@ class Style:
     font: str = 'Segoe UI'
     size: int = 46
     secondary_size: int = 34
-    margin: int = 48
+    margin: int = 48  # Every side unless a side below overrides it.
+    # Text area: per-side margins in canvas pixels (None follows `margin`). Lets the lyrics
+    # sit inside the picture of a 4:3 or letterboxed video instead of the whole canvas.
+    margin_left: int | None = None
+    margin_top: int | None = None
+    margin_right: int | None = None
+    margin_bottom: int | None = None
     gap: int = 20
     fill: str = '#f1f4ff'
     painted: str = '#63b8ff'
@@ -170,6 +178,29 @@ class Project:
                         add('span_scale', tr('Frase {0}: escala de sílaba inválida.').format(i))
                     prev = span.end
         return issues
+
+def side_margins(style):
+    """Raw (left, top, right, bottom) margins as set by the user."""
+    return tuple(style.margin if getattr(style, key) is None else getattr(style, key) for key in SIDES)
+
+
+def text_area(style):
+    """(x0, y0, x1, y1) of the area the lyrics are laid out in, always inside the canvas.
+    Margins that leave less than MIN_TEXT_AREA shrink proportionally (e.g. after a smaller resolution)."""
+    left, top, right, bottom = side_margins(style)
+
+    def fit(a, b, size):
+        a, b = max(0, a), max(0, b)
+        room = max(0, size - MIN_TEXT_AREA)
+        if a + b > room:
+            k = room / (a + b)
+            a, b = a * k, b * k
+        return a, b
+
+    left, right = fit(left, right, style.width)
+    top, bottom = fit(top, bottom, style.height)
+    return left, top, style.width - right, style.height - bottom
+
 
 def clamp_cue(cue: Cue):
     cue.end = max(cue.start + 0.05, cue.end)
@@ -419,6 +450,12 @@ def from_dict(data, base: Path | None = None, strict=True):
     if s.export_format not in EXPORT_FORMATS:
         s.export_format = 'mp4'
     s.match_media = bool(s.match_media)
+    if isinstance(s.margin, bool) or not isinstance(s.margin, int) or not 0 <= s.margin <= 240:
+        s.margin = 48
+    for key in SIDES:
+        value = getattr(s, key)
+        if value is not None and (isinstance(value, bool) or not isinstance(value, int) or not 0 <= value <= 2160):
+            setattr(s, key, None)
     if not (8 <= s.size <= 180 and 8 <= s.secondary_size <= 180):
         raise ValueError(tr('Tamaño de fuente inválido.'))
     # Hand-edited or older files: map values the editor cannot show to the nearest valid ones.

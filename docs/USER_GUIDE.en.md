@@ -36,6 +36,8 @@ The importer preserves punctuation and symbols; it does not detect languages or 
 
 Choose which language is primary. In two-line mode it is above the secondary line. Left/right lines share their respective margin; centered lines share the same axis even when their lengths differ. **Spacing** applies only to two centered lines. Text is not automatically wrapped: split an overlong phrase, edit it or reduce its size when the margin warning appears.
 
+**Design → Text area** sets where the lyrics are laid out: **Margin** applies to all four sides; Left, Top, Right and Bottom change one side; **Draw on the preview** lets you drag the rectangle directly (Esc cancels). Useful for 4:3 or letterboxed videos. **Use the whole canvas** goes back to a single margin. The dashed **Guides** line shows the current area.
+
 ## Mark timing by ear
 
 1. Select the first phrase and play from before its start.

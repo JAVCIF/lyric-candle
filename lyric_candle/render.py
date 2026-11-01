@@ -16,7 +16,7 @@ from PySide6.QtGui import (
     QPen,
 )
 
-from .model import Project, animation_clock, animation_progress
+from .model import Project, animation_clock, animation_progress, text_area
 
 
 @lru_cache(maxsize=1200)
@@ -67,26 +67,26 @@ def visibility(cue, t, style):
 
 def line_positions(style, widths, ascents, descents):
     """Aligned anchors depend on layout and font metrics, never on animated bounds."""
-    w, h, m = style.width, style.height, style.margin
+    x0, y0, x1, y1 = text_area(style)
     position = style.position
     if position.startswith('left'):
-        xs = [m for _ in widths]
+        xs = [x0 for _ in widths]
     elif position.startswith('right'):
-        xs = [w - m - width for width in widths]
+        xs = [x1 - width for width in widths]
     else:
-        xs = [(w - width) / 2 for width in widths]
+        xs = [x0 + (x1 - x0 - width) / 2 for width in widths]
     if len(widths) == 1:
         if position.endswith('top'):
-            ys = [m + ascents[0]]
+            ys = [y0 + ascents[0]]
         elif position.endswith('bottom'):
-            ys = [h - m - descents[0]]
+            ys = [y1 - descents[0]]
         else:
-            ys = [(h + ascents[0] - descents[0]) / 2]
+            ys = [(y0 + y1 + ascents[0] - descents[0]) / 2]
     elif position.endswith('split'):
-        ys = [m + ascents[0], h - m - descents[1]]
+        ys = [y0 + ascents[0], y1 - descents[1]]
     else:
         total = sum(a + d for a, d in zip(ascents, descents)) + style.gap
-        top = (h - total) / 2
+        top = y0 + (y1 - y0 - total) / 2
         ys = [top + ascents[0], top + ascents[0] + descents[0] + style.gap + ascents[1]]
     return list(zip(xs, ys))
 
@@ -151,9 +151,14 @@ class Renderer:
         return result, positions
 
     def overflow(self, project, cue):
-        result, positions = self.cue_geometry(project, cue)
-        return any(g[0] > project.style.width - 2 * project.style.margin
-                   for _, _, g in result)
+        """True when a line is wider than the text area or the lines do not fit in its height."""
+        s = project.style
+        result, _positions = self.cue_geometry(project, cue)
+        x0, y0, x1, y1 = text_area(s)
+        height = sum(g[1] + g[2] for _, _, g in result)
+        if len(result) == 2 and s.position == 'center':
+            height += s.gap
+        return any(g[0] > x1 - x0 + .5 for _, _, g in result) or height > y1 - y0 + .5
 
     def draw_cue(self, p, project, cue, t, opacity):
         s = project.style

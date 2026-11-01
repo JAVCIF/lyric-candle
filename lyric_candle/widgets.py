@@ -31,7 +31,7 @@ from PySide6.QtWidgets import (
 )
 
 from .i18n import tr
-from .model import time_text
+from .model import MIN_TEXT_AREA, text_area, time_text
 from .render import Renderer
 
 LOGO_PATH = Path(__file__).resolve().parent / 'assets' / 'logo.svg'
@@ -406,6 +406,10 @@ class HoverFontComboBox(QFontComboBox):
 
 
 class Preview(QWidget):
+    # Text-area tool: drag a rectangle over the canvas (canvas pixels); Esc cancels.
+    areaDrawn = Signal(QRectF)
+    areaToolEnded = Signal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.project = None
@@ -414,6 +418,9 @@ class Preview(QWidget):
         self.font_override = ''
         self.renderer = Renderer()
         self.guides = True
+        self.area_tool = False
+        self._drag_start = None
+        self._drag_rect = None
         self.setMinimumSize(360, 200)
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
@@ -422,6 +429,31 @@ class Preview(QWidget):
             return replace(self.project, style=replace(self.project.style, font=self.font_override))
         return self.project
 
+    def canvas_transform(self):
+        """(scale, dx, dy) that map canvas pixels to widget pixels."""
+        s = self.project.style
+        scale = min(self.width() / s.width, self.height() / s.height)
+        return scale, (self.width() - s.width * scale) / 2, (self.height() - s.height * scale) / 2
+
+    def to_canvas(self, point):
+        s = self.project.style
+        scale, dx, dy = self.canvas_transform()
+        return QPointF(min(max((point.x() - dx) / scale, 0), s.width),
+                       min(max((point.y() - dy) / scale, 0), s.height))
+
+    def set_area_tool(self, on):
+        on = bool(on) and self.project is not None
+        if on == self.area_tool:
+            return
+        self.area_tool = on
+        self._drag_start = self._drag_rect = None
+        if on:
+            self.setCursor(Qt.CursorShape.CrossCursor)
+            self.setFocus()
+        else:
+            self.unsetCursor()
+        self.update()
+
     def paintEvent(self, event):
         p = QPainter(self)
         p.fillRect(self.rect(), QColor('#080e18'))
@@ -429,24 +461,78 @@ class Preview(QWidget):
             return
         project = self.effective_project()
         s = project.style
-        scale = min(self.width() / s.width, self.height() / s.height)
-        dx = (self.width() - s.width * scale) / 2
-        dy = (self.height() - s.height * scale) / 2
+        scale, dx, dy = self.canvas_transform()
+        p.save()
         p.translate(dx, dy)
         p.scale(scale, scale)
         p.setClipRect(QRectF(0, 0, s.width, s.height))
         self.renderer.draw(p, project, self.time, self.video)
-        if self.guides:
+        x0, y0, x1, y1 = text_area(s)
+        if self.guides or self.area_tool:
             pen = QPen(QColor(180, 205, 240, 65), 1 / scale, Qt.PenStyle.DashLine)
             p.setPen(pen)
-            m = s.margin
-            p.drawRect(QRectF(m, m, s.width - 2 * m, s.height - 2 * m))
-            p.drawLine(QPointF(s.width / 2, m), QPointF(s.width / 2, s.height - m))
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.drawRect(QRectF(x0, y0, x1 - x0, y1 - y0))
+            p.drawLine(QPointF((x0 + x1) / 2, y0), QPointF((x0 + x1) / 2, y1))
+        if self.area_tool and self._drag_rect is not None:
+            r = self._drag_rect
+            outside = QPainterPath()
+            outside.addRect(QRectF(0, 0, s.width, s.height))
+            inside = QPainterPath()
+            inside.addRect(r)
+            p.fillPath(outside.subtracted(inside), QColor(4, 8, 16, 120))
+            p.setPen(QPen(QColor('#ffe49c'), 2 / scale))
+            p.drawRect(r)
+        p.restore()
+        if self.area_tool:
+            text = tr('Arrastra para marcar dónde va la letra · Esc cancela')
+            if self._drag_rect is not None:
+                r = self._drag_rect
+                text = tr('Zona {0} × {1} px').format(round(r.width()), round(r.height()))
+            fm = QFontMetricsF(p.font())
+            box = QRectF(8, 8, fm.horizontalAdvance(text) + 16, fm.height() + 8)
+            p.fillRect(box, QColor(8, 14, 24, 210))
+            p.setPen(QColor('#ffe49c'))
+            p.drawText(box, Qt.AlignmentFlag.AlignCenter, text)
         p.end()
 
     def mousePressEvent(self, event):
         self.setFocus()
+        if self.area_tool and event.button() == Qt.MouseButton.LeftButton:
+            self._drag_start = self.to_canvas(event.position())
+            self._drag_rect = None
+            event.accept()
+            return
         super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        if self.area_tool and self._drag_start is not None:
+            self._drag_rect = QRectF(self._drag_start, self.to_canvas(event.position())).normalized()
+            self.update()
+            event.accept()
+            return
+        super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        if self.area_tool and self._drag_start is not None and event.button() == Qt.MouseButton.LeftButton:
+            rect = QRectF(self._drag_start, self.to_canvas(event.position())).normalized()
+            self._drag_start = self._drag_rect = None
+            if rect.width() >= MIN_TEXT_AREA and rect.height() >= MIN_TEXT_AREA:
+                self.set_area_tool(False)
+                self.areaDrawn.emit(rect)
+            else:  # A click or a tiny drag: keep the tool on and try again.
+                self.update()
+            event.accept()
+            return
+        super().mouseReleaseEvent(event)
+
+    def keyPressEvent(self, event):
+        if self.area_tool and event.key() == Qt.Key.Key_Escape:
+            self.set_area_tool(False)
+            self.areaToolEnded.emit()
+            event.accept()
+            return
+        super().keyPressEvent(event)
 
 
 class Waveform(QWidget):

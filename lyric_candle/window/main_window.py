@@ -429,6 +429,7 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
             self.fill_positions()
             self.total_duration.setValue(self.project.duration)
             self.fill_canvas_controls()
+            self.refresh_text_area()
             self.match_media.setChecked(s.match_media)
             self.update_source_label()
             cue = self.selected_cue()

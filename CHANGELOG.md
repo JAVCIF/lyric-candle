@@ -2,6 +2,12 @@
 
 [English overview](README.md) · [Resumen en español](README.es.md)
 
+## Unreleased
+
+**English:** rectangular text area. Design → Text area sets the margin of each side, or **Draw on the preview** lets you drag the rectangle the lyrics are laid out in (Esc cancels; **Use the whole canvas** resets it). Alignment, centring and the margin warning follow that area, which also checks the lines fit in its height. Projects from 1.0.0 open unchanged.
+
+**Español:** zona de texto rectangular. Diseño → Zona de texto define el margen de cada lado, o **Dibujar en la vista previa** permite arrastrar el rectángulo donde se acomoda la letra (Esc cancela; **Usar todo el lienzo** lo restablece). La alineación, el centrado y el aviso de márgenes siguen esa zona, que además comprueba que las líneas quepan a lo alto. Los proyectos de la 1.0.0 abren igual.
+
 ## 1.0.0-beta — 2026-10-20
 
 **English:** first beta. Export only the lyrics as ProRes 4444 with an alpha channel. PySide6 `>=6.8,<6.11` adds Python 3.14 support (tested on 3.10, 3.13 and 3.14). The main window is split into responsibility modules without behaviour changes; the repository root is tidied (notes in `docs/releases/`, guides in `docs/`, launchers in `scripts\windows\`); `pyproject.toml` and Ruff join CI, which also tests Python 3.14 and the oldest supported pair. 181 tests.
