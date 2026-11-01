@@ -30,7 +30,8 @@ class TransportMixin:
         focus = QApplication.focusWidget()
         editing = (isinstance(focus, (QLineEdit, QPlainTextEdit, QAbstractSpinBox))
                    or (isinstance(focus, QComboBox) and focus.isEditable()))
-        self.space_shortcut.setEnabled(not editing)
+        # Full screen handles Space itself: two handlers would play and pause at once.
+        self.space_shortcut.setEnabled(not editing and not self.is_fullscreen_preview())
         if self.virtual_playing:
             self.set_position(self.virtual_start + self.virtual_clock.elapsed() / 1000 * self.speed.currentData())
         elif self.player.playbackState() == QMediaPlayer.PlaybackState.PlayingState and not self._warming_video:

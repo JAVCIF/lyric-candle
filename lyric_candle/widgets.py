@@ -23,10 +23,12 @@ from PySide6.QtWidgets import (
     QCompleter,
     QDoubleSpinBox,
     QFontComboBox,
+    QLabel,
     QListView,
     QPushButton,
     QSpinBox,
     QToolButton,
+    QVBoxLayout,
     QWidget,
 )
 
@@ -162,6 +164,17 @@ def transport_icon(kind, color='#eaf3ff', size=18):
             path.lineTo(s * .30, s * .83)
             path.closeSubpath()
             p.drawPath(path)
+        elif kind == 'fullscreen':
+            # Four corner brackets.
+            p.setBrush(Qt.BrushStyle.NoBrush)
+            p.setPen(QPen(QColor(color), s * .11, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap,
+                          Qt.PenJoinStyle.RoundJoin))
+            a, b, k = s * .18, s * .82, s * .24
+            for x, y, dx, dy in ((a, a, 1, 1), (b, a, -1, 1), (a, b, 1, -1), (b, b, -1, -1)):
+                path = QPainterPath(QPointF(x, y + dy * k))
+                path.lineTo(x, y)
+                path.lineTo(x + dx * k, y)
+                p.drawPath(path)
         else:
             for x in (.22, .58):
                 p.drawRoundedRect(QRectF(s * x, s * .18, s * .20, s * .64), s * .05, s * .05)
@@ -425,6 +438,8 @@ class Preview(QWidget):
     # Text-area tool: drag a rectangle over the canvas (canvas pixels); Esc cancels.
     areaDrawn = Signal(QRectF)
     areaToolEnded = Signal()
+    doubleClicked = Signal()
+    BACKDROP = '#080e18'
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -434,6 +449,7 @@ class Preview(QWidget):
         self.font_override = ''
         self.renderer = Renderer()
         self.guides = True
+        self.backdrop = QColor(self.BACKDROP)  # Around the canvas; black while full screen.
         self.area_tool = False
         self._drag_start = None
         self._drag_rect = None
@@ -472,7 +488,7 @@ class Preview(QWidget):
 
     def paintEvent(self, event):
         p = QPainter(self)
-        p.fillRect(self.rect(), QColor('#080e18'))
+        p.fillRect(self.rect(), self.backdrop)
         if self.project is None:
             return
         project = self.effective_project()
@@ -542,6 +558,13 @@ class Preview(QWidget):
             return
         super().mouseReleaseEvent(event)
 
+    def mouseDoubleClickEvent(self, event):
+        if not self.area_tool and event.button() == Qt.MouseButton.LeftButton:
+            self.doubleClicked.emit()
+            event.accept()
+            return
+        super().mouseDoubleClickEvent(event)
+
     def keyPressEvent(self, event):
         if self.area_tool and event.key() == Qt.Key.Key_Escape:
             self.set_area_tool(False)
@@ -549,6 +572,60 @@ class Preview(QWidget):
             event.accept()
             return
         super().keyPressEvent(event)
+
+
+class FullscreenView(QWidget):
+    """Black full-screen window that borrows the preview. Space plays/pauses; Esc, F11 or a
+    double click return. Keys reach it from the preview, which does not use them."""
+    togglePlay = Signal()
+    exitRequested = Signal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent, Qt.WindowType.Window)
+        self.setWindowTitle('Lyric Candle')
+        self.setStyleSheet('background:#000;')
+        self.box = QVBoxLayout(self)
+        self.box.setContentsMargins(0, 0, 0, 0)
+        self.hint = QLabel(self)
+        self.hint.setStyleSheet('background:rgba(8,14,24,215); color:#ffe49c; padding:8px 14px; '
+                                'border-radius:6px; font-size:14px;')
+        self.hint.hide()
+        self._hint_timer = QTimer(self)
+        self._hint_timer.setSingleShot(True)
+        self._hint_timer.timeout.connect(self.hint.hide)
+
+    def show_hint(self, text, ms=2600):
+        self.hint.setText(text)
+        self.hint.adjustSize()
+        self.hint.move((self.width() - self.hint.width()) // 2, 24)
+        self.hint.raise_()
+        self.hint.show()
+        self._hint_timer.start(ms)
+
+    def keyPressEvent(self, event):
+        key = event.key()
+        if key == Qt.Key.Key_Space:
+            if not event.isAutoRepeat():
+                self.togglePlay.emit()
+            event.accept()
+        elif key in (Qt.Key.Key_Escape, Qt.Key.Key_F11):
+            self.exitRequested.emit()
+            event.accept()
+        else:
+            super().keyPressEvent(event)
+
+    def mouseDoubleClickEvent(self, event):
+        self.exitRequested.emit()
+        event.accept()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        if self.hint.isVisible():
+            self.hint.move((self.width() - self.hint.width()) // 2, 24)
+
+    def closeEvent(self, event):  # Alt+F4 and the like: give the preview back first.
+        self.exitRequested.emit()
+        super().closeEvent(event)
 
 
 class Waveform(QWidget):

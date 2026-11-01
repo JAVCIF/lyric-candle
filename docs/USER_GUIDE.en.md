@@ -142,6 +142,7 @@ Export writes a temporary file and replaces the destination only on success. Can
 | Shortcut | Action |
 | --- | --- |
 | Space | Play/pause outside text editors and font search |
+| F11 / double-click the preview | Full-screen preview (Space plays or pauses, Esc returns); also the button next to the speed |
 | Ctrl+M / Ctrl+F | Mark start and advance / mark end |
 | Ctrl+N / Ctrl+O | New / open project |
 | Ctrl+S / Ctrl+Shift+S | Save / save as |

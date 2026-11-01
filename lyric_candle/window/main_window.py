@@ -54,6 +54,7 @@ from ..widgets import (
 from .common import DARK, version_label
 from .cues import CueEditorMixin
 from .export import ExportMixin
+from .fullscreen import FullscreenMixin
 from .history import HistoryMixin
 from .keyframes import KeyframeMixin
 from .marking import MarkingMixin
@@ -63,7 +64,8 @@ from .syllables import SyllableMixin
 from .transport import TransportMixin
 
 
-class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, KeyframeMixin, StyleMixin, HistoryMixin, ProjectMixin, ExportMixin, QMainWindow):
+class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, KeyframeMixin, StyleMixin, HistoryMixin, ProjectMixin,
+                 ExportMixin, FullscreenMixin, QMainWindow):
 
     def __init__(self, demo=True, recover=True):
         super().__init__()
@@ -186,7 +188,9 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
         leftlayout = QVBoxLayout(left)
         leftlayout.setContentsMargins(0, 0, 8, 0)
         self.preview = Preview()
+        self.preview_layout = leftlayout
         leftlayout.addWidget(self.preview, 5)
+        self.preview.doubleClicked.connect(self.toggle_fullscreen_preview)
         transport = QHBoxLayout()
         self.play_icons = {False: transport_icon('play'), True: transport_icon('pause')}
         self.play_button = QPushButton()
@@ -208,6 +212,15 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
         self.speed.setCurrentIndex(2)
         self.speed.currentIndexChanged.connect(self.change_speed)
         transport.addWidget(self.speed)
+        self.fullscreen_button = QPushButton()
+        self.fullscreen_button.setIcon(transport_icon('fullscreen'))
+        self.fullscreen_button.setIconSize(QSize(18, 18))
+        self.fullscreen_button.setCheckable(True)
+        self.fullscreen_button.setToolTip(tr('Vista previa en pantalla completa (F11 o doble clic). '
+                                             'Espacio reproduce o pausa; Esc vuelve.'))
+        self.fullscreen_button.setAccessibleName(tr('Pantalla completa'))
+        self.fullscreen_button.clicked.connect(lambda: self.toggle_fullscreen_preview())
+        transport.addWidget(self.fullscreen_button)
         leftlayout.addLayout(transport)
         marks = QHBoxLayout()
         for name, caption, method in [('mark_start_button', tr('Marcar inicio y avanzar  [Ctrl+M]'), self.mark_next),
@@ -354,6 +367,8 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
         help_menu.addAction(action)
         self.space_shortcut = QShortcut(QKeySequence('Space'), self)
         self.space_shortcut.activated.connect(self.toggle_play)
+        self.fullscreen_shortcut = QShortcut(QKeySequence('F11'), self)
+        self.fullscreen_shortcut.activated.connect(self.toggle_fullscreen_preview)
 
     def selected_index(self):
         return self.table.currentRow()
@@ -492,6 +507,7 @@ class MainWindow(TransportMixin, MarkingMixin, CueEditorMixin, SyllableMixin, Ke
             QMessageBox.information(self, tr('Exportación activa'), tr('Cancela la exportación o espera a que termine antes de cerrar.'))
             event.ignore()
             return
+        self.exit_fullscreen_preview()
         self.pause()
         if not self.confirm_unsaved():
             event.ignore()

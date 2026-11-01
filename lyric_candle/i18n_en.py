@@ -270,6 +270,10 @@ EN = {
     'Zona de texto: {0} × {1} px.': 'Text area: {0} × {1} px.',
     'Arrastra para marcar dónde va la letra · Esc cancela': 'Drag to mark where the lyrics go · Esc cancels',
     'Zona {0} × {1} px': 'Area {0} × {1} px',
+    'Vista previa en pantalla completa (F11 o doble clic). Espacio reproduce o pausa; Esc vuelve.':
+        'Full-screen preview (F11 or double-click). Space plays or pauses; Esc returns.',
+    'Pantalla completa': 'Full screen',
+    'Espacio: reproducir / pausar · Esc: salir': 'Space: play / pause · Esc: exit',
     'Distancia vertical entre las dos líneas centradas.': 'Vertical distance between the two centered lines.',
     'Solo se usa con «Dos líneas» en «Centro · principal arriba». En las demás posiciones cada línea va pegada a su margen (arriba y abajo).':
         'Only used with "Two lines" in "Center · main on top". In the other positions each line sits on its own margin (top and bottom).',

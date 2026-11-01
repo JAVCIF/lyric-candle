@@ -88,6 +88,7 @@ transparente y sin audio, aunque el proyecto use un video de fondo, para superpo
 <h2>Atajos</h2>
 <table>
 <tr><td><kbd>Espacio</kbd></td><td>Reproducir / pausar (fuera de los campos de texto)</td></tr>
+<tr><td><kbd>F11</kbd> o doble clic en la vista previa</td><td>Vista previa en pantalla completa (<kbd>Espacio</kbd> reproduce o pausa; <kbd>Esc</kbd> vuelve)</td></tr>
 <tr><td><kbd>Ctrl+M</kbd> · <kbd>Ctrl+F</kbd></td><td>Marcar inicio y avanzar · marcar final</td></tr>
 <tr><td><kbd>Ctrl+Z</kbd> · <kbd>Ctrl+Y</kbd></td><td>Deshacer · rehacer</td></tr>
 <tr><td><kbd>Ctrl+N</kbd> · <kbd>Ctrl+O</kbd> · <kbd>Ctrl+S</kbd> · <kbd>Ctrl+Shift+S</kbd></td><td>Nuevo · abrir · guardar · guardar como</td></tr>
@@ -184,6 +185,7 @@ transparent background and without audio, even if the project uses a video backg
 <h2>Shortcuts</h2>
 <table>
 <tr><td><kbd>Space</kbd></td><td>Play / pause (outside text fields)</td></tr>
+<tr><td><kbd>F11</kbd> or double-click the preview</td><td>Full-screen preview (<kbd>Space</kbd> plays or pauses; <kbd>Esc</kbd> returns)</td></tr>
 <tr><td><kbd>Ctrl+M</kbd> · <kbd>Ctrl+F</kbd></td><td>Mark start and advance · mark end</td></tr>
 <tr><td><kbd>Ctrl+Z</kbd> · <kbd>Ctrl+Y</kbd></td><td>Undo · redo</td></tr>
 <tr><td><kbd>Ctrl+N</kbd> · <kbd>Ctrl+O</kbd> · <kbd>Ctrl+S</kbd> · <kbd>Ctrl+Shift+S</kbd></td><td>New · open · save · save as</td></tr>
